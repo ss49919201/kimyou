@@ -1,7 +1,6 @@
 {
   "name": "kimyou",
   "scripts": {
-    "client": "pnpm -F \"client\"",
     "server": "pnpm -F \"server\""
   },
   "engines": {

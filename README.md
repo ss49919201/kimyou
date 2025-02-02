@@ -19,5 +19,5 @@ pnpm init
 pnpm add ${new_pkg} -w -E
 
 # Add new package to specific workspace
-pnpm add ${new_pkg} -w packages/${workspace} -E
+pnpm ${workspace} add ${new_pkg} -E
 ```
