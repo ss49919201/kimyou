@@ -8,3 +8,10 @@ authApp.get("/login", (c) => {
     message: "ok",
   });
 });
+
+// TODO: implement me
+authApp.get("/logout", (c) => {
+  return c.json({
+    message: "ok",
+  });
+});
