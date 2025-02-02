@@ -16,8 +16,8 @@ pnpm init
 
 ```bash
 # Add new package to workspace root
-pnpm add ${new_pkg} -w
+pnpm add ${new_pkg} -w -E
 
 # Add new package to specific workspace
-pnpm add ${new_pkg} -w packages/${workspace}
+pnpm add ${new_pkg} -w packages/${workspace} -E
 ```
