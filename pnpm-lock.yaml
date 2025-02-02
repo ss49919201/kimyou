@@ -6,7 +6,11 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      typescript:
+        specifier: ~5.6.2
+        version: 5.6.3
 
   packages/client:
     dependencies:
@@ -56,6 +60,8 @@ importers:
       wrangler:
         specifier: ^3.107.2
         version: 3.107.2(@cloudflare/workers-types@4.20250129.0)
+
+  packages/server: {}
 
 packages:
 

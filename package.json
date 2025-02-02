@@ -4,7 +4,10 @@
     "web": "pnpm -F \"web\""
   },
   "engines": {
-	"pnpm": ">=10.0.0"
+    "pnpm": ">=10.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "~5.6.2"
+  }
 }
