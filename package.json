@@ -1,7 +1,8 @@
 {
   "name": "kimyou",
   "scripts": {
-    "web": "pnpm -F \"web\""
+    "client": "pnpm -F \"client\"",
+    "server": "pnpm -F \"server\""
   },
   "engines": {
     "pnpm": ">=10.0.0"
