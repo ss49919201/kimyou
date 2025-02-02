@@ -1,7 +1,7 @@
 {
   "name": "kimyou",
   "scripts": {
-    "server": "pnpm -F \"server\""
+    "backend": "pnpm -F \"backend\""
   },
   "engines": {
     "pnpm": ">=10.0.0"
