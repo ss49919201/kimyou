@@ -3,5 +3,8 @@
   "scripts": {
     "web": "pnpm -F \"web\""
   },
+  "engines": {
+	"pnpm": ">=10.0.0"
+  },
   "license": "MIT"
 }
