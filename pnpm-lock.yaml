@@ -15,12 +15,29 @@ importers:
         specifier: 5.7.3
         version: 5.7.3
 
-  packages/backend: {}
+  packages/backend:
+    dependencies:
+      '@hono/node-server':
+        specifier: 1.13.8
+        version: 1.13.8(hono@4.6.20)
+      hono:
+        specifier: 4.6.20
+        version: 4.6.20
 
 packages:
 
+  '@hono/node-server@1.13.8':
+    resolution: {integrity: sha512-fsn8ucecsAXUoVxrUil0m13kOEq4mkX4/4QozCqmY+HpGfKl74OYSn8JcMA8GnG0ClfdRI4/ZSeG7zhFaVg+wg==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      hono: ^4
+
   '@types/node@22.13.0':
     resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
+
+  hono@4.6.20:
+    resolution: {integrity: sha512-5qfNQeaIptMaJKyoJ6N/q4gIq0DBp2FCRaLNuUI3LlJKL4S37DY/rLL1uAxA4wrPB39tJ3s+f7kgI79O4ScSug==}
+    engines: {node: '>=16.9.0'}
 
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
@@ -32,9 +49,15 @@ packages:
 
 snapshots:
 
+  '@hono/node-server@1.13.8(hono@4.6.20)':
+    dependencies:
+      hono: 4.6.20
+
   '@types/node@22.13.0':
     dependencies:
       undici-types: 6.20.0
+
+  hono@4.6.20: {}
 
   typescript@5.7.3: {}
 
