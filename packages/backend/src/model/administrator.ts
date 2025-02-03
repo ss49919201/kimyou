@@ -1,3 +1,4 @@
+import { compareSync } from "bcrypt";
 import * as v from "valibot";
 
 const administrator = v.object({
@@ -5,4 +6,11 @@ const administrator = v.object({
   hasedPassword: v.string(),
 });
 
-export type Administrator = v.InferDefault<typeof administrator>;
+export type Administrator = v.InferInput<typeof administrator>;
+
+export function compareAdministratorPassword(
+  rawPassword: string,
+  administrator: Administrator
+) {
+  return compareSync(rawPassword, administrator.hasedPassword);
+}

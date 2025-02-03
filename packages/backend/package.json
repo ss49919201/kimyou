@@ -1,12 +1,15 @@
 {
   "name": "backend",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "dev": "tsx watch src/index.ts"
   },
   "license": "MIT",
   "dependencies": {
     "@hono/node-server": "1.13.8",
+    "@types/bcrypt": "5.0.2",
+    "bcrypt": "5.1.1",
     "hono": "4.6.20"
   }
 }
