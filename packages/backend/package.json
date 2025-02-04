@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "drizzle:generate": "drizzle-kit generate"
   },
   "license": "MIT",
   "dependencies": {
