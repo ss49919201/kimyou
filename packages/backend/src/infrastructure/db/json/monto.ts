@@ -101,17 +101,24 @@ type FindManyMontoWithPageOutput = v.InferOutput<
 export function findManyMontoWithPage(
   input: FindManyMontoWithPageInput
 ): FindManyMontoWithPageOutput {
+  const parsedInput = v.safeParse(findManyMontoWithPageInput, input);
+  if (!parsedInput.success) {
+    const valiError = new v.ValiError(parsedInput.issues);
+    throw new Error(
+      `Failed to parse json based on find many monto with page input schema: ${valiError.message}`
+    );
+  }
+  const { firstName, lastName, dateOfDeath, homyo } = parsedInput.output;
+
   const allMontoFamily = readJson();
 
   const values = allMontoFamily.filter(
     (montoFamily) =>
-      (!input.firstName ||
-        containsMatchedMontoFirstName(montoFamily, input.firstName)) &&
-      (!input.lastName ||
-        containsMatchedMontoLastName(montoFamily, input.lastName)) &&
-      (!input.dateOfDeath ||
-        containsMatchedMontoDateOfDeath(montoFamily, input.dateOfDeath)) &&
-      (!input.homyo || containsMatchedMontoHomyo(montoFamily, input.homyo))
+      (!firstName || containsMatchedMontoFirstName(montoFamily, firstName)) &&
+      (!lastName || containsMatchedMontoLastName(montoFamily, lastName)) &&
+      (!dateOfDeath ||
+        containsMatchedMontoDateOfDeath(montoFamily, dateOfDeath)) &&
+      (!homyo || containsMatchedMontoHomyo(montoFamily, homyo))
   );
 
   return {
