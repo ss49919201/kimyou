@@ -15,14 +15,20 @@ const monto = v.object({
   ingou: v.nullable(v.string()),
 });
 
-const manyMonto = v.array(monto);
+const montoFamily = v.object({
+  name: v.string(),
+  address: v.string(),
+  montoList: v.array(monto),
+});
 
-type manyMonto = v.InferOutput<typeof manyMonto>;
+const manyMontoFamily = v.array(montoFamily);
+
+type ManyMontoFamily = v.InferOutput<typeof manyMontoFamily>;
 
 const jsonPath = "./src/infrastructure/db/json/monto.json";
-let json: manyMonto;
+let json: ManyMontoFamily;
 
-function readJson(): manyMonto {
+function readJson(): ManyMontoFamily {
   if (json) {
     return json;
   }
@@ -43,7 +49,7 @@ function readJson(): manyMonto {
     );
   }
 
-  const parsedJson = v.safeParse(manyMonto, rawJson);
+  const parsedJson = v.safeParse(manyMontoFamily, rawJson);
 
   if (!parsedJson.success) {
     const valiError = new v.ValiError(parsedJson.issues);
@@ -77,7 +83,7 @@ type FindManyMontoWithPageInput = v.InferOutput<
 
 const findManyMontoWithPageOutput = v.object({
   totalPage: v.pipe(v.number(), v.integer(), v.minValue(0)),
-  values: manyMonto,
+  values: v.object({}),
 });
 
 type FindManyMontoWithPageOutput = v.InferOutput<
