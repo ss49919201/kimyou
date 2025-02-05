@@ -3,8 +3,6 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "dev:http:sever": "tsx watch src/entrypoint/httpServer/index.ts",
-    "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts",
     "cli:start": "tsx src/entrypoint/cli/index.ts"
   },
   "license": "MIT",
