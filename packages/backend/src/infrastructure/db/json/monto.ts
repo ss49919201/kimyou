@@ -67,11 +67,18 @@ const findManyMontoWithPageInput = v.object({
   firstName: v.nullable(v.pipe(v.string(), v.minLength(1))),
   lastName: v.nullable(v.pipe(v.string(), v.minLength(1))),
   dateOfDeath: v.nullable(
-    v.pipe(
-      v.string(),
-      v.isoDate(),
-      v.transform((input) => new Date(input))
-    )
+    v.object({
+      start: v.pipe(
+        v.string(),
+        v.isoDate(),
+        v.transform((input) => new Date(input))
+      ),
+      end: v.pipe(
+        v.string(),
+        v.isoDate(),
+        v.transform((input) => new Date(input))
+      ),
+    })
   ),
   homyo: v.nullable(v.pipe(v.string(), v.minLength(1))),
   ingou: v.nullable(v.pipe(v.string(), v.minLength(1))),
@@ -101,7 +108,9 @@ export function findManyMontoWithPage(
       (!input.firstName ||
         containsMatchedMontoFirstName(montoFamily, input.firstName)) &&
       (!input.lastName ||
-        containsMatchedMontoLastName(montoFamily, input.lastName))
+        containsMatchedMontoLastName(montoFamily, input.lastName)) &&
+      (!input.dateOfDeath ||
+        containsMatchedMontoDateOfDeath(montoFamily, input.dateOfDeath))
   );
 
   return {
@@ -124,6 +133,27 @@ function containsMatchedMontoLastName(
   montoLastName: string
 ): boolean {
   return !!value.montoList.find(({ lastName }) => lastName === montoLastName);
+}
+
+function containsMatchedMontoDateOfDeath(
+  value: FindManyMontoWithPageOutput["values"][number],
+  {
+    start,
+    end,
+  }: {
+    start: Date;
+    end: Date;
+  }
+): boolean {
+  return !!value.montoList.find(({ dateOfDeath }) => {
+    const dateOfDeathTimeValue = dateOfDeath?.valueOf();
+
+    return (
+      dateOfDeathTimeValue &&
+      dateOfDeathTimeValue >= start.valueOf() &&
+      dateOfDeathTimeValue <= end.valueOf()
+    );
+  });
 }
 
 function sliceByPage(
