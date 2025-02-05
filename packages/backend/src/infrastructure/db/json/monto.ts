@@ -83,7 +83,9 @@ type FindManyMontoWithPageInput = v.InferOutput<
 
 const findManyMontoWithPageOutput = v.object({
   totalPage: v.pipe(v.number(), v.integer(), v.minValue(0)),
-  values: v.object({}),
+  values: v.array(
+    v.intersect([monto, v.omit(montoFamily, ["montoList", "name"])])
+  ),
 });
 
 type FindManyMontoWithPageOutput = v.InferOutput<
