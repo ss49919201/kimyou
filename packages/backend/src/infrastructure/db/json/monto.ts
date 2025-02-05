@@ -122,7 +122,7 @@ export function findManyMontoFamilyWithPage(
   );
 
   return {
-    totalPage: 0,
+    totalPage: values.length,
     values: sliceByPage(values, input.page),
   };
 }
