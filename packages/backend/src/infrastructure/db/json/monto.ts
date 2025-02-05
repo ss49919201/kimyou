@@ -110,7 +110,8 @@ export function findManyMontoWithPage(
       (!input.lastName ||
         containsMatchedMontoLastName(montoFamily, input.lastName)) &&
       (!input.dateOfDeath ||
-        containsMatchedMontoDateOfDeath(montoFamily, input.dateOfDeath))
+        containsMatchedMontoDateOfDeath(montoFamily, input.dateOfDeath)) &&
+      (!input.homyo || containsMatchedMontoHomyo(montoFamily, input.homyo))
   );
 
   return {
@@ -154,6 +155,13 @@ function containsMatchedMontoDateOfDeath(
       dateOfDeathTimeValue <= end.valueOf()
     );
   });
+}
+
+function containsMatchedMontoHomyo(
+  value: FindManyMontoWithPageOutput["values"][number],
+  montoHomyo: string
+): boolean {
+  return !!value.montoList.find(({ homyo }) => homyo === montoHomyo);
 }
 
 function sliceByPage(
