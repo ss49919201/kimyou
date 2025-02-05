@@ -22,7 +22,7 @@ const main = async () => {
     ingou: null,
   });
 
-  console.log(result);
+  console.log(JSON.stringify(result));
 };
 
 main();
