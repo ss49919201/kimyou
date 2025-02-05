@@ -114,6 +114,13 @@ export function findManyMontoWithPage(
 
   return {
     totalPage: 0,
-    values,
+    values: sliceByPage(values, input.page),
   };
+}
+
+function sliceByPage(
+  values: FindManyMontoWithPageOutput["values"],
+  page: number
+): FindManyMontoWithPageOutput["values"] {
+  return values.slice((page - 1) * 50, page * 50);
 }
