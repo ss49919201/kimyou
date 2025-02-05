@@ -108,7 +108,7 @@ export function findManyMontoWithPage(
       `Failed to parse json based on find many monto with page input schema: ${valiError.message}`
     );
   }
-  const { firstName, lastName, dateOfDeath, homyo } = parsedInput.output;
+  const { firstName, lastName, dateOfDeath, homyo, ingou } = parsedInput.output;
 
   const allMontoFamily = readJson();
 
@@ -118,7 +118,8 @@ export function findManyMontoWithPage(
       (!lastName || containsMatchedMontoLastName(montoFamily, lastName)) &&
       (!dateOfDeath ||
         containsMatchedMontoDateOfDeath(montoFamily, dateOfDeath)) &&
-      (!homyo || containsMatchedMontoHomyo(montoFamily, homyo))
+      (!homyo || containsMatchedMontoHomyo(montoFamily, homyo)) &&
+      (!ingou || containsMatchedMontoIngou(montoFamily, ingou))
   );
 
   return {
@@ -169,6 +170,13 @@ function containsMatchedMontoHomyo(
   montoHomyo: string
 ): boolean {
   return !!value.montoList.find(({ homyo }) => homyo === montoHomyo);
+}
+
+function containsMatchedMontoIngou(
+  value: FindManyMontoWithPageOutput["values"][number],
+  montoIngou: string
+): boolean {
+  return !!value.montoList.find(({ ingou }) => ingou === montoIngou);
 }
 
 function sliceByPage(
