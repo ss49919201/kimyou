@@ -83,9 +83,7 @@ type FindManyMontoWithPageInput = v.InferOutput<
 
 const findManyMontoWithPageOutput = v.object({
   totalPage: v.pipe(v.number(), v.integer(), v.minValue(0)),
-  values: v.array(
-    v.intersect([monto, v.omit(montoFamily, ["montoList", "name"])])
-  ),
+  values: manyMontoFamily,
 });
 
 type FindManyMontoWithPageOutput = v.InferOutput<
@@ -98,19 +96,7 @@ export function findManyMontoWithPage(
 ): FindManyMontoWithPageOutput {
   const allMontoFamily = readJson();
 
-  const values: FindManyMontoWithPageOutput["values"] = [];
-  for (const montoFamily of allMontoFamily) {
-    values.push(
-      ...montoFamily.montoList.map((monto) => ({
-        firstName: monto.firstName,
-        lastName: monto.lastName,
-        dateOfDeath: monto.dateOfDeath,
-        homyo: monto.homyo,
-        ingou: monto.ingou,
-        address: montoFamily.address,
-      }))
-    );
-  }
+  const values = allMontoFamily;
 
   return {
     totalPage: 0,
