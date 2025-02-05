@@ -1,6 +1,6 @@
 import { stdin, stdout } from "node:process";
 import { createInterface } from "node:readline/promises";
-import { findManyMontoWithPage } from "../../infrastructure/db/json/monto";
+import { findManyMontoFamilyWithPage } from "../../infrastructure/db/json/monto";
 
 const readlineInterface = createInterface({
   input: stdin,
@@ -13,7 +13,7 @@ const main = async () => {
     "ページ番号を入力してください: "
   );
 
-  const result = findManyMontoWithPage({
+  const result = findManyMontoFamilyWithPage({
     page: Number(page),
     firstName: null,
     lastName: null,

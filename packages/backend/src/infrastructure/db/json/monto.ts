@@ -62,7 +62,7 @@ function readJson(): ManyMontoFamily {
   return json;
 }
 
-const findManyMontoWithPageInput = v.object({
+const findManyMontoFamilyWithPageInput = v.object({
   page: v.pipe(v.number(), v.integer(), v.minValue(1)),
   firstName: v.nullable(v.pipe(v.string(), v.minLength(1))),
   lastName: v.nullable(v.pipe(v.string(), v.minLength(1))),
@@ -84,24 +84,24 @@ const findManyMontoWithPageInput = v.object({
   ingou: v.nullable(v.pipe(v.string(), v.minLength(1))),
 });
 
-type FindManyMontoWithPageInput = v.InferOutput<
-  typeof findManyMontoWithPageInput
+type FindManyMontoFamilyWithPageInput = v.InferOutput<
+  typeof findManyMontoFamilyWithPageInput
 >;
 
-const findManyMontoWithPageOutput = v.object({
+const findManyMontoFamilyWithPageOutput = v.object({
   totalPage: v.pipe(v.number(), v.integer(), v.minValue(0)),
   values: manyMontoFamily,
 });
 
-type FindManyMontoWithPageOutput = v.InferOutput<
-  typeof findManyMontoWithPageOutput
+type FindManyMontoFamilyWithPageOutput = v.InferOutput<
+  typeof findManyMontoFamilyWithPageOutput
 >;
 
 // TODO: implement me
-export function findManyMontoWithPage(
-  input: FindManyMontoWithPageInput
-): FindManyMontoWithPageOutput {
-  const parsedInput = v.safeParse(findManyMontoWithPageInput, input);
+export function findManyMontoFamilyWithPage(
+  input: FindManyMontoFamilyWithPageInput
+): FindManyMontoFamilyWithPageOutput {
+  const parsedInput = v.safeParse(findManyMontoFamilyWithPageInput, input);
   if (!parsedInput.success) {
     const valiError = new v.ValiError(parsedInput.issues);
     throw new Error(
@@ -128,7 +128,7 @@ export function findManyMontoWithPage(
 }
 
 function containsMatchedMontoFirstName(
-  value: FindManyMontoWithPageOutput["values"][number],
+  value: FindManyMontoFamilyWithPageOutput["values"][number],
   montoFirstName: string
 ): boolean {
   return !!value.montoList.find(
@@ -137,14 +137,14 @@ function containsMatchedMontoFirstName(
 }
 
 function containsMatchedMontoLastName(
-  value: FindManyMontoWithPageOutput["values"][number],
+  value: FindManyMontoFamilyWithPageOutput["values"][number],
   montoLastName: string
 ): boolean {
   return !!value.montoList.find(({ lastName }) => lastName === montoLastName);
 }
 
 function containsMatchedMontoDateOfDeath(
-  value: FindManyMontoWithPageOutput["values"][number],
+  value: FindManyMontoFamilyWithPageOutput["values"][number],
   {
     start,
     end,
@@ -165,22 +165,22 @@ function containsMatchedMontoDateOfDeath(
 }
 
 function containsMatchedMontoHomyo(
-  value: FindManyMontoWithPageOutput["values"][number],
+  value: FindManyMontoFamilyWithPageOutput["values"][number],
   montoHomyo: string
 ): boolean {
   return !!value.montoList.find(({ homyo }) => homyo === montoHomyo);
 }
 
 function containsMatchedMontoIngou(
-  value: FindManyMontoWithPageOutput["values"][number],
+  value: FindManyMontoFamilyWithPageOutput["values"][number],
   montoIngou: string
 ): boolean {
   return !!value.montoList.find(({ ingou }) => ingou === montoIngou);
 }
 
 function sliceByPage(
-  values: FindManyMontoWithPageOutput["values"],
+  values: FindManyMontoFamilyWithPageOutput["values"],
   page: number
-): FindManyMontoWithPageOutput["values"] {
+): FindManyMontoFamilyWithPageOutput["values"] {
   return values.slice((page - 1) * 50, page * 50);
 }
