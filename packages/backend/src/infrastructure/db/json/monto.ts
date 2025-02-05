@@ -111,7 +111,6 @@ export function findManyMontoWithPage(
   const { firstName, lastName, dateOfDeath, homyo, ingou } = parsedInput.output;
 
   const allMontoFamily = readJson();
-
   const values = allMontoFamily.filter(
     (montoFamily) =>
       (!firstName || containsMatchedMontoFirstName(montoFamily, firstName)) &&
