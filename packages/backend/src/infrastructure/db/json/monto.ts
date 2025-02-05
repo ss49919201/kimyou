@@ -15,12 +15,14 @@ const monto = v.object({
   ingou: v.nullable(v.string()),
 });
 
-type Monto = v.InferOutput<typeof monto>;
+const manyMonto = v.array(monto);
+
+type manyMonto = v.InferOutput<typeof manyMonto>;
 
 const jsonPath = "./src/infrastructure/db/json/monto.json";
-let json: Monto;
+let json: manyMonto;
 
-function readJson(): Monto {
+function readJson(): manyMonto {
   if (json) {
     return json;
   }
@@ -41,7 +43,7 @@ function readJson(): Monto {
     );
   }
 
-  const parsedJson = v.safeParse(monto, rawJson);
+  const parsedJson = v.safeParse(manyMonto, rawJson);
 
   if (!parsedJson.success) {
     const valiError = new v.ValiError(parsedJson.issues);
@@ -52,4 +54,42 @@ function readJson(): Monto {
 
   json = parsedJson.output;
   return json;
+}
+
+const findManyMontoWithPageInput = v.object({
+  page: v.pipe(v.number(), v.integer(), v.minValue(1)),
+  firstName: v.nullable(v.pipe(v.string(), v.minLength(1))),
+  lastName: v.nullable(v.pipe(v.string(), v.minLength(1))),
+  dateOfDeath: v.nullable(
+    v.pipe(
+      v.string(),
+      v.isoDate(),
+      v.transform((input) => new Date(input))
+    )
+  ),
+  homyo: v.nullable(v.pipe(v.string(), v.minLength(1))),
+  ingou: v.nullable(v.pipe(v.string(), v.minLength(1))),
+});
+
+type FindManyMontoWithPageInput = v.InferOutput<
+  typeof findManyMontoWithPageInput
+>;
+
+const findManyMontoWithPageOutput = v.object({
+  totalPage: v.pipe(v.number(), v.integer(), v.minValue(0)),
+  values: manyMonto,
+});
+
+type FindManyMontoWithPageOutput = v.InferOutput<
+  typeof findManyMontoWithPageOutput
+>;
+
+// TODO: implement me
+export function findManyMontoWithPage(
+  input: FindManyMontoWithPageInput
+): FindManyMontoWithPageOutput {
+  return {
+    totalPage: 0,
+    values: [],
+  };
 }
