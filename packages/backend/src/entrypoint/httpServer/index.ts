@@ -1,3 +1,3 @@
-import { runServer } from "./infrastructure/server/node/hono";
+import { runServer } from "../../infrastructure/server/node/hono";
 
 runServer();
