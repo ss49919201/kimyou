@@ -96,12 +96,25 @@ export function findManyMontoWithPage(
 ): FindManyMontoWithPageOutput {
   const allMontoFamily = readJson();
 
-  const values = allMontoFamily;
+  const values = allMontoFamily.filter(
+    (montoFamily) =>
+      input.firstName &&
+      containsMatchedMontoFirstName(montoFamily, input.firstName)
+  );
 
   return {
     totalPage: 0,
     values: sliceByPage(values, input.page),
   };
+}
+
+function containsMatchedMontoFirstName(
+  value: FindManyMontoWithPageOutput["values"][number],
+  montoFirstName: string
+): boolean {
+  return !!value.montoList.find(
+    ({ firstName }) => firstName === montoFirstName
+  );
 }
 
 function sliceByPage(
