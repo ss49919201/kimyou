@@ -15,7 +15,7 @@ app.get("/montos", async (c) => {
   const result = await findManyWithPage(db);
   console.log("result", result);
 
-  return c.html(<Montos />);
+  return c.html(<Montos {...result} />);
 });
 
 export default app;
