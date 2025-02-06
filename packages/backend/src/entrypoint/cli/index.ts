@@ -8,21 +8,52 @@ const readlineInterface = createInterface({
 });
 
 const main = async () => {
-  // TODO: implement other questions
-  const page = await readlineInterface.question(
-    "ページ番号を入力してください: "
-  );
+  console.log("==========================================");
+
+  const firstName =
+    (await readlineInterface.question("苗字を入力してください: ")) || null;
+
+  const lastName =
+    (await readlineInterface.question("名前を入力してください: ")) || null;
+
+  const dateOfDeathStart =
+    (await readlineInterface.question(
+      "命日の期間開始日を入力してください: "
+    )) || null;
+
+  const dateOfDeathEnd = dateOfDeathStart
+    ? (await readlineInterface.question("ページ番号を入力してください: ")) ||
+      null
+    : null;
+
+  const homyo =
+    (await readlineInterface.question("法名を入力してください: ")) || null;
+
+  const ingou =
+    (await readlineInterface.question("院号を入力してください: ")) || null;
+
+  const page =
+    (await readlineInterface.question("ページ番号を入力してください: ")) || 1;
 
   const result = findManyMontoFamilyWithPage({
+    firstName,
+    lastName,
+    dateOfDeath:
+      dateOfDeathStart && dateOfDeathEnd
+        ? {
+            start: dateOfDeathStart,
+            end: dateOfDeathEnd,
+          }
+        : null,
+    homyo,
+    ingou,
     page: Number(page),
-    firstName: null,
-    lastName: null,
-    dateOfDeath: null,
-    homyo: null,
-    ingou: null,
   });
 
+  console.log("==========================================");
   console.log(JSON.stringify(result));
+
+  readlineInterface.close();
 };
 
 main();
