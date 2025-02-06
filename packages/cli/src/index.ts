@@ -1,6 +1,6 @@
 import { stdin, stdout } from "node:process";
 import { createInterface } from "node:readline/promises";
-import { findManyMontoFamilyWithPage } from "../../infrastructure/db/json/monto";
+import { findManyMontoFamilyWithPage } from "./infrastructure/db/json/monto";
 
 const readlineInterface = createInterface({
   input: stdin,
