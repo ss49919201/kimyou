@@ -8,6 +8,13 @@
       "when": 1738853889107,
       "tag": "0000_broad_stellaris",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1738884906859,
+      "tag": "0001_perfect_vertigo",
+      "breakpoints": true
     }
   ]
 }
