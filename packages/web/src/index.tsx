@@ -7,4 +7,4 @@ app.get("/montos", (c) => {
   return c.html(<Montos />);
 });
 
-app.fire();
+export default app;
