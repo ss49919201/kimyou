@@ -41,6 +41,9 @@ importers:
 
   packages/web:
     dependencies:
+      '@types/node':
+        specifier: 22.13.0
+        version: 22.13.0
       hono:
         specifier: ^4.6.20
         version: 4.6.20
