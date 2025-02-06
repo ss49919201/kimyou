@@ -5,15 +5,5 @@
     "test": "vitest run",
     "cli:start": "tsx src/entrypoint/cli/index.ts"
   },
-  "license": "MIT",
-  "dependencies": {
-    "@hono/node-server": "1.13.8",
-    "@types/bcrypt": "5.0.2",
-    "bcrypt": "5.1.1",
-    "drizzle-orm": "0.39.1",
-    "hono": "4.6.20"
-  },
-  "devDependencies": {
-    "drizzle-kit": "0.30.4"
-  }
+  "license": "MIT"
 }
