@@ -1,27 +1,19 @@
 import { Layout } from "../../layout";
 
-const montos = [
-  {
-    id: 1,
-    homyo: "釋　帰命",
-    firstName: "山田",
-    lastName: "一郎",
-    ingou: "帰命院",
-    dateOfDeath: "2024-01-13",
-    address: "札幌市中央区北3条西6丁目",
-  },
-  {
-    id: 2,
-    homyo: "釋　知恩",
-    firstName: "田中",
-    lastName: "二郎",
-    ingou: "知恩院",
-    dateOfDeath: "2024-01-13",
-    address: "青森市長島一丁目1-1",
-  },
-];
+type MontosWithPage = {
+  totalCount: number;
+  values: {
+    id: string;
+    homyo: string;
+    firstName: string;
+    lastName: string;
+    ingou: string;
+    dateOfDeath: string;
+    address: string;
+  }[];
+};
 
-const MontoList = () => (
+const MontoList = ({ values: montos }: MontosWithPage) => (
   <div className="max-w-6xl mx-auto p-6">
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold">門徒一覧</h1>
@@ -77,9 +69,9 @@ const MontoList = () => (
   </div>
 );
 
-const Content = () => (
+const Content = (props: MontosWithPage) => (
   <Layout>
-    <MontoList />
+    <MontoList {...props} />
   </Layout>
 );
 
