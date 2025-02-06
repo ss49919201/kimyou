@@ -59,6 +59,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^4.20250109.0
         version: 4.20250204.0
+      tailwindcss:
+        specifier: 4.0.3
+        version: 4.0.3
       wrangler:
         specifier: ^3.101.0
         version: 3.107.3(@cloudflare/workers-types@4.20250204.0)
@@ -1501,6 +1504,9 @@ packages:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
     engines: {node: '>=8'}
 
+  tailwindcss@4.0.3:
+    resolution: {integrity: sha512-ImmZF0Lon5RrQpsEAKGxRvHwCvMgSC4XVlFRqmbzTEDb/3wvin9zfEZrMwgsa3yqBbPqahYcVI6lulM2S7IZAA==}
+
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
@@ -2748,6 +2754,8 @@ snapshots:
   strip-ansi@6.0.1:
     dependencies:
       ansi-regex: 5.0.1
+
+  tailwindcss@4.0.3: {}
 
   tar@6.2.1:
     dependencies:
