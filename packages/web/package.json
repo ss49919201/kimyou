@@ -2,7 +2,8 @@
   "name": "web",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts"
   },
   "dependencies": {
     "hono": "^4.6.20"
