@@ -84,7 +84,7 @@ const findManyMontoFamilyWithPageInput = v.object({
   ingou: v.nullable(v.pipe(v.string(), v.minLength(1))),
 });
 
-type FindManyMontoFamilyWithPageInput = v.InferOutput<
+type FindManyMontoFamilyWithPageInput = v.InferInput<
   typeof findManyMontoFamilyWithPageInput
 >;
 
