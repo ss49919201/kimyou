@@ -5,7 +5,7 @@
     "dev": "wrangler dev --config=./wrangler.local.json",
     "deploy": "wrangler deploy --minify",
     "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts",
-    "drizzle:migrate:local": "wrangler d1 migrations apply D1 --local",
+    "drizzle:migrate:local": "wrangler d1 migrations apply D1 --local --config=./wrangler.local.json",
     "drizzle:migrate": "wrangler d1 migrations apply D1 --remote"
   },
   "dependencies": {
