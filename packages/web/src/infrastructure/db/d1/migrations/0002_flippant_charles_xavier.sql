@@ -1,0 +1,1 @@
+ALTER TABLE `montos` RENAME COLUMN "daetOfDeath" TO "date_of_death";
