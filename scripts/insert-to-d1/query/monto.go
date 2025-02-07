@@ -1,13 +1,44 @@
 package query
 
-import sqlbuilder "github.com/huandu/go-sqlbuilder"
+import (
+	"strconv"
+	"time"
 
-func CreateManyMontos() (string, []any) {
+	sqlbuilder "github.com/huandu/go-sqlbuilder"
+)
+
+type Monto struct {
+	ID          string
+	FirstName   string
+	LastName    string
+	Address     string
+	DateOfDeath string
+}
+
+func CreateManyMontos(montos []Monto) (string, []any) {
 	ib := sqlbuilder.NewInsertBuilder()
-	ib.InsertInto("demo.user")
-	ib.Cols("id", "name", "status", "created_at", "updated_at")
-	ib.Values(1, "Huan Du", 1, sqlbuilder.Raw("UNIX_TIMESTAMP(NOW())"))
-	ib.Values(2, "Charmy Liu", 1, 1234567890)
+	ib.InsertInto("montos")
+	ib.Cols(
+		"id",
+		"first_name",
+		"last_name",
+		"address",
+		"date_of_death",
+		"created_at",
+		"updated_at",
+	)
+
+	for _, monto := range montos {
+		ib.Values(
+			strconv.FormatInt(time.Now().UnixNano(), 10),
+			monto.FirstName,
+			monto.LastName,
+			monto.Address,
+			monto.DateOfDeath,
+			sqlbuilder.Raw("NOW()"),
+			sqlbuilder.Raw("NOW()"),
+		)
+	}
 
 	return ib.Build()
 }
