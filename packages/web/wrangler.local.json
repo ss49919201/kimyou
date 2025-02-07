@@ -3,6 +3,10 @@
   "name": "kimyou",
   "main": "src/index.tsx",
   "compatibility_date": "2025-02-06",
+  "vars": {
+    "BASIC_USERNAME": "user",
+    "BASIC_PASSWORD": "password"
+  },
   "d1_databases": [
     {
       "binding": "D1",
