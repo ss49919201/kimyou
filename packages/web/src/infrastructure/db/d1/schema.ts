@@ -5,7 +5,7 @@ export const montos = sqliteTable("montos", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   address: text("address").notNull(),
-  dateOfDeath: text("daetOfDeath"), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+  dateOfDeath: text("date_of_death"), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
