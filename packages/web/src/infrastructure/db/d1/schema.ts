@@ -9,7 +9,9 @@ export const genders = sqliteTable("genders", {
 
 export const montos = sqliteTable("montos", {
   id: text().notNull().primaryKey(),
-  genderId: integer({ mode: "number" }).references(() => genders.id),
+  genderId: integer({ mode: "number" })
+    .notNull()
+    .references(() => genders.id),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   phoneNumber: text("phone_number"),
