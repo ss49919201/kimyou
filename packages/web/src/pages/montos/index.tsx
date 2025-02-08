@@ -8,6 +8,8 @@ type MontosWithPage = {
     firstName: string;
     lastName: string;
     address: string;
+    phoneNumber?: string;
+    gender: string;
   }[];
 };
 
@@ -65,23 +67,27 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {montos.map(({ id, firstName, lastName, address }) => (
-            <tr key={id} className="hover:bg-gray-50">
-              <td className="px-6 py-4">{lastName}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
-              <td className="px-6 py-4 whitespace-nowrap">ダミーの電話番号</td>
-              <td className="px-6 py-4 whitespace-nowrap">ダミーの性別</td>
-              <td className="px-6 py-4 whitespace-nowrap">{address}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <a
-                  href={`montos/${id}`}
-                  className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5 focus:outline-none}"
-                >
-                  詳細
-                </a>
-              </td>
-            </tr>
-          ))}
+          {montos.map(
+            ({ id, firstName, lastName, address, phoneNumber, gender }) => (
+              <tr key={id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">{lastName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {phoneNumber || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{gender}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{address}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <a
+                    href={`montos/${id}`}
+                    className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5 focus:outline-none}"
+                  >
+                    詳細
+                  </a>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
     </div>
