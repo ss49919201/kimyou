@@ -55,3 +55,49 @@ export async function findManyWithPage(
     })),
   };
 }
+
+type FindOneResponse = {
+  id: string;
+  homyo: string;
+  firstName: string;
+  lastName: string;
+  ingou: string;
+  dateOfDeath?: Date;
+  nextNenki?: Date;
+  address: string;
+};
+
+type FindOneParameters = {
+  id: string;
+};
+
+export async function findOne(
+  db: DrizzleD1Database,
+  params: FindOneParameters
+): Promise<FindOneResponse | undefined> {
+  const result = await db
+    .select()
+    .from(montos)
+    .leftJoin(buddhistProfiles, eq(montos.id, buddhistProfiles.montoId))
+    .where(eq(montos.id, params.id))
+    .get();
+
+  if (!result) {
+    return undefined;
+  }
+
+  return {
+    id: result.montos.id,
+    homyo: result.buddhist_profiles?.homyo || "",
+    firstName: result.montos.firstName,
+    lastName: result.montos.lastName,
+    ingou: result.buddhist_profiles?.ingou ?? "",
+    dateOfDeath: result.montos.dateOfDeath
+      ? new Date(result.montos.dateOfDeath)
+      : undefined,
+    address: result.montos.address ?? "",
+    nextNenki: result.montos.dateOfDeath
+      ? calcNextNenki(new Date(result.montos.dateOfDeath))
+      : undefined,
+  };
+}
