@@ -1,7 +1,7 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { calcNextNenki } from "../../../domain/service/nenki";
-import { buddhistProfiles, montos } from "./schema";
+import { buddhistProfiles, genders, montos } from "./schema";
 
 type FindManyWithPageResponse = {
   totalCount: number;
@@ -14,6 +14,8 @@ type FindManyWithPageResponse = {
     dateOfDeath?: Date;
     nextNenki?: Date;
     address: string;
+    phoneNumber?: string;
+    gender: string;
   }[];
 };
 
@@ -28,6 +30,7 @@ export async function findManyWithPage(
   const query = db
     .select()
     .from(montos)
+    .innerJoin(genders, eq(montos.genderId, genders.id))
     .leftJoin(buddhistProfiles, eq(montos.id, buddhistProfiles.montoId))
     .$dynamic();
 
@@ -52,6 +55,8 @@ export async function findManyWithPage(
       nextNenki: result.montos.dateOfDeath
         ? calcNextNenki(new Date(result.montos.dateOfDeath))
         : undefined,
+      gender: result.genders.type,
+      phoneNumber: result.montos.phoneNumber ?? undefined,
     })),
   };
 }
