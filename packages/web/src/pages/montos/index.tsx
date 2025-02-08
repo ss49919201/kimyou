@@ -75,7 +75,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
               <td className="px-6 py-4 whitespace-nowrap">
                 <a
                   href={`montos/${id}`}
-                  class="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5 focus:outline-none}"
+                  className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5 focus:outline-none}"
                 >
                   詳細
                 </a>
