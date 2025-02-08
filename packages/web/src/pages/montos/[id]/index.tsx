@@ -17,7 +17,7 @@ const Monto = (monto: Monto) => (
     <div className="items-center mb-6">
       <h1 className="text-2xl font-bold">門徒詳細</h1>
     </div>
-    <div className="items-center p-6 bg-white rounded-lg shadow">
+    <div className="items-center p-6 rounded-lg shadow">
       <div className="text-xl mb-4 font-bold">性</div>
       <div className="text-xl mb-4">{monto.lastName}</div>
       <div className="text-xl mb-4 font-bold">名</div>
