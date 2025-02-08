@@ -15,3 +15,15 @@ export function calcNextNenki(dateOfDeath: Date): Date | undefined {
 
   return void 0;
 }
+
+// in-source test suites
+if (import.meta.vitest) {
+  const { it, expect, describe } = import.meta.vitest;
+  describe("calcNextNenki", () => {
+    it("Should return undefined after 50th", () => {
+      const date = new Date("1970-01-10T15:00:00Z");
+      const result = calcNextNenki(date);
+      expect(result).toBeUndefined();
+    });
+  });
+}

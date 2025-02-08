@@ -2,6 +2,7 @@
   "name": "web",
   "type": "module",
   "scripts": {
+    "test": "vitest run",
     "dev": "wrangler dev --config=./wrangler.local.json",
     "deploy": "wrangler deploy --minify",
     "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts",
