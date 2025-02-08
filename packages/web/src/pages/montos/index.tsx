@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Layout } from "../../layout";
 
 type MontosWithPage = {
@@ -8,8 +9,9 @@ type MontosWithPage = {
     firstName: string;
     lastName: string;
     ingou: string;
-    dateOfDeath: string;
+    dateOfDeath?: Date;
     address: string;
+    nextNenki?: Date;
   }[];
 };
 
@@ -66,6 +68,9 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               住所
             </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              次回年忌
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -78,14 +83,20 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
               homyo,
               dateOfDeath,
               address,
+              nextNenki,
             }) => (
               <tr key={id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">{lastName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{ingou}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{homyo}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{dateOfDeath}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {dateOfDeath ? format(dateOfDeath, "yyyy年MM月dd日") : ""}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{address}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {nextNenki ? format(nextNenki, "yyyy年MM月dd日") : ""}
+                </td>
               </tr>
             )
           )}

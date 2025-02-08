@@ -1,5 +1,6 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
+import { calcNextNenki } from "../../../domain/service/nenki";
 import { buddhistProfiles, montos } from "./schema";
 
 type FindManyWithPageResponse = {
@@ -10,7 +11,8 @@ type FindManyWithPageResponse = {
     firstName: string;
     lastName: string;
     ingou: string;
-    dateOfDeath: string;
+    dateOfDeath?: Date;
+    nextNenki?: Date;
     address: string;
   }[];
 };
@@ -43,8 +45,13 @@ export async function findManyWithPage(
       firstName: result.montos.firstName,
       lastName: result.montos.lastName,
       ingou: result.buddhist_profiles?.ingou ?? "",
-      dateOfDeath: result.montos.dateOfDeath ?? "",
-      address: result.montos.address,
+      dateOfDeath: result.montos.dateOfDeath
+        ? new Date(result.montos.dateOfDeath)
+        : undefined,
+      address: result.montos.address ?? "",
+      nextNenki: result.montos.dateOfDeath
+        ? calcNextNenki(new Date(result.montos.dateOfDeath))
+        : undefined,
     })),
   };
 }
