@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import Index from "./pages";
 import Montos from "./pages/montos";
 import Monto from "./pages/montos/[id]";
 import { drizzle } from "drizzle-orm/d1";
@@ -21,6 +22,10 @@ app.use("/*", async (c, next) => {
     password: c.env.BASIC_PASSWORD,
   });
   return auth(c, next);
+});
+
+app.get("/", async (c) => {
+  return c.html(<Index />);
 });
 
 app.get(
