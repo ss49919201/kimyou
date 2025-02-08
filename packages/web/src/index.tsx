@@ -3,6 +3,8 @@ import Montos from "./pages/montos";
 import { drizzle } from "drizzle-orm/d1";
 import { findManyWithPage } from "./infrastructure/db/d1/monto";
 import { basicAuth } from "hono/basic-auth";
+import { vValidator } from "@hono/valibot-validator";
+import * as v from "valibot";
 
 type Bindings = {
   D1: D1Database;
@@ -20,13 +22,23 @@ app.use("/*", async (c, next) => {
   return auth(c, next);
 });
 
-app.get("/montos", async (c) => {
-  // TODO: implement me
-  const db = drizzle(c.env.D1);
-  const result = await findManyWithPage(db);
-  console.log("result", result);
+app.get(
+  "/montos",
+  vValidator(
+    "query",
+    v.object({
+      "first-name": v.optional(v.string()),
+    })
+  ),
+  async (c) => {
+    const { "first-name": firstName } = c.req.valid("query");
 
-  return c.html(<Montos {...result} />);
-});
+    const db = drizzle(c.env.D1, { logger: true });
+    const result = await findManyWithPage(db, { firstName });
+    console.log("result", result);
+
+    return c.html(<Montos {...result} />);
+  }
+);
 
 export default app;

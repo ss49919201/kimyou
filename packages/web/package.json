@@ -9,6 +9,7 @@
     "drizzle:migrate": "wrangler d1 migrations apply D1 --remote"
   },
   "dependencies": {
+    "@hono/valibot-validator": "0.5.2",
     "@types/node": "22.13.0",
     "hono": "^4.6.20"
   },

@@ -41,6 +41,9 @@ importers:
 
   packages/web:
     dependencies:
+      '@hono/valibot-validator':
+        specifier: 0.5.2
+        version: 0.5.2(hono@4.6.20)(valibot@1.0.0-beta.14(typescript@5.7.3))
       '@types/node':
         specifier: 22.13.0
         version: 22.13.0
@@ -825,6 +828,12 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
+
+  '@hono/valibot-validator@0.5.2':
+    resolution: {integrity: sha512-WbTr8PCFNAME0ale62rmmq+E8bGp5a7VPiVNmNT+Ue12GJE3Ax+CWBGtHhR0TzAEiloPvJND3IbjHIgtNtsqhw==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      valibot: ^1.0.0 || ^1.0.0-beta.4 || ^1.0.0-rc
 
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
@@ -3759,6 +3768,11 @@ snapshots:
     optional: true
 
   '@fastify/busboy@2.1.1': {}
+
+  '@hono/valibot-validator@0.5.2(hono@4.6.20)(valibot@1.0.0-beta.14(typescript@5.7.3))':
+    dependencies:
+      hono: 4.6.20
+      valibot: 1.0.0-beta.14(typescript@5.7.3)
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
