@@ -35,7 +35,6 @@ app.get(
 
     const db = drizzle(c.env.D1, { logger: true });
     const result = await findManyWithPage(db, { lastName });
-    console.log("result", result);
 
     return c.html(<Montos {...result} />);
   }
