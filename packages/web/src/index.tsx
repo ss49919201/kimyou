@@ -27,14 +27,14 @@ app.get(
   vValidator(
     "query",
     v.object({
-      "first-name": v.optional(v.string()),
+      "last-name": v.optional(v.string()),
     })
   ),
   async (c) => {
-    const { "first-name": firstName } = c.req.valid("query");
+    const { "last-name": lastName } = c.req.valid("query");
 
     const db = drizzle(c.env.D1, { logger: true });
-    const result = await findManyWithPage(db, { firstName });
+    const result = await findManyWithPage(db, { lastName });
     console.log("result", result);
 
     return c.html(<Montos {...result} />);

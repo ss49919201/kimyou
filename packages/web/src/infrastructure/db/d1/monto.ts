@@ -16,7 +16,7 @@ type FindManyWithPageResponse = {
 };
 
 type FindManyWithPageParameters = {
-  firstName?: string;
+  lastName?: string;
 };
 
 export async function findManyWithPage(
@@ -29,8 +29,8 @@ export async function findManyWithPage(
     .leftJoin(buddhistProfiles, eq(montos.id, buddhistProfiles.montoId))
     .$dynamic();
 
-  if (params.firstName) {
-    query.where(like(montos.firstName, `%${params.firstName}%`));
+  if (params.lastName) {
+    query.where(like(montos.lastName, `%${params.lastName}%`));
   }
 
   const results = await query;

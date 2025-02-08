@@ -29,7 +29,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
       <div class="relative flex">
         <input
           type="search"
-          name="first-name"
+          name="last-name"
           id="default-search"
           class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="門徒名を入力してください"
@@ -80,8 +80,8 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
               address,
             }) => (
               <tr key={id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
                 <td className="px-6 py-4">{lastName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{ingou}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{homyo}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{dateOfDeath}</td>
