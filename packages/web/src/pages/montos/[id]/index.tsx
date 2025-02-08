@@ -16,7 +16,7 @@ const Monto = (monto: Monto) => (
   <div className="max-w-6xl mx-auto p-6">
     <div className="mb-2">
       <a href="/montos" className="text-blue-600 hover:underline">
-        ← 一覧に戻る
+        ← 門徒一覧に戻る
       </a>
     </div>
     <div className="items-center mb-6">

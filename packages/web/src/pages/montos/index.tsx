@@ -15,6 +15,11 @@ type MontosWithPage = {
 
 const MontoList = ({ values: montos }: MontosWithPage) => (
   <div className="max-w-6xl mx-auto p-6">
+    <div className="mb-2">
+      <a href="/" className="text-blue-600 hover:underline">
+        ← お品書きに戻る
+      </a>
+    </div>
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold">門徒一覧</h1>
     </div>
