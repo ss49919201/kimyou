@@ -15,7 +15,7 @@ const Content = () => (
           </a>
         </li>
         <li class="w-full px-8 py-4 border-b border-gray-200 dark:border-gray-600">
-          <a href="/" className="text-blue-600 hover:underline">
+          <a href="/homyos/generate" className="text-blue-600 hover:underline">
             法名生成
           </a>
         </li>

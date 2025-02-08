@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import Index from "./pages";
 import Montos from "./pages/montos";
 import Monto from "./pages/montos/[id]";
+import GenerateHomyo from "./pages/homyos/generate";
 import { drizzle } from "drizzle-orm/d1";
 import { findManyWithPage, findOne } from "./infrastructure/db/d1/monto";
 import { basicAuth } from "hono/basic-auth";
@@ -58,5 +59,26 @@ app.get("/montos/:id", async (c) => {
 
   return c.html(<Monto {...result} />);
 });
+
+app.get(
+  "/homyos/generate",
+  vValidator(
+    "query",
+    v.object({
+      "first-name": v.optional(v.string()),
+    })
+  ),
+  async (c) => {
+    const { "first-name": firstName } = c.req.valid("query");
+    const homyos: string[] = [];
+
+    // implement me
+    if (firstName) {
+      homyos.push(...["釋　一宗", "釋　二宗"]);
+    }
+
+    return c.html(<GenerateHomyo {...{ homyos }} />);
+  }
+);
 
 export default app;
