@@ -5,13 +5,9 @@ type MontosWithPage = {
   totalCount: number;
   values: {
     id: string;
-    homyo: string;
     firstName: string;
     lastName: string;
-    ingou: string;
-    dateOfDeath?: Date;
     address: string;
-    nextNenki?: Date;
   }[];
 };
 
@@ -57,49 +53,35 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
               名
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              院号
+              電話番号
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              法名
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              命日
+              性別
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               住所
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              次回年忌
-            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" />
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {montos.map(
-            ({
-              id,
-              firstName,
-              lastName,
-              ingou,
-              homyo,
-              dateOfDeath,
-              address,
-              nextNenki,
-            }) => (
-              <tr key={id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">{lastName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{ingou}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{homyo}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {dateOfDeath ? format(dateOfDeath, "yyyy年MM月dd日") : ""}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{address}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {nextNenki ? format(nextNenki, "yyyy年MM月dd日") : ""}
-                </td>
-              </tr>
-            )
-          )}
+          {montos.map(({ id, firstName, lastName, address }) => (
+            <tr key={id} className="hover:bg-gray-50">
+              <td className="px-6 py-4">{lastName}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
+              <td className="px-6 py-4 whitespace-nowrap">ダミーの電話番号</td>
+              <td className="px-6 py-4 whitespace-nowrap">ダミーの性別</td>
+              <td className="px-6 py-4 whitespace-nowrap">{address}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <a
+                  href={`montos/${id}`}
+                  class="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5 focus:outline-none}"
+                >
+                  詳細
+                </a>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
