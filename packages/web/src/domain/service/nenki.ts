@@ -8,7 +8,7 @@ export function calcNextNenki(dateOfDeath: Date): Date | undefined {
     const last = idx === yearsToAdd.length - 1;
     const nenki = addYears(dateOfDeath, yearToAdd);
 
-    if (now >= nenki && !last) {
+    if (nenki >= now && !last) {
       return nenki;
     }
   }
