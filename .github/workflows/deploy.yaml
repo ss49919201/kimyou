@@ -16,7 +16,7 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v4
-      - run: echo ${{ secrets.WRANGLER_JSON }} > ./wrangler.json
+      - run: echo "${{ secrets.WRANGLER_JSON }}" > ./wrangler.json
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
