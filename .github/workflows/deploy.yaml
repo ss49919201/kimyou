@@ -25,7 +25,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           environment: demo
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: "$CLOUDFLARE_ACCOUNT_ID"
           apiToken: $CLOUDFLARE_API_TOKEN
           workingDirectory: ./packages/web
           # quiet: true
@@ -33,7 +33,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           environment: prod
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: "$CLOUDFLARE_ACCOUNT_ID"
           apiToken: $CLOUDFLARE_API_TOKEN
           workingDirectory: ./packages/web
           # quiet: true
