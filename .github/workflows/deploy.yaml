@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - auto-deploy
+      - main
 
 jobs:
   deploy-web:
@@ -28,7 +28,7 @@ jobs:
           accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./packages/web
-          # quiet: true
+          quiet: true
       - name: Deploy prod
         uses: cloudflare/wrangler-action@v3
         with:
@@ -36,4 +36,4 @@ jobs:
           accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./packages/web
-          # quiet: true
+          quiet: true
