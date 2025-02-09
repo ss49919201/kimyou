@@ -1,9 +1,0 @@
-{
-  "name": "cli",
-  "type": "module",
-  "scripts": {
-    "test": "vitest run",
-    "cli:start": "tsx src/index.ts"
-  },
-  "license": "MIT"
-}
