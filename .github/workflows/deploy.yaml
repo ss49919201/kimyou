@@ -19,7 +19,8 @@ jobs:
       - run: pnpm install
       # - run: echo ${{ secrets.WRANGLER_JSON }} > ./wrangler.json
       #   working-directory: ./packages/web
-      - run: echo '{"name": "kimyou"}' > ./wrangler.json
+      - run: JSON='{"name":"kimyou""}'
+      - run: echo ${JSON} > ./wrangler.json
         working-directory: ./packages/web
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
