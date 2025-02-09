@@ -1,4 +1,4 @@
-module github.com/ss49919201/kimyou/scripts/insert-to-d1
+module github.com/ss49919201/kimyou/scripts/patrol-d1
 
 go 1.23.0
 
