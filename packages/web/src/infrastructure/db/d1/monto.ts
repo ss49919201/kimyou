@@ -44,7 +44,7 @@ export async function findManyWithPage(
     totalCount: results.length,
     values: results.map((result) => ({
       id: result.montos.id,
-      homyo: result.buddhist_profiles?.homyo || "",
+      homyo: result.buddhist_profiles?.homyo ?? "",
       firstName: result.montos.firstName,
       lastName: result.montos.lastName,
       ingou: result.buddhist_profiles?.ingou ?? "",
