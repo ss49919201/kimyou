@@ -10,9 +10,6 @@ jobs:
     name: Deploy Web Package
     environment: 
       name: prod
-    defaults:
-      run:
-        working-directory: ./packages/web
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
