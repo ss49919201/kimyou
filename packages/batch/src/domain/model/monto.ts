@@ -6,7 +6,7 @@ export type UnsavedMonto = {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  address?: string;
+  address: string;
   dateOfDeath?: Date;
   homyo?: string;
   ingou?: string;
