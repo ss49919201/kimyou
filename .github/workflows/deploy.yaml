@@ -28,7 +28,7 @@ jobs:
           accountId: $CLOUDFLARE_ACCOUNT_ID
           apiToken: $CLOUDFLARE_API_TOKEN
           workingDirectory: ./packages/web
-          # quiet: true
+          quiet: true
       - name: Deploy prod
         uses: cloudflare/wrangler-action@v3
         with:
@@ -36,4 +36,4 @@ jobs:
           accountId: $CLOUDFLARE_ACCOUNT_ID
           apiToken: $CLOUDFLARE_API_TOKEN
           workingDirectory: ./packages/web
-          # quiet: true
+          quiet: true
