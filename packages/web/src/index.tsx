@@ -8,11 +8,13 @@ import { findManyWithPage, findOne } from "./infrastructure/db/d1/monto";
 import { basicAuth } from "hono/basic-auth";
 import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
+import { generateHomyos } from "./infrastructure/ai/workersAi/homyo";
 
 type Bindings = {
   D1: D1Database;
   BASIC_USERNAME: string;
   BASIC_PASSWORD: string;
+  AI: Ai;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -72,9 +74,8 @@ app.get(
     const { "first-name": firstName } = c.req.valid("query");
     const homyos: string[] = [];
 
-    // implement me
     if (firstName) {
-      homyos.push(...["釋　一宗", "釋　二宗"]);
+      homyos.push(...(await generateHomyos(c.env.AI, firstName)));
     }
 
     return c.html(<GenerateHomyo {...{ homyos }} />);

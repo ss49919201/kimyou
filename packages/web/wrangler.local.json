@@ -14,5 +14,8 @@
       "database_id" : "n/a",
       "migrations_dir" : "./src/infrastructure/db/d1/migrations"
     }
-  ]
+  ],
+  "ai": {
+    "binding": "AI"
+  }
 }
