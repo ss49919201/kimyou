@@ -4,7 +4,6 @@ const wetRun = v.boolean();
 
 export const input = v.object({
   wetRun: wetRun,
-  file: v.pipe(v.string(), v.minLength(1)),
   gender: v.union([v.literal("男"), v.literal("女")]),
   firstName: v.string(),
   lastName: v.string(),
