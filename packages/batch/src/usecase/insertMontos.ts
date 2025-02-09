@@ -7,4 +7,6 @@ export const input = v.object({
 
 export type Input = v.InferInput<typeof input>;
 
-export async function Do(input: Input): Promise<void> {}
+export type Dependency = {};
+
+export async function Do(input: Input, dep: Dependency): Promise<void> {}
