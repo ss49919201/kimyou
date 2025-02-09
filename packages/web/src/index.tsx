@@ -11,6 +11,7 @@ import * as v from "valibot";
 import { generateHomyos } from "./infrastructure/ai/workersAi/homyo";
 
 type Bindings = {
+  ENV: string;
   D1: D1Database;
   BASIC_USERNAME: string;
   BASIC_PASSWORD: string;
@@ -75,7 +76,7 @@ app.get(
     const homyos: string[] = [];
 
     if (firstName) {
-      homyos.push(...(await generateHomyos(c.env.AI, firstName)));
+      homyos.push(...(await generateHomyos(c.env.ENV, c.env.AI, firstName)));
     }
 
     return c.html(<GenerateHomyo {...{ homyos }} />);

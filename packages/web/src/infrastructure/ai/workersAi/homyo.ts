@@ -10,7 +10,15 @@ const runAiOutput = v.object({
 });
 
 // TODO: Return multiple homyos
-export async function generateHomyos(ai: Ai, base: string): Promise<string[]> {
+export async function generateHomyos(
+  env: string,
+  ai: Ai,
+  base: string
+): Promise<string[]> {
+  if (env === "local") {
+    return [];
+  }
+
   const output = await ai.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
     prompt: `以下の条件に従って、漢字を生成してください：
 
