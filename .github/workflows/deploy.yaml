@@ -8,22 +8,32 @@ on:
 jobs:
   deploy-web:
     name: Deploy Web Package
-    environment: 
-      name: prod
-    defaults:
-      run:
-        working-directory: ./packages/web
     runs-on: ubuntu-latest
+    env:
+      BASE64_WRANGLER_JSON: ${{ secrets.BASE64_WRANGLER_JSON }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
           version: 10
       - run: pnpm install
-      - run: echo ${{ secrets.WRANGLER_JSON }} > ./wrangler.json
+      - run: echo ${{ env.BASE64_WRANGLER_JSON }} | base64 --decode > ./wrangler.json
         working-directory: ./packages/web
-      - name: Deploy
+      - name: Deploy demo
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          environment: demo
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./packages/web
+          quiet: true
+      - name: Deploy prod
+        uses: cloudflare/wrangler-action@v3
+        with:
+          environment: prod
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: ./packages/web
+          quiet: true
