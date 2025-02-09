@@ -36,7 +36,7 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">法名</div>
       <div className="text-xl mb-4">{monto.homyo}</div>
       <div className="text-xl mb-4 font-bold">院号</div>
-      <div className="text-xl mb-4">{monto.homyo}</div>
+      <div className="text-xl mb-4">{monto.ingou}</div>
       <div className="text-xl mb-4 font-bold">命日</div>
       <div className="text-xl mb-4">
         {monto.dateOfDeath ? format(monto.dateOfDeath, "yyyy年MM月dd日") : "-"}
