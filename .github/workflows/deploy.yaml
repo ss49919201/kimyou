@@ -19,21 +19,21 @@ jobs:
         with:
           version: 10
       - run: pnpm install
-      - run: echo $BASE64_WRANGLER_JSON | base64 --decode > ./wrangler.json
+      - run: echo ${{ env.BASE64_WRANGLER_JSON }} | base64 --decode > ./wrangler.json
         working-directory: ./packages/web
       - name: Deploy demo
         uses: cloudflare/wrangler-action@v3
         with:
           environment: demo
-          accountId: "$CLOUDFLARE_ACCOUNT_ID"
-          apiToken: $CLOUDFLARE_API_TOKEN
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./packages/web
           # quiet: true
       - name: Deploy prod
         uses: cloudflare/wrangler-action@v3
         with:
           environment: prod
-          accountId: "$CLOUDFLARE_ACCOUNT_ID"
-          apiToken: $CLOUDFLARE_API_TOKEN
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./packages/web
           # quiet: true
