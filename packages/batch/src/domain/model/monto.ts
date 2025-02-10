@@ -1,4 +1,4 @@
-export const genders = ["男", "女"] as const;
+export const genders = ["MAN", "WOMEN"] as const;
 export type Gender = (typeof genders)[number];
 
 export type UnsavedMonto = {
