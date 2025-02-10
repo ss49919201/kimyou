@@ -18,7 +18,10 @@ export type Dependency = {
   insertMonto: (unsavedMonto: UnsavedMonto) => Promise<void>;
 };
 
-export async function Do(input: Input, dep: Dependency): Promise<void> {
+export async function insertMontos(
+  input: Input,
+  dep: Dependency
+): Promise<void> {
   const unsavedMontos = input.montos.map(createUnsavedMonto);
 
   if (input.wetRun) {
