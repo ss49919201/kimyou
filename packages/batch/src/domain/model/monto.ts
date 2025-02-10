@@ -16,6 +16,12 @@ const monto = v.object({
 
 export const unsavedMonto = monto;
 
+export function createUnsavedMonto(
+  input: v.InferInput<typeof unsavedMonto>
+): UnsavedMonto {
+  return v.parse(unsavedMonto, input);
+}
+
 export type UnsavedMonto = v.InferOutput<typeof unsavedMonto>;
 
 export const savedMonto = v.intersect([
