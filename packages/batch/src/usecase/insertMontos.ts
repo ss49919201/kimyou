@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { UnsavedMonto } from "../domain/model/monto";
 
 const wetRun = v.boolean();
 
@@ -20,6 +21,8 @@ export const input = v.object({
 
 export type Input = v.InferInput<typeof input>;
 
-export type Dependency = {};
+export type Dependency = {
+  insertMonto: (unsavedMonto: UnsavedMonto) => Promise<void>;
+};
 
 export async function Do(input: Input, dep: Dependency): Promise<void> {}
