@@ -10,14 +10,18 @@ async function main() {
       const parsedFile = v.parse(v.string(), file);
       const parsedWetRun = !!v.parse(v.optional(v.boolean()), wetRun);
 
-      await generateMontosFromCsv(file);
+      const montosFromCsv = await generateMontosFromCsv(file);
 
-      console.log(parsedFile, parsedWetRun);
+      console.log(montosFromCsv);
     });
 
   program.parse();
-
-  console.log("Done");
 }
 
-main();
+main().catch((e: unknown) =>
+  console.error(
+    `Failed to exec insert montos: ${
+      e instanceof Error ? e.message : JSON.stringify(e)
+    }`
+  )
+);
