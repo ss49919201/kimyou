@@ -31,6 +31,6 @@ export async function insertMontos(
       )
     );
   } else {
-    console.log(`montos to be insert is :${unsavedMontos}`);
+    console.log(`montos to be insert is :${JSON.stringify(unsavedMontos)}`);
   }
 }
