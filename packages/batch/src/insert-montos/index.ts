@@ -10,7 +10,7 @@ async function main() {
       const parsedFile = v.parse(v.string(), file);
       const parsedWetRun = !!v.parse(v.optional(v.boolean()), wetRun);
 
-      const montosFromCsv = await generateMontosFromCsv(file);
+      const montosFromCsv = await generateMontosFromCsv(parsedFile);
 
       console.log(montosFromCsv);
     });
