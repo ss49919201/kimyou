@@ -1,8 +1,8 @@
-import { UnsavedMonto } from "../domain/model/monto";
+import { createUnsavedMonto, UnsavedMonto } from "../domain/model/monto";
 
 export type Input = {
   wetRun: boolean;
-  mongos: {
+  montos: {
     gender: "MAN" | "WOMEN";
     firstName: string;
     lastName: string;
@@ -18,4 +18,16 @@ export type Dependency = {
   insertMonto: (unsavedMonto: UnsavedMonto) => Promise<void>;
 };
 
-export async function Do(input: Input, dep: Dependency): Promise<void> {}
+export async function Do(input: Input, dep: Dependency): Promise<void> {
+  const unsavedMontos = input.montos.map(createUnsavedMonto);
+
+  if (input.wetRun) {
+    await Promise.all(
+      unsavedMontos.map(
+        async (unsavedMonto) => await dep.insertMonto(unsavedMonto)
+      )
+    );
+  } else {
+    console.log(`montos to be insert is :${unsavedMontos}`);
+  }
+}
