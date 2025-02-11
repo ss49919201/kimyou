@@ -5,9 +5,7 @@
   "compatibility_date": "2025-02-06",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "ENV": "local",
-    "BASIC_USERNAME": "user",
-    "BASIC_PASSWORD": "password"
+    "ENV": "local"
   },
   "d1_databases": [
     {

@@ -21,3 +21,8 @@ pnpm add ${new_pkg} -w -E
 # Add new package to specific workspace
 pnpm ${workspace} add ${new_pkg} -E
 ```
+
+## Authentication
+
+kimyou does not implement authentication.
+Recommend using Cloudflare Access for authentication.
