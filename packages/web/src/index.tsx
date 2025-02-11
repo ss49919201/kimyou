@@ -4,11 +4,17 @@ import Montos from "./pages/montos";
 import Monto from "./pages/montos/[id]";
 import GenerateHomyo from "./pages/homyos/generate";
 import { drizzle } from "drizzle-orm/d1";
-import { findManyWithPage, findOne } from "./infrastructure/db/d1/monto";
+import {
+  findManyWithPage,
+  findOne,
+  insertMonto,
+} from "./infrastructure/db/d1/monto";
 import { basicAuth } from "hono/basic-auth";
 import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
 import { generateHomyos } from "./infrastructure/ai/workersAi/homyo";
+import { insertMontos } from "./usecase/insertMontos";
+import { genders, UnsavedMonto, unsavedMonto } from "./domain/model/monto";
 
 type Bindings = {
   ENV: string;
@@ -62,6 +68,39 @@ app.get("/montos/:id", async (c) => {
 
   return c.html(<Monto {...result} />);
 });
+
+app.post(
+  "/montos",
+  vValidator(
+    "json",
+    v.object({
+      wetRun: v.boolean(),
+      montos: v.array(
+        v.object({
+          gender: v.picklist(genders),
+          firstName: v.string(),
+          lastName: v.string(),
+          phoneNumber: v.string(),
+          address: v.string(),
+          dateOfDeath: v.optional(v.date()),
+          homyo: v.optional(v.string()),
+          ingou: v.optional(v.string()),
+        })
+      ),
+    })
+  ),
+  async (c) => {
+    const params = c.req.valid("json");
+    const db = drizzle(c.env.D1, { logger: true });
+
+    await insertMontos(params, {
+      insertMonto: (unsavedMonto: UnsavedMonto) =>
+        insertMonto(db, unsavedMonto),
+    });
+
+    return c.json({ msg: "ok" });
+  }
+);
 
 app.get(
   "/homyos/generate",
