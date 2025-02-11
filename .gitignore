@@ -3,4 +3,5 @@ node_modules
 .wrangler
 wrangler.json
 
+# git worktree
 w-*/

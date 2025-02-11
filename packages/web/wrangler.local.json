@@ -3,6 +3,7 @@
   "name": "kimyou",
   "main": "src/index.tsx",
   "compatibility_date": "2025-02-06",
+  "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "ENV": "local",
     "BASIC_USERNAME": "user",
