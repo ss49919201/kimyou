@@ -1,5 +1,7 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
+import { randomUUID } from "node:crypto";
+import { UnsavedMonto } from "../../../domain/model/monto";
 import { calcNextNenki } from "../../../domain/service/nenki";
 import { buddhistProfiles, genders, montos } from "./schema";
 
@@ -44,7 +46,7 @@ export async function findManyWithPage(
     totalCount: results.length,
     values: results.map((result) => ({
       id: result.montos.id,
-      homyo: result.buddhist_profiles?.homyo || "",
+      homyo: result.buddhist_profiles?.homyo ?? "",
       firstName: result.montos.firstName,
       lastName: result.montos.lastName,
       ingou: result.buddhist_profiles?.ingou ?? "",
@@ -105,4 +107,48 @@ export async function findOne(
       ? calcNextNenki(new Date(result.montos.dateOfDeath))
       : undefined,
   };
+}
+
+export async function insertMonto(
+  db: DrizzleD1Database,
+  unsavedMonto: UnsavedMonto
+): Promise<void> {
+  const selectedGender = await db
+    .select({ id: genders.id })
+    .from(genders)
+    .where(eq(genders.type, unsavedMonto.gender === "MAN" ? "男" : "女"))
+    .get();
+
+  if (!selectedGender) {
+    throw new Error("gender not found");
+  }
+
+  const createdDate = new Date().toISOString();
+  const updatedDate = new Date().toISOString();
+
+  // NOTE: Cloudflare D1 transaction not supported
+  // https://github.com/drizzle-team/drizzle-orm/issues/2463
+  const montoId = randomUUID();
+  await db.insert(montos).values({
+    id: montoId,
+    genderId: selectedGender.id,
+    firstName: unsavedMonto.firstName,
+    lastName: unsavedMonto.lastName,
+    address: unsavedMonto.address,
+    phoneNumber: unsavedMonto.phoneNumber,
+    dateOfDeath: unsavedMonto.dateOfDeath
+      ? unsavedMonto.dateOfDeath.toISOString()
+      : null,
+    createdDate,
+    updatedDate,
+  });
+
+  await db.insert(buddhistProfiles).values({
+    id: crypto.randomUUID(),
+    montoId,
+    homyo: unsavedMonto.homyo,
+    ingou: unsavedMonto.ingou,
+    createdDate,
+    updatedDate,
+  });
 }

@@ -27,7 +27,7 @@ export const buddhistProfiles = sqliteTable("buddhist_profiles", {
     .notNull()
     .unique()
     .references(() => montos.id),
-  homyo: text().notNull(),
+  homyo: text(),
   ingou: text(),
   createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
