@@ -26,14 +26,6 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-app.use("/*", async (c, next) => {
-  const auth = basicAuth({
-    username: c.env.BASIC_USERNAME,
-    password: c.env.BASIC_PASSWORD,
-  });
-  return auth(c, next);
-});
-
 app.get("/", async (c) => {
   return c.html(<Index />);
 });
