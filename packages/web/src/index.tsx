@@ -70,7 +70,7 @@ app.get("/montos/:id", async (c) => {
 });
 
 app.post(
-  "/montos",
+  "/montos/_batch",
   vValidator(
     "json",
     v.object({
