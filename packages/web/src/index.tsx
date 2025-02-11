@@ -9,7 +9,6 @@ import {
   findOne,
   insertMonto,
 } from "./infrastructure/db/d1/monto";
-import { basicAuth } from "hono/basic-auth";
 import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
 import { generateHomyos } from "./infrastructure/ai/workersAi/homyo";
