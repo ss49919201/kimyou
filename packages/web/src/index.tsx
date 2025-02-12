@@ -13,7 +13,7 @@ import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
 import { generateHomyos } from "./infrastructure/ai/workersAi/homyo";
 import { insertMontos } from "./usecase/insertMontos";
-import { genders, UnsavedMonto, unsavedMonto } from "./domain/model/monto";
+import { genders, UnsavedMonto } from "./domain/model/monto";
 
 type Bindings = {
   ENV: string;
