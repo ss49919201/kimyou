@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "vitest run",
     "dev": "wrangler dev --config=./wrangler.local.json",
     "deploy": "wrangler deploy --minify",
