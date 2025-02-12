@@ -1,6 +1,7 @@
 import { html } from "hono/html";
+import { Child } from "hono/jsx";
 
-export const Layout = (props: { children?: any }) => html`<!DOCTYPE html>
+export const Layout = (props: { children?: Child }) => html`<!DOCTYPE html>
   <html>
     <head>
       <script src="https://cdn.tailwindcss.com"></script>

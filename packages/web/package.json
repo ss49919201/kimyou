@@ -2,6 +2,8 @@
   "name": "web",
   "type": "module",
   "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "vitest run",
     "dev": "wrangler dev --config=./wrangler.local.json",
     "deploy": "wrangler deploy --minify",
@@ -16,8 +18,12 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250109.0",
+    "@eslint/js": "^9.20.0",
     "@faker-js/faker": "9.4.0",
+    "eslint": "^9.20.1",
+    "globals": "^15.14.0",
     "tailwindcss": "4.0.3",
+    "typescript-eslint": "^8.24.0",
     "wrangler": "^3.101.0"
   }
 }
