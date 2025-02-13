@@ -9,7 +9,7 @@
   "packageManager": "pnpm@10.3.0",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "22.13.2",
+    "@types/node": "22.13.4",
     "drizzle-kit": "0.30.4",
     "typescript": "5.7.3",
     "vitest": "3.0.5"
