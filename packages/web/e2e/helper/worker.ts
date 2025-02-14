@@ -1,12 +1,15 @@
-import type { Unstable_DevWorker } from "wrangler";
-import { unstable_dev } from "wrangler";
+import { Miniflare } from "miniflare";
 
-export async function runWorker(): Promise<Unstable_DevWorker> {
-  return await unstable_dev("./src/index.tsx", {
-    experimental: { disableExperimentalWarning: true },
+export async function startWorker(): Promise<Miniflare> {
+  const worker = new Miniflare({
+    modules: [
+      {
+        type: "ESModule",
+        path: "./dist/index.js",
+      },
+    ],
+    d1Databases: ["D1"],
   });
-}
-
-export async function stopWorker(worker: Unstable_DevWorker): Promise<void> {
-  await worker.stop();
+  await worker.ready;
+  return worker;
 }
