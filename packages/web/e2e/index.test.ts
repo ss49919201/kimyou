@@ -1,18 +1,16 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Unstable_DevWorker } from "wrangler";
-import { unstable_dev } from "wrangler";
+import { runWorker, stopWorker } from "./helper/worker";
 
 describe("E2E Snapshot test", () => {
   let worker: Unstable_DevWorker;
 
   beforeAll(async () => {
-    worker = await unstable_dev("./src/index.tsx", {
-      experimental: { disableExperimentalWarning: true },
-    });
+    worker = await runWorker();
   });
 
   afterAll(async () => {
-    await worker.stop();
+    await stopWorker(worker);
   });
 
   it.each([{ route: "/" }, { route: "/homyos/generate" }])(
