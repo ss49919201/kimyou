@@ -10,7 +10,8 @@
     ],
     "types": [
       "@cloudflare/workers-types/2023-07-01",
-      "vitest/importMeta"
+      "vitest/importMeta",
+      "@cloudflare/vitest-pool-workers"
     ],
     // JSX elements are converted to _jsx calls
     "jsx": "react-jsx",

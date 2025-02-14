@@ -1,7 +1,27 @@
-import { defineConfig } from "vitest/config";
+import {
+  defineWorkersConfig,
+  readD1Migrations,
+} from "@cloudflare/vitest-pool-workers/config";
+import { env } from "cloudflare:test";
 
-export default defineConfig({
-  test: {
-    includeSource: ["src/**/*.{js,ts}"],
-  },
+export default defineWorkersConfig(async () => {
+  const migrations = await readD1Migrations(
+    "./src/infrastructure/db/d1/migrations"
+  );
+
+  return {
+    test: {
+      includeSource: ["./src/**/*.{js,ts}"],
+      poolOptions: {
+        workers: {
+          wrangler: { configPath: "./wrangler.e2e.json" },
+          miniflare: {
+            bindings: {
+              D1_MIGRATIONS: migrations,
+            } satisfies Pick<typeof env, "D1_MIGRATIONS">,
+          },
+        },
+      },
+    },
+  };
 });
