@@ -4,9 +4,9 @@
     "web": "pnpm -F \"web\""
   },
   "engines": {
-    "pnpm": "10.3.0"
+    "pnpm": "10.4.0"
   },
-  "packageManager": "pnpm@10.3.0",
+  "packageManager": "pnpm@10.4.0",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "22.13.4",
