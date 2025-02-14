@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import Index from "./pages";
 import GenerateHomyo from "./pages/homyos/generate";
 import { drizzle } from "drizzle-orm/d1";
 import { insertMonto } from "./infrastructure/db/d1/monto";
@@ -11,12 +10,11 @@ import { genders, UnsavedMonto } from "./domain/model/monto";
 import { Bindings } from "./handler/bindings";
 import { findManyMontosHandler } from "./handler/findManyMontosHandler";
 import { findOneMontoHandler } from "./handler/findOneMonto";
+import { indexHandler } from "./handler";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-app.get("/", async (c) => {
-  return c.html(<Index />);
-});
+app.get("/", ...indexHandler);
 
 app.get("/montos", ...findManyMontosHandler);
 
