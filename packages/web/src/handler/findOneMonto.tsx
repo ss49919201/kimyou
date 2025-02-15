@@ -4,7 +4,7 @@ import { factory } from "./factory";
 import { findOne } from "../infrastructure/db/d1/monto";
 import { HTTPException } from "hono/http-exception";
 
-export const findOneMontoHandler = factory.createHandlers(async (c) => {
+export const findOneMonto = factory.createHandlers(async (c) => {
   const id = c.req.param("id");
 
   if (!id) {

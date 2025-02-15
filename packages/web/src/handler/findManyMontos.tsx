@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { factory } from "./factory";
 import { findManyWithPage } from "../infrastructure/db/d1/monto";
 
-export const findManyMontosHandler = factory.createHandlers(
+export const findManyMontos = factory.createHandlers(
   vValidator(
     "query",
     v.object({
