@@ -18,7 +18,7 @@ export type Dependency = {
   insertMonto: (unsavedMonto: UnsavedMonto) => Promise<void>;
 };
 
-export async function insertMontos(
+export async function insertManyMontos(
   input: Input,
   dep: Dependency
 ): Promise<void> {
