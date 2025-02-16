@@ -1,4 +1,5 @@
 import { createUnsavedMonto, UnsavedMonto } from "../domain/model/monto";
+import { InvalidParameterError } from "./error/invalidPrameter";
 
 export type Input = {
   wetRun: boolean;
@@ -22,7 +23,16 @@ export async function insertManyMontos(
   input: Input,
   dep: Dependency
 ): Promise<void> {
-  const unsavedMontos = input.montos.map(createUnsavedMonto);
+  const unsavedMontos = input.montos.map((inputMonto) => {
+    const unsavedMontoOrError = createUnsavedMonto(inputMonto);
+    if (unsavedMontoOrError instanceof Error) {
+      throw new InvalidParameterError(
+        "Invalid insert many montos parameter",
+        unsavedMontoOrError.message
+      );
+    }
+    return unsavedMontoOrError;
+  });
 
   // TODO: improve error message...
   if (input.wetRun) {
