@@ -3,10 +3,19 @@ import * as v from "valibot";
 export const genders = ["MAN", "WOMEN"] as const;
 export type Gender = (typeof genders)[number];
 
+// 固定電話
 // 国内プレフィックス「0」市外局番+市内局番「合計5桁」加入者番号「4桁」
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
-const phoneNumberRegex = v.regex(
+const landlinePhoneNumberRegex = v.regex(
   /^0[0-9]{5}[0-9]{4}$/,
+  "invalid phone nubmer format"
+);
+
+// 携帯電話
+// 「070」「080」「090」のいずれかから始まる「11桁」の番号
+// https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
+const mobilePhoneNumberRegex = v.regex(
+  /^0[789]0[0-9]{8}$/,
   "invalid phone nubmer format"
 );
 
@@ -22,11 +31,18 @@ const validatedMonto = v.object({
     v.trim(),
     v.minLength(1, "invalid last name length")
   ),
-  phoneNumber: v.pipe(
-    v.string("invalid phone number type"),
-    v.trim(),
-    phoneNumberRegex
-  ),
+  phoneNumber: v.union([
+    v.pipe(
+      v.string("invalid phone number type"),
+      v.trim(),
+      landlinePhoneNumberRegex
+    ),
+    v.pipe(
+      v.string("invalid phone number type"),
+      v.trim(),
+      mobilePhoneNumberRegex
+    ),
+  ]),
   address: v.pipe(
     v.string("invalid address type"),
     v.trim(),
