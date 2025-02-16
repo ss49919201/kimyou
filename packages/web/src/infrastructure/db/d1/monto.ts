@@ -9,10 +9,10 @@ type FindManyWithPageResponse = {
   totalCount: number;
   values: {
     id: string;
-    homyo: string;
+    homyo?: string;
     firstName: string;
     lastName: string;
-    ingou: string;
+    ingou?: string;
     dateOfDeath?: Date;
     nextNenki?: Date;
     address: string;
@@ -46,10 +46,10 @@ export async function findManyWithPage(
     totalCount: results.length,
     values: results.map((result) => ({
       id: result.montos.id,
-      homyo: result.buddhist_profiles?.homyo ?? "",
+      homyo: result.buddhist_profiles?.homyo ?? undefined,
       firstName: result.montos.firstName,
       lastName: result.montos.lastName,
-      ingou: result.buddhist_profiles?.ingou ?? "",
+      ingou: result.buddhist_profiles?.ingou ?? undefined,
       dateOfDeath: result.montos.dateOfDeath
         ? new Date(result.montos.dateOfDeath)
         : undefined,
@@ -65,10 +65,10 @@ export async function findManyWithPage(
 
 type FindOneResponse = {
   id: string;
-  homyo: string;
+  homyo?: string;
   firstName: string;
   lastName: string;
-  ingou: string;
+  ingou?: string;
   dateOfDeath?: Date;
   nextNenki?: Date;
   address: string;
@@ -98,10 +98,10 @@ export async function findOne(
 
   return {
     id: result.montos.id,
-    homyo: result.buddhist_profiles?.homyo || "",
+    homyo: result.buddhist_profiles?.homyo ?? undefined,
     firstName: result.montos.firstName,
     lastName: result.montos.lastName,
-    ingou: result.buddhist_profiles?.ingou ?? "",
+    ingou: result.buddhist_profiles?.ingou ?? undefined,
     dateOfDeath: result.montos.dateOfDeath
       ? new Date(result.montos.dateOfDeath)
       : undefined,

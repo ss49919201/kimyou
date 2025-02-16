@@ -2,10 +2,10 @@ import { format } from "date-fns";
 
 type Monto = {
   id: string;
-  homyo: string;
+  homyo?: string;
   firstName: string;
   lastName: string;
-  ingou: string;
+  ingou?: string;
   dateOfDeath?: Date;
   address: string;
   nextNenki?: Date;
@@ -35,9 +35,9 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">住所</div>
       <div className="text-xl mb-4">{monto.address}</div>
       <div className="text-xl mb-4 font-bold">法名</div>
-      <div className="text-xl mb-4">{monto.homyo}</div>
+      <div className="text-xl mb-4">{monto.homyo || "-"}</div>
       <div className="text-xl mb-4 font-bold">院号</div>
-      <div className="text-xl mb-4">{monto.ingou}</div>
+      <div className="text-xl mb-4">{monto.ingou || "-"}</div>
       <div className="text-xl mb-4 font-bold">命日</div>
       <div className="text-xl mb-4">
         {monto.dateOfDeath ? format(monto.dateOfDeath, "yyyy年MM月dd日") : "-"}
