@@ -3,7 +3,7 @@ import { Bindings } from "./handler/bindings";
 import { findManyMontos } from "./handler/findManyMontos";
 import { findOneMonto } from "./handler/findOneMonto";
 import { indexHandler } from "./handler";
-import { insertManyMontos } from "./handler/insertManyMontos";
+import { insertManyMontos } from "./handler/api/insertManyMontos";
 import { generateHomyo } from "./handler/generateHomyo";
 import { InvalidParameterError } from "./usecase/error/invalidPrameter";
 import { HTTPException } from "hono/http-exception";
