@@ -42,7 +42,7 @@ app.get("/montos", ...findManyMontos);
 
 app.get("/montos/:id", ...findOneMonto);
 
-app.post("/montos/_batch", ...insertManyMontos);
+app.post("/api/montos/_batch", ...insertManyMontos);
 
 app.get("/homyos/generate", ...generateHomyo);
 
