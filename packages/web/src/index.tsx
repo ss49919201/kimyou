@@ -11,44 +11,49 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import { newMonto } from "./handler/newMonto";
 import { insertMonto } from "./handler/insertMonto";
 
-const app = new Hono<{ Bindings: Bindings }>();
+const montoApp = new Hono<{ Bindings: Bindings }>()
+  .get("/", ...findManyMontos)
+  .post("/", ...insertMonto)
+  .get("/new", ...newMonto)
+  .get("/:id", ...findOneMonto);
 
-app.onError((err, c) => {
-  console.error(err);
-
-  if (err instanceof HTTPException) {
-    throw err;
-  }
-
-  if (err instanceof InvalidParameterError) {
-    return c.text("Bad request", 400);
-  }
-
-  return c.text("Internal server error", 500);
-});
-
-app.use(
-  jsxRenderer(({ children }) => (
-    <html>
-      <head>
-        <script src="https://cdn.tailwindcss.com"></script>
-      </head>
-      <body>{children}</body>
-    </html>
-  ))
+const homyoApp = new Hono<{ Bindings: Bindings }>().get(
+  "/generate",
+  ...generateHomyo
 );
 
-app.get("/", ...indexHandler);
+const apiApp = new Hono<{ Bindings: Bindings }>().post(
+  "/montos/_batch",
+  ...insertManyMontos
+);
 
-app.get("/montos", ...findManyMontos);
+const app = new Hono<{ Bindings: Bindings }>()
+  .onError((err, c) => {
+    console.error(err);
 
-app.get("/montos/new", ...newMonto);
-app.post("/montos", ...insertMonto);
+    if (err instanceof HTTPException) {
+      throw err;
+    }
 
-app.get("/montos/:id", ...findOneMonto);
+    if (err instanceof InvalidParameterError) {
+      return c.text("Bad request", 400);
+    }
 
-app.post("/api/montos/_batch", ...insertManyMontos);
-
-app.get("/homyos/generate", ...generateHomyo);
+    return c.text("Internal server error", 500);
+  })
+  .use(
+    jsxRenderer(({ children }) => (
+      <html>
+        <head>
+          <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body>{children}</body>
+      </html>
+    ))
+  )
+  .get("/", ...indexHandler)
+  .route("/montos", montoApp)
+  .route("/homyos", homyoApp)
+  .route("/api", apiApp);
 
 export default app;
