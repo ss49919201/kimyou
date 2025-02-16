@@ -14,7 +14,7 @@ export const montos = sqliteTable("montos", {
     .references(() => genders.id),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
-  phoneNumber: text("phone_number"),
+  phoneNumber: text("phone_number").notNull(),
   address: text("address").notNull(),
   dateOfDeath: text("date_of_death"), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
