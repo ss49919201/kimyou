@@ -1,5 +1,3 @@
-import { Layout } from "../../../layout";
-
 const GenerateHomyo = ({ homyos }: { homyos: string[] }) => (
   <div className="max-w-6xl mx-auto p-6">
     <div className="mb-2">
@@ -56,10 +54,6 @@ const GenerateHomyo = ({ homyos }: { homyos: string[] }) => (
   </div>
 );
 
-const Content = (props: { homyos: string[] }) => (
-  <Layout>
-    <GenerateHomyo {...props} />
-  </Layout>
-);
+const Content = (props: { homyos: string[] }) => <GenerateHomyo {...props} />;
 
 export default Content;

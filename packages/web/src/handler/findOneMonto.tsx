@@ -19,5 +19,5 @@ export const findOneMonto = factory.createHandlers(async (c) => {
     return c.text("Not found");
   }
 
-  return c.html(<Monto {...result} />);
+  return c.render(<Monto {...result} />);
 });

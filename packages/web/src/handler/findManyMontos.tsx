@@ -18,6 +18,6 @@ export const findManyMontos = factory.createHandlers(
     const db = drizzle(c.env.D1, { logger: true });
     const result = await findManyWithPage(db, { lastName });
 
-    return c.html(<Montos {...result} />);
+    return c.render(<Montos {...result} />);
   }
 );

@@ -19,6 +19,6 @@ export const generateHomyo = factory.createHandlers(
       homyos.push(...(await generateHomyos(c.env.ENV, c.env.AI, firstName)));
     }
 
-    return c.html(<GenerateHomyo {...{ homyos }} />);
+    return c.render(<GenerateHomyo {...{ homyos }} />);
   }
 );

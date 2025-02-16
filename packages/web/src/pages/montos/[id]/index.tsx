@@ -1,15 +1,16 @@
 import { format } from "date-fns";
-import { Layout } from "../../../layout";
 
 type Monto = {
   id: string;
-  homyo: string;
+  homyo?: string;
   firstName: string;
   lastName: string;
-  ingou: string;
+  ingou?: string;
   dateOfDeath?: Date;
   address: string;
   nextNenki?: Date;
+  phoneNumber: string;
+  gender: string;
 };
 
 const Monto = (monto: Monto) => (
@@ -28,15 +29,15 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">名</div>
       <div className="text-xl mb-4">{monto.firstName}</div>
       <div className="text-xl mb-4 font-bold">電話番号</div>
-      <div className="text-xl mb-4">ダミーの電話番号</div>
+      <div className="text-xl mb-4">{monto.phoneNumber}</div>
       <div className="text-xl mb-4 font-bold">性別</div>
-      <div className="text-xl mb-4">ダミーの性別</div>
+      <div className="text-xl mb-4">{monto.gender}</div>
       <div className="text-xl mb-4 font-bold">住所</div>
       <div className="text-xl mb-4">{monto.address}</div>
       <div className="text-xl mb-4 font-bold">法名</div>
-      <div className="text-xl mb-4">{monto.homyo}</div>
+      <div className="text-xl mb-4">{monto.homyo || "-"}</div>
       <div className="text-xl mb-4 font-bold">院号</div>
-      <div className="text-xl mb-4">{monto.ingou}</div>
+      <div className="text-xl mb-4">{monto.ingou || "-"}</div>
       <div className="text-xl mb-4 font-bold">命日</div>
       <div className="text-xl mb-4">
         {monto.dateOfDeath ? format(monto.dateOfDeath, "yyyy年MM月dd日") : "-"}
@@ -49,10 +50,6 @@ const Monto = (monto: Monto) => (
   </div>
 );
 
-const Content = (props: Monto) => (
-  <Layout>
-    <Monto {...props} />
-  </Layout>
-);
+const Content = (props: Monto) => <Monto {...props} />;
 
 export default Content;
