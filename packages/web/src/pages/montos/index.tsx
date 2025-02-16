@@ -5,7 +5,7 @@ type MontosWithPage = {
     firstName: string;
     lastName: string;
     address: string;
-    phoneNumber?: string;
+    phoneNumber: string;
     gender: string;
   }[];
 };
@@ -74,9 +74,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
               <tr key={id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">{lastName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {phoneNumber || "-"}
-                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{phoneNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{gender}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{address}</td>
                 <td className="px-6 py-4 whitespace-nowrap">

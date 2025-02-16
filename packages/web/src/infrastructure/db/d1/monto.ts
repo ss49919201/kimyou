@@ -16,7 +16,7 @@ type FindManyWithPageResponse = {
     dateOfDeath?: Date;
     nextNenki?: Date;
     address: string;
-    phoneNumber?: string;
+    phoneNumber: string;
     gender: string;
   }[];
 };
@@ -53,12 +53,12 @@ export async function findManyWithPage(
       dateOfDeath: result.montos.dateOfDeath
         ? new Date(result.montos.dateOfDeath)
         : undefined,
-      address: result.montos.address ?? "",
+      address: result.montos.address,
       nextNenki: result.montos.dateOfDeath
         ? calcNextNenki(new Date(result.montos.dateOfDeath))
         : undefined,
       gender: result.genders.type,
-      phoneNumber: result.montos.phoneNumber ?? undefined,
+      phoneNumber: result.montos.phoneNumber,
     })),
   };
 }
@@ -105,7 +105,7 @@ export async function findOne(
     dateOfDeath: result.montos.dateOfDeath
       ? new Date(result.montos.dateOfDeath)
       : undefined,
-    address: result.montos.address ?? "",
+    address: result.montos.address,
     nextNenki: result.montos.dateOfDeath
       ? calcNextNenki(new Date(result.montos.dateOfDeath))
       : undefined,
