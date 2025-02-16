@@ -5,8 +5,24 @@ import { findOneMonto } from "./handler/findOneMonto";
 import { indexHandler } from "./handler";
 import { insertManyMontos } from "./handler/insertManyMontos";
 import { generateHomyo } from "./handler/generateHomyo";
+import { InvalidParameterError } from "./usecase/error/invalidPrameter";
+import { HTTPException } from "hono/http-exception";
 
 const app = new Hono<{ Bindings: Bindings }>();
+
+app.onError((err, c) => {
+  console.error(err);
+
+  if (err instanceof HTTPException) {
+    throw err;
+  }
+
+  if (err instanceof InvalidParameterError) {
+    return c.text("Bad request", 400);
+  }
+
+  return c.text("Internal server error", 500);
+});
 
 app.get("/", ...indexHandler);
 
