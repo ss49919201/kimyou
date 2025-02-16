@@ -1,5 +1,3 @@
-import { Layout } from "../../layout";
-
 type MontosWithPage = {
   totalCount: number;
   values: {
@@ -98,10 +96,6 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
   </div>
 );
 
-const Content = (props: MontosWithPage) => (
-  <Layout>
-    <MontoList {...props} />
-  </Layout>
-);
+const Content = (props: MontosWithPage) => <MontoList {...props} />;
 
 export default Content;
