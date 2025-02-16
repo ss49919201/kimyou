@@ -31,7 +31,7 @@ app.use(
       <head>
         <script src="https://cdn.tailwindcss.com"></script>
       </head>
-      <body>${children}</body>
+      <body>{children}</body>
     </html>
   ))
 );
