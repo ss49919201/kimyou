@@ -10,6 +10,7 @@ import { HTTPException } from "hono/http-exception";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { newMonto } from "./handler/newMonto";
 import { insertMonto } from "./handler/insertMonto";
+import { csrf } from "hono/csrf";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...findManyMontos)
@@ -51,6 +52,7 @@ const app = new Hono<{ Bindings: Bindings }>()
       </html>
     ))
   )
+  .use(csrf())
   .get("/", ...indexHandler)
   .route("/montos", montoApp)
   .route("/homyos", homyoApp)
