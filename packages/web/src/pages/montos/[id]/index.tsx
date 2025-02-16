@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { Layout } from "../../../layout";
 
 type Monto = {
   id: string;
@@ -49,10 +48,6 @@ const Monto = (monto: Monto) => (
   </div>
 );
 
-const Content = (props: Monto) => (
-  <Layout>
-    <Monto {...props} />
-  </Layout>
-);
+const Content = (props: Monto) => <Monto {...props} />;
 
 export default Content;
