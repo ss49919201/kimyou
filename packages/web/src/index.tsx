@@ -8,6 +8,8 @@ import { generateHomyo } from "./handler/generateHomyo";
 import { InvalidParameterError } from "./usecase/error/invalidPrameter";
 import { HTTPException } from "hono/http-exception";
 import { jsxRenderer } from "hono/jsx-renderer";
+import { newMonto } from "./handler/newMonto";
+import { insertMonto } from "./handler/insertMonto";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -39,6 +41,9 @@ app.use(
 app.get("/", ...indexHandler);
 
 app.get("/montos", ...findManyMontos);
+
+app.get("/montos/new", ...newMonto);
+app.post("/montos", ...insertMonto);
 
 app.get("/montos/:id", ...findOneMonto);
 
