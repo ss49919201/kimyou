@@ -7,6 +7,7 @@ import { insertManyMontos } from "./handler/insertManyMontos";
 import { generateHomyo } from "./handler/generateHomyo";
 import { InvalidParameterError } from "./usecase/error/invalidPrameter";
 import { HTTPException } from "hono/http-exception";
+import { jsxRenderer } from "hono/jsx-renderer";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -23,6 +24,17 @@ app.onError((err, c) => {
 
   return c.text("Internal server error", 500);
 });
+
+app.use(
+  jsxRenderer(({ children }) => (
+    <html>
+      <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body>${children}</body>
+    </html>
+  ))
+);
 
 app.get("/", ...indexHandler);
 
