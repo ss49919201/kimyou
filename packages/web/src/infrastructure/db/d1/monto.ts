@@ -72,6 +72,8 @@ type FindOneResponse = {
   dateOfDeath?: Date;
   nextNenki?: Date;
   address: string;
+  phoneNumber: string;
+  gender: string;
 };
 
 type FindOneParameters = {
@@ -85,6 +87,7 @@ export async function findOne(
   const result = await db
     .select()
     .from(montos)
+    .innerJoin(genders, eq(montos.genderId, genders.id))
     .leftJoin(buddhistProfiles, eq(montos.id, buddhistProfiles.montoId))
     .where(eq(montos.id, params.id))
     .get();
@@ -106,6 +109,8 @@ export async function findOne(
     nextNenki: result.montos.dateOfDeath
       ? calcNextNenki(new Date(result.montos.dateOfDeath))
       : undefined,
+    phoneNumber: result.montos.phoneNumber,
+    gender: result.genders.type,
   };
 }
 

@@ -9,6 +9,8 @@ type Monto = {
   dateOfDeath?: Date;
   address: string;
   nextNenki?: Date;
+  phoneNumber: string;
+  gender: string;
 };
 
 const Monto = (monto: Monto) => (
@@ -27,9 +29,9 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">名</div>
       <div className="text-xl mb-4">{monto.firstName}</div>
       <div className="text-xl mb-4 font-bold">電話番号</div>
-      <div className="text-xl mb-4">ダミーの電話番号</div>
+      <div className="text-xl mb-4">{monto.phoneNumber}</div>
       <div className="text-xl mb-4 font-bold">性別</div>
-      <div className="text-xl mb-4">ダミーの性別</div>
+      <div className="text-xl mb-4">{monto.gender}</div>
       <div className="text-xl mb-4 font-bold">住所</div>
       <div className="text-xl mb-4">{monto.address}</div>
       <div className="text-xl mb-4 font-bold">法名</div>
