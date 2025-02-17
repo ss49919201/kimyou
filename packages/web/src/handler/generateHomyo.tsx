@@ -3,13 +3,15 @@ import { factory } from "./factory";
 import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
 import { generateHomyos } from "../infrastructure/ai/workersAi/homyo";
+import { vValidatorHook } from "./vValidator";
 
 export const generateHomyo = factory.createHandlers(
   vValidator(
     "query",
     v.object({
       "first-name": v.optional(v.string()),
-    })
+    }),
+    vValidatorHook()
   ),
   async (c) => {
     const { "first-name": firstName } = c.req.valid("query");

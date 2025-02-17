@@ -4,13 +4,15 @@ import * as v from "valibot";
 import { drizzle } from "drizzle-orm/d1";
 import { factory } from "./factory";
 import { findManyWithPage } from "../infrastructure/db/d1/monto";
+import { vValidatorHook } from "./vValidator";
 
 export const findManyMontos = factory.createHandlers(
   vValidator(
     "query",
     v.object({
       "last-name": v.optional(v.string()),
-    })
+    }),
+    vValidatorHook()
   ),
   async (c) => {
     const { "last-name": lastName } = c.req.valid("query");

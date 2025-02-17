@@ -1,11 +1,11 @@
 import { vValidator } from "@hono/valibot-validator";
 import { drizzle } from "drizzle-orm/d1";
-import { HTTPException } from "hono/http-exception";
 import * as v from "valibot";
 import { genders, UnsavedMonto } from "../domain/model/monto";
 import { insertMonto as insertMontoD1 } from "../infrastructure/db/d1/monto";
 import { insertManyMontos as insertManyMontosUsecase } from "../usecase/insertManyMontos";
 import { factory } from "./factory";
+import { vValidatorHook } from "./vValidator";
 
 export const insertMonto = factory.createHandlers(
   vValidator(
@@ -42,15 +42,7 @@ export const insertMonto = factory.createHandlers(
         v.string(),
       ]),
     }),
-    (result) => {
-      if (!result.success) {
-        const valiErr = new v.ValiError(result.issues);
-        throw new HTTPException(400, {
-          message: valiErr.message,
-          cause: valiErr.cause,
-        });
-      }
-    }
+    vValidatorHook()
   ),
   async (c) => {
     const params = c.req.valid("form");

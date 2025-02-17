@@ -5,6 +5,7 @@ import { genders, UnsavedMonto } from "../../domain/model/monto";
 import { insertMonto } from "../../infrastructure/db/d1/monto";
 import { insertManyMontos as insertManyMontosUsecase } from "../../usecase/insertManyMontos";
 import { factory } from "../factory";
+import { vValidatorHook } from "../vValidator";
 
 export const insertManyMontos = factory.createHandlers(
   vValidator(
@@ -23,7 +24,8 @@ export const insertManyMontos = factory.createHandlers(
           ingou: v.optional(v.string()),
         })
       ),
-    })
+    }),
+    vValidatorHook()
   ),
   async (c) => {
     const params = c.req.valid("json");
