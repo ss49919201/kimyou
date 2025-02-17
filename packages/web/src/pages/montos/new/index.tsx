@@ -46,10 +46,13 @@ const newMonto = () => {
           </div>
           <div className="mb-4">
             <lavel className="mb-2 block text-xl font-bold">電話番号</lavel>
+            <p className="mb-2 text-sm">※半角数字で入力してください。</p>
+            <p className="mb-2 text-sm">※「-」の入力は不要です。</p>
             <input
               name="phone-number"
               required
               className="px-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="0[0-9]{5}[0-9]{4}|0[789]0[0-9]{8}"
             />
           </div>
           <div className="mb-4">
@@ -62,16 +65,20 @@ const newMonto = () => {
           </div>
           <div className="mb-4">
             <lavel className="mb-2 block text-xl font-bold">法名</lavel>
+            <p className="mb-2 text-sm">※釋〇〇の形式で入力してください。</p>
             <input
               name="homyo"
               className="px-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="釋[\u4E00-\u9FFF]{2}"
             />
           </div>
           <div className="mb-4">
             <lavel className="mb-2 block text-xl font-bold">院号</lavel>
+            <p className="mb-2 text-sm">※〇〇院の形式で入力してください。</p>
             <input
               name="ingou"
               className="px-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="[\u4E00-\u9FFF]{2}院"
             />
           </div>
         </div>
