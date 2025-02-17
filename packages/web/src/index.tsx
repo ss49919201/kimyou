@@ -23,21 +23,44 @@ const homyoApp = new Hono<{ Bindings: Bindings }>().get(
   ...generateHomyo
 );
 
-const apiApp = new Hono<{ Bindings: Bindings }>().post(
-  "/montos/_batch",
-  ...insertManyMontos
-);
-
-const app = new Hono<{ Bindings: Bindings }>()
+const apiApp = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
     console.error(err);
 
-    if (err instanceof HTTPException) {
-      throw err;
+    if (
+      err instanceof InvalidParameterError ||
+      (err instanceof HTTPException && err.status === 400)
+    ) {
+      return c.json(
+        {
+          msg: "Bad request",
+          detail: err.message,
+        },
+        400
+      );
     }
+
+    return c.json(
+      {
+        msg: "Internal server error",
+      },
+      500
+    );
+  })
+  .post("/montos/_batch", ...insertManyMontos);
+
+const app = new Hono<{ Bindings: Bindings }>()
+  // TODO: error page
+  .onError((err, c) => {
+    console.error(err);
 
     if (err instanceof InvalidParameterError) {
       return c.text("Bad request", 400);
+    }
+
+    if (err instanceof HTTPException) {
+      const { statusText } = err.getResponse();
+      return c.text(statusText, err.status);
     }
 
     return c.text("Internal server error", 500);
