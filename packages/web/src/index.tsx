@@ -11,6 +11,7 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import { newMonto } from "./handler/newMonto";
 import { insertMonto } from "./handler/insertMonto";
 import { csrf } from "hono/csrf";
+import Error500 from "./pages/500";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...findManyMontos)
@@ -50,20 +51,11 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
   .post("/montos/_batch", ...insertManyMontos);
 
 const app = new Hono<{ Bindings: Bindings }>()
-  // TODO: error page
   .onError((err, c) => {
     console.error(err);
 
-    if (err instanceof InvalidParameterError) {
-      return c.text("Bad request", 400);
-    }
-
-    if (err instanceof HTTPException) {
-      const { statusText } = err.getResponse();
-      return c.text(statusText, err.status);
-    }
-
-    return c.text("Internal server error", 500);
+    // Error generated after passing html input validation are not expected.
+    return c.render(<Error500 />);
   })
   .use(
     jsxRenderer(({ children }) => (
