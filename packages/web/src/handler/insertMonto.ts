@@ -44,7 +44,11 @@ export const insertMonto = factory.createHandlers(
     }),
     (result) => {
       if (!result.success) {
-        throw new HTTPException(400);
+        const valiErr = new v.ValiError(result.issues);
+        throw new HTTPException(400, {
+          message: valiErr.message,
+          cause: valiErr.cause,
+        });
       }
     }
   ),
