@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kimyou-tail",
+  "main": "src/index.ts",
+  "observability": {
+    "enabled": true
+  },
+  "compatibility_date": "2025-02-06",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENV": "test"
+  }
+}
