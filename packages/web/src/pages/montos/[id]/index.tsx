@@ -40,11 +40,13 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4">{monto.ingou || "-"}</div>
       <div className="text-xl mb-4 font-bold">命日</div>
       <div className="text-xl mb-4">
-        {monto.dateOfDeath ? format(monto.dateOfDeath, "yyyy年MM月dd日") : "-"}
+        {monto.dateOfDeath
+          ? format(monto.dateOfDeath, "yyyy年M月d日H時m分")
+          : "-"}
       </div>
       <div className="text-xl mb-2 font-bold">次回年忌</div>
       <div className="text-xl mb-2">
-        {monto.nextNenki ? format(monto.nextNenki, "yyyy年MM月dd日") : "-"}
+        {monto.nextNenki ? format(monto.nextNenki, "yyyy年M月d日") : "-"}
       </div>
     </div>
   </div>

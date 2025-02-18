@@ -52,7 +52,7 @@ async function insertDummy(d1: D1Database): Promise<void> {
     genderId: genderMale.id,
     firstName: "テスト名",
     lastName: "テスト性",
-    dateOfDeath: null,
+    dateOfDeath: new Date("2025-01-31T15:00:00Z").toISOString(),
     createdDate,
     updatedDate,
     address: "テスト住所",
