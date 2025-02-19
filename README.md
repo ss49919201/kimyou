@@ -1,6 +1,7 @@
 # kimyou
 
 kmyou is temple management software.
+kimyou is an application hosted by a Cloudflare workers.
 
 # For Developer
 
