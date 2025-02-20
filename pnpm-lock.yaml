@@ -69,7 +69,7 @@ importers:
         version: 3.20250214.0
       wrangler:
         specifier: ^3.101.0
-        version: 3.109.1(@cloudflare/workers-types@4.20250214.0)
+        version: 3.109.2(@cloudflare/workers-types@4.20250214.0)
 
 packages:
 
@@ -3895,12 +3895,12 @@ packages:
       '@cloudflare/workers-types':
         optional: true
 
-  wrangler@3.109.1:
-    resolution: {integrity: sha512-1Jx+nZ6eCXPQ2rsGdrV6Qy/LGvhpqudeuTl4AYHl9P8Zugp44Uzxnj5w11qF4v/rv1dOZoA5TydSt9xMFfhpKg==}
+  wrangler@3.109.2:
+    resolution: {integrity: sha512-CT8izugPBth5o1o4gLNcQrDkHKSX2Jthy6gkyhaWiy2pFrx+536NMn/atWilLA1t1uhIgddEI5BXDNudIkPPHA==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20250204.0
+      '@cloudflare/workers-types': ^4.20250214.0
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
@@ -8298,17 +8298,17 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  wrangler@3.109.1(@cloudflare/workers-types@4.20250214.0):
+  wrangler@3.109.2(@cloudflare/workers-types@4.20250214.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
       esbuild: 0.17.19
-      miniflare: 3.20250204.1
+      miniflare: 3.20250214.0
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.1
-      workerd: 1.20250204.0
+      workerd: 1.20250214.0
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250214.0
       fsevents: 2.3.3
