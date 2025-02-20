@@ -1,6 +1,7 @@
 # kimyou
 
 kmyou is temple management software.
+kimyou is an application hosted by a Cloudflare workers.
 
 # For Developer
 
@@ -20,6 +21,8 @@ pnpm add ${new_pkg} -w -E
 
 # Add new package to specific workspace
 pnpm ${workspace} add ${new_pkg} -E
+# or
+cd packages/${workspace} && pnpm add ${new_pkg} -E
 ```
 
 ## Authentication
