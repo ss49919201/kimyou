@@ -50,10 +50,10 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: 0.5.2
-        version: 0.5.2(hono@4.7.1)(valibot@1.0.0-beta.14(typescript@5.7.3))
+        version: 0.5.2(hono@4.7.2)(valibot@1.0.0-beta.14(typescript@5.7.3))
       hono:
         specifier: ^4.6.20
-        version: 4.7.1
+        version: 4.7.2
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: 0.6.15
@@ -2459,8 +2459,8 @@ packages:
     resolution: {integrity: sha512-ycURW7oUxE2sNiPVw1HVEFsW+ecOpJ5zaj7eC0RlwhibhRBod20muUN8qu/gzx956YrLolVvs1MTXwKgC2rVEg==}
     engines: {node: '>=0.10.0'}
 
-  hono@4.7.1:
-    resolution: {integrity: sha512-V3eWoPkBxoNgFCkSc5Y5rpLF6YoQQx1pkYO4qrF6YfOw8RZbujUNlJLZCxh0z9gZct70+je2Ih7Zrdpv21hP9w==}
+  hono@4.7.2:
+    resolution: {integrity: sha512-8V5XxoOF6SI12jkHkzX/6aLBMU5GEF5g387EjVSQipS0DlxWgWGSMeEayY3CRBjtTUQYwLHx9JYouWqKzy2Vng==}
     engines: {node: '>=16.9.0'}
 
   http-errors@2.0.0:
@@ -4447,9 +4447,9 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@hono/valibot-validator@0.5.2(hono@4.7.1)(valibot@1.0.0-beta.14(typescript@5.7.3))':
+  '@hono/valibot-validator@0.5.2(hono@4.7.2)(valibot@1.0.0-beta.14(typescript@5.7.3))':
     dependencies:
-      hono: 4.7.1
+      hono: 4.7.2
       valibot: 1.0.0-beta.14(typescript@5.7.3)
 
   '@humanfs/core@0.19.1': {}
@@ -6507,7 +6507,7 @@ snapshots:
       os-homedir: 1.0.2
       os-tmpdir: 1.0.2
 
-  hono@4.7.1: {}
+  hono@4.7.2: {}
 
   http-errors@2.0.0:
     dependencies:
