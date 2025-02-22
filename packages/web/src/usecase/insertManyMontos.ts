@@ -17,12 +17,21 @@ export type Input = {
 
 export type Dependency = {
   insertMonto: (unsavedMonto: UnsavedMonto) => Promise<void>;
+  maxNumberOfInsertableMontos: () => number;
 };
 
 export async function insertManyMontos(
   input: Input,
   dep: Dependency
 ): Promise<void> {
+  const maxNumberOfInsertableMontos = dep.maxNumberOfInsertableMontos();
+  if (input.montos.length > maxNumberOfInsertableMontos) {
+    throw new InvalidParameterError(
+      "Invalid montos size",
+      `Montos size must be less than or equal to ${maxNumberOfInsertableMontos}, input montos size is ${input.montos.length}`
+    );
+  }
+
   const unsavedMontos = input.montos.map((inputMonto) => {
     const unsavedMontoOrError = createUnsavedMonto(inputMonto);
     if (unsavedMontoOrError instanceof Error) {

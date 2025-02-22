@@ -157,3 +157,10 @@ export async function insertMonto(
     updatedDate,
   });
 }
+
+export function maxNumberOfInsertableMontos(): number {
+  // 1monto = 約100B
+  // Cloudflare Workers のメモリ制限が128MB
+  // 上記のインフラ制約を満たしている且つ、1回の入力として常識的な数を最大数とする
+  return 1000;
+}
