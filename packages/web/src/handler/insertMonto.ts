@@ -2,7 +2,10 @@ import { vValidator } from "@hono/valibot-validator";
 import { drizzle } from "drizzle-orm/d1";
 import * as v from "valibot";
 import { genders, UnsavedMonto } from "../domain/model/monto";
-import { insertMonto as insertMontoD1 } from "../infrastructure/db/d1/monto";
+import {
+  insertMonto as insertMontoD1,
+  maxNumberOfInsertableMontos,
+} from "../infrastructure/db/d1/monto";
 import { insertManyMontos as insertManyMontosUsecase } from "../usecase/insertManyMontos";
 import { factory } from "./factory";
 import { vValidatorHook } from "./vValidator";
@@ -64,6 +67,7 @@ export const insertMonto = factory.createHandlers(
       {
         insertMonto: (unsavedMonto: UnsavedMonto) =>
           insertMontoD1(db, unsavedMonto),
+        maxNumberOfInsertableMontos,
       }
     );
 
