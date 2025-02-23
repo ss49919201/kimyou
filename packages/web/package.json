@@ -2,6 +2,7 @@
   "name": "web",
   "type": "module",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "TZ=Asia/Tokyo vitest run",
