@@ -18,7 +18,7 @@
     "hono": "^4.6.20"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "0.6.15",
+    "@cloudflare/vitest-pool-workers": "0.7.2",
     "@cloudflare/workers-types": "^4.20250109.0",
     "@eslint/js": "^9.20.0",
     "miniflare": "3.20250214.0",
