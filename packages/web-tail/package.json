@@ -1,0 +1,14 @@
+{
+  "name": "web-tail",
+  "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "vitest run",
+    "test:update": "vitest -u run",
+    "dev": "wrangler dev --config=./wrangler.local.json",
+    "deploy": "wrangler deploy --minify"
+  },
+  "devDependencies": {
+    "wrangler": "^3.101.0"
+  }
+}
