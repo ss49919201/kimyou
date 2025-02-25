@@ -18,8 +18,8 @@ importers:
         specifier: ^0.39.2
         version: 0.39.3(@cloudflare/workers-types@4.20250214.0)
       valibot:
-        specifier: 1.0.0-beta.14
-        version: 1.0.0-beta.14(typescript@5.7.3)
+        specifier: 1.0.0-rc.2
+        version: 1.0.0-rc.2(typescript@5.7.3)
     devDependencies:
       '@types/node':
         specifier: 22.13.4
@@ -50,7 +50,7 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: 0.5.2
-        version: 0.5.2(hono@4.7.2)(valibot@1.0.0-beta.14(typescript@5.7.3))
+        version: 0.5.2(hono@4.7.2)(valibot@1.0.0-rc.2(typescript@5.7.3))
       hono:
         specifier: ^4.6.20
         version: 4.7.2
@@ -3703,8 +3703,8 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
 
-  valibot@1.0.0-beta.14:
-    resolution: {integrity: sha512-tLyV2rE5QL6U29MFy3xt4AqMrn+/HErcp2ZThASnQvPMwfSozjV1uBGKIGiegtZIGjinJqn0SlBdannf18wENA==}
+  valibot@1.0.0-rc.2:
+    resolution: {integrity: sha512-Tnnp7dydpihvoUbJiaxuYfsCAgAFKuFMex7PTaI25XSjRWkU70DmJPlAO1W6sF1/WUx4RNWyM2hdmBSMIUSZFA==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -4447,10 +4447,10 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@hono/valibot-validator@0.5.2(hono@4.7.2)(valibot@1.0.0-beta.14(typescript@5.7.3))':
+  '@hono/valibot-validator@0.5.2(hono@4.7.2)(valibot@1.0.0-rc.2(typescript@5.7.3))':
     dependencies:
       hono: 4.7.2
-      valibot: 1.0.0-beta.14(typescript@5.7.3)
+      valibot: 1.0.0-rc.2(typescript@5.7.3)
 
   '@humanfs/core@0.19.1': {}
 
@@ -7898,7 +7898,7 @@ snapshots:
 
   uuid@3.4.0: {}
 
-  valibot@1.0.0-beta.14(typescript@5.7.3):
+  valibot@1.0.0-rc.2(typescript@5.7.3):
     optionalDependencies:
       typescript: 5.7.3
 
