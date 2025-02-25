@@ -5,15 +5,18 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  lint:
+  lint-web:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: application
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - run: pnpm install
       - run: pnpm web lint
 
-  test:
+  test-web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +24,7 @@ jobs:
       - run: pnpm install
       - run: pnpm web test
 
-  typecheck:
+  typecheck-web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
