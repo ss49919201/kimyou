@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./application/package.json
       - run: pnpm install
       - run: pnpm web lint
 
@@ -24,6 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./application/package.json
       - run: pnpm install
       - run: pnpm web test
 
@@ -35,5 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./application/package.json
       - run: pnpm install
       - run: pnpm web typecheck
