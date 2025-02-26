@@ -12,6 +12,7 @@ import { newMonto } from "./handler/newMonto";
 import { newMontoAction } from "./handler/newMontoAction";
 import { csrf } from "hono/csrf";
 import Error500 from "./pages/500";
+import Error404 from "./pages/404";
 import { editMonto } from "./handler/editMonto";
 import { editMontoAction } from "./handler/editMontoAction";
 
@@ -57,6 +58,10 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
 const app = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
     console.error(err);
+
+    if (err instanceof HTTPException && err.status === 404) {
+      return c.render(<Error404 />);
+    }
 
     // Error generated after passing html input validation are not expected.
     return c.render(<Error500 />);

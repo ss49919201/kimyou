@@ -1,7 +1,7 @@
 import { createExecutionContext, env } from "cloudflare:test";
 import { beforeAll, describe, expect, it } from "vitest";
 import worker from "../src";
-import { dummyMontoId, setupD1 } from "./helper/d1";
+import { dummyInvalidMontoId, dummyMontoId, setupD1 } from "./helper/d1";
 
 describe("E2E Snapshot test", () => {
   beforeAll(async () => {
@@ -13,6 +13,7 @@ describe("E2E Snapshot test", () => {
     { route: "/homyos/generate" },
     { route: "/montos" },
     { route: `/montos/${dummyMontoId}` },
+    { route: `/montos/${dummyInvalidMontoId}` },
     { route: "/montos/new" },
   ])("route `$route`", async ({ route }) => {
     const req = new Request(`http://localhost:8787${route}`);
