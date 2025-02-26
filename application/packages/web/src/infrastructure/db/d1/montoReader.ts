@@ -1,7 +1,7 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { Gender, isGender } from "../../../domain/model/monto";
-import { calcNextNenki } from "../../../domain/service/nenki";
+import { nextNenki } from "../../../domain/service/nenki";
 import { buddhistProfiles, genders, montos } from "./schema";
 
 type FindManyMontosWithPageResponse = {
@@ -59,7 +59,7 @@ export async function findManyMontosWithPage(
           : undefined,
         address: result.montos.address,
         nextNenki: result.montos.dateOfDeath
-          ? calcNextNenki(new Date(result.montos.dateOfDeath))
+          ? nextNenki(new Date(result.montos.dateOfDeath))
           : undefined,
         gender: result.genders.type,
         phoneNumber: result.montos.phoneNumber,
@@ -116,7 +116,7 @@ export async function findOneMonto(
       : undefined,
     address: result.montos.address,
     nextNenki: result.montos.dateOfDeath
-      ? calcNextNenki(new Date(result.montos.dateOfDeath))
+      ? nextNenki(new Date(result.montos.dateOfDeath))
       : undefined,
     phoneNumber: result.montos.phoneNumber,
     gender: result.genders.type,
