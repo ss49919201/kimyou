@@ -65,28 +65,29 @@ export async function insertMonto(
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
   const montoId = randomUUID();
-  await db.insert(montos).values({
-    id: montoId,
-    genderId: selectedGender.id,
-    firstName: unsavedMonto.firstName,
-    lastName: unsavedMonto.lastName,
-    address: unsavedMonto.address,
-    phoneNumber: unsavedMonto.phoneNumber,
-    dateOfDeath: unsavedMonto.dateOfDeath
-      ? unsavedMonto.dateOfDeath.toISOString()
-      : null,
-    createdDate,
-    updatedDate,
-  });
-
-  await db.insert(buddhistProfiles).values({
-    id: crypto.randomUUID(),
-    montoId,
-    homyo: unsavedMonto.homyo,
-    ingou: unsavedMonto.ingou,
-    createdDate,
-    updatedDate,
-  });
+  await db.batch([
+    db.insert(montos).values({
+      id: montoId,
+      genderId: selectedGender.id,
+      firstName: unsavedMonto.firstName,
+      lastName: unsavedMonto.lastName,
+      address: unsavedMonto.address,
+      phoneNumber: unsavedMonto.phoneNumber,
+      dateOfDeath: unsavedMonto.dateOfDeath
+        ? unsavedMonto.dateOfDeath.toISOString()
+        : null,
+      createdDate,
+      updatedDate,
+    }),
+    db.insert(buddhistProfiles).values({
+      id: crypto.randomUUID(),
+      montoId,
+      homyo: unsavedMonto.homyo,
+      ingou: unsavedMonto.ingou,
+      createdDate,
+      updatedDate,
+    }),
+  ]);
 }
 
 export function maxNumberOfInsertableMontos(): number {
@@ -113,6 +114,8 @@ export async function updateMonto(
   const createdDate = new Date().toISOString();
   const updatedDate = new Date().toISOString();
 
+  console.log(savedMonto);
+
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
   await db.batch([
@@ -134,8 +137,8 @@ export async function updateMonto(
     db
       .update(buddhistProfiles)
       .set({
-        homyo: savedMonto.homyo,
-        ingou: savedMonto.ingou,
+        homyo: savedMonto.homyo ?? null,
+        ingou: savedMonto.ingou ?? null,
         createdDate,
         updatedDate,
       })
