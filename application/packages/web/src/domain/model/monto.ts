@@ -20,7 +20,7 @@ const mobilePhoneNumberRegex = v.regex(
 );
 
 const validatedMonto = v.object({
-  gender: v.picklist(genders),
+  gender: v.pipe(v.string(), v.picklist(genders)),
   firstName: v.pipe(
     v.string("invalid firstName type"),
     v.trim(),
@@ -118,4 +118,60 @@ export const savedMonto = v.intersect([
   }),
 ]);
 
-export type SavedHomyo = v.InferOutput<typeof savedMonto>;
+export function createSavedMonto(
+  input: v.InferInput<typeof savedMonto>
+): SavedMonto | Error {
+  try {
+    return v.parse(savedMonto, input);
+  } catch (e: unknown) {
+    return new Error(
+      `Failed to parse input based on saved monto schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+}
+
+const updateSavedMontoInput = v.omit(validatedMonto, [
+  "gender",
+  "firstName",
+  "lastName",
+]);
+
+export function updateSavedMonto(
+  currentMonto: v.InferOutput<typeof savedMonto>,
+  input: v.InferInput<typeof updateSavedMontoInput>
+): SavedMonto | Error {
+  let parsedInput: v.InferOutput<typeof updateSavedMontoInput>;
+  try {
+    parsedInput = v.parse(updateSavedMontoInput, input);
+  } catch (e: unknown) {
+    return new Error(
+      `Failed to parse input based on update saved monto input schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+
+  let updatedMonto: v.InferOutput<typeof savedMonto>;
+  try {
+    updatedMonto = v.parse(savedMonto, {
+      ...currentMonto,
+      phoneNumber: parsedInput.phoneNumber,
+      address: parsedInput.address,
+      dateOfDeath: parsedInput.dateOfDeath,
+      homyo: parsedInput.homyo,
+      ingou: parsedInput.ingou,
+    });
+  } catch (e: unknown) {
+    return new Error(
+      `Failed to parse input based on saved monto schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+
+  return updatedMonto;
+}
+
+export type SavedMonto = v.InferOutput<typeof savedMonto>;
