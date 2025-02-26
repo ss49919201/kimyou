@@ -8,8 +8,9 @@ export const monto = factory.createHandlers(async (c) => {
   const id = c.req.param("id");
 
   if (!id) {
-    console.error("path parameter id is not found in monto handler");
-    throw new HTTPException(500);
+    throw new HTTPException(500, {
+      message: "path parameter id is not found in monto handler",
+    });
   }
 
   const db = drizzle(c.env.D1, { logger: true });
