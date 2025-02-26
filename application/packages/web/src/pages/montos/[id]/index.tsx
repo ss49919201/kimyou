@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Gender } from "../../../domain/model/monto";
 
 type Monto = {
   id: string;
@@ -10,7 +11,7 @@ type Monto = {
   address: string;
   nextNenki?: Date;
   phoneNumber: string;
-  gender: string;
+  gender: Gender;
 };
 
 const Monto = (monto: Monto) => (
@@ -39,7 +40,9 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">電話番号</div>
       <div className="text-xl mb-4">{monto.phoneNumber}</div>
       <div className="text-xl mb-4 font-bold">性別</div>
-      <div className="text-xl mb-4">{monto.gender}</div>
+      <div className="text-xl mb-4">
+        {monto.gender === "MALE" ? "男" : "女"}
+      </div>
       <div className="text-xl mb-4 font-bold">住所</div>
       <div className="text-xl mb-4">{monto.address}</div>
       <div className="text-xl mb-4 font-bold">法名</div>

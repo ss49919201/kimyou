@@ -1,5 +1,6 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
+import { Gender, isGender } from "../../../domain/model/monto";
 import { calcNextNenki } from "../../../domain/service/nenki";
 import { buddhistProfiles, genders, montos } from "./schema";
 
@@ -15,7 +16,7 @@ type FindManyMontosWithPageResponse = {
     nextNenki?: Date;
     address: string;
     phoneNumber: string;
-    gender: string;
+    gender: Gender;
   }[];
 };
 
@@ -42,22 +43,28 @@ export async function findManyMontosWithPage(
 
   return {
     totalCount: results.length,
-    values: results.map((result) => ({
-      id: result.montos.id,
-      homyo: result.buddhist_profiles?.homyo ?? undefined,
-      firstName: result.montos.firstName,
-      lastName: result.montos.lastName,
-      ingou: result.buddhist_profiles?.ingou ?? undefined,
-      dateOfDeath: result.montos.dateOfDeath
-        ? new Date(result.montos.dateOfDeath)
-        : undefined,
-      address: result.montos.address,
-      nextNenki: result.montos.dateOfDeath
-        ? calcNextNenki(new Date(result.montos.dateOfDeath))
-        : undefined,
-      gender: result.genders.type,
-      phoneNumber: result.montos.phoneNumber,
-    })),
+    values: results.map((result) => {
+      if (!isGender(result.genders.type)) {
+        throw new Error(`Invalid gender type: ${result.genders.type}`);
+      }
+
+      return {
+        id: result.montos.id,
+        homyo: result.buddhist_profiles?.homyo ?? undefined,
+        firstName: result.montos.firstName,
+        lastName: result.montos.lastName,
+        ingou: result.buddhist_profiles?.ingou ?? undefined,
+        dateOfDeath: result.montos.dateOfDeath
+          ? new Date(result.montos.dateOfDeath)
+          : undefined,
+        address: result.montos.address,
+        nextNenki: result.montos.dateOfDeath
+          ? calcNextNenki(new Date(result.montos.dateOfDeath))
+          : undefined,
+        gender: result.genders.type,
+        phoneNumber: result.montos.phoneNumber,
+      };
+    }),
   };
 }
 
@@ -71,7 +78,7 @@ type FindOneMontoResponse = {
   nextNenki?: Date;
   address: string;
   phoneNumber: string;
-  gender: string;
+  gender: Gender;
 };
 
 type FindOneMontoParameters = {
@@ -92,6 +99,10 @@ export async function findOneMonto(
 
   if (!result) {
     return undefined;
+  }
+
+  if (!isGender(result.genders.type)) {
+    throw new Error(`Invalid gender type: ${result.genders.type}`);
   }
 
   return {

@@ -1,3 +1,5 @@
+import { Gender } from "../../domain/model/monto";
+
 type MontosWithPage = {
   totalCount: number;
   values: {
@@ -6,7 +8,7 @@ type MontosWithPage = {
     lastName: string;
     address: string;
     phoneNumber: string;
-    gender: string;
+    gender: Gender;
   }[];
 };
 
@@ -81,7 +83,9 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
                 <td className="px-6 py-4">{lastName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{phoneNumber}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{gender}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {gender === "MALE" ? "男" : "女"}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{address}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <a
