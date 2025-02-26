@@ -1,7 +1,7 @@
 import Monto from "../pages/montos/[id]";
 import { drizzle } from "drizzle-orm/d1";
 import { factory } from "./factory";
-import { findOne } from "../infrastructure/db/d1/monto";
+import { findOneMonto } from "../infrastructure/db/d1/montoReader";
 import { HTTPException } from "hono/http-exception";
 
 export const monto = factory.createHandlers(async (c) => {
@@ -13,7 +13,7 @@ export const monto = factory.createHandlers(async (c) => {
   }
 
   const db = drizzle(c.env.D1, { logger: true });
-  const result = await findOne(db, { id });
+  const result = await findOneMonto(db, { id });
 
   if (!result) {
     return c.text("Not found");
