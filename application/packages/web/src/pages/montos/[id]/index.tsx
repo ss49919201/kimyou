@@ -23,6 +23,14 @@ const Monto = (monto: Monto) => (
     <div className="items-center mb-6">
       <h1 className="text-2xl font-bold">門徒詳細</h1>
     </div>
+    <div className="flex justify-between mb-6">
+      <a
+        href={`/montos/${monto.id}/edit`}
+        className="flex justify-center items-center text-white end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        編集
+      </a>
+    </div>
     <div className="items-center p-6 rounded-lg shadow">
       <div className="text-xl mb-4 font-bold">性</div>
       <div className="text-xl mb-4">{monto.lastName}</div>
