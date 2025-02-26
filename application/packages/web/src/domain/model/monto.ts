@@ -93,7 +93,11 @@ if (import.meta.vitest) {
   });
 }
 
-export const unsavedMonto = validatedMonto;
+export const unsavedMonto = v.pipe(
+  validatedMonto,
+  v.brand("unsavedMonto"),
+  v.readonly()
+);
 
 export function createUnsavedMonto(
   input: v.InferInput<typeof unsavedMonto>
@@ -111,12 +115,16 @@ export function createUnsavedMonto(
 
 export type UnsavedMonto = v.InferOutput<typeof unsavedMonto>;
 
-export const savedMonto = v.intersect([
-  unsavedMonto,
-  v.object({
-    id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
-  }),
-]);
+export const savedMonto = v.pipe(
+  v.intersect([
+    validatedMonto,
+    v.object({
+      id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
+    }),
+  ]),
+  v.brand("savedMonto"),
+  v.readonly()
+);
 
 export function createSavedMonto(
   input: v.InferInput<typeof savedMonto>
