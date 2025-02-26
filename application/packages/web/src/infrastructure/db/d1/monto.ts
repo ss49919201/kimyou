@@ -52,7 +52,7 @@ export async function insertMonto(
   const selectedGender = await db
     .select({ id: genders.id })
     .from(genders)
-    .where(eq(genders.type, unsavedMonto.gender === "MALE" ? "男" : "女"))
+    .where(eq(genders.type, unsavedMonto.gender))
     .get();
 
   if (!selectedGender) {
