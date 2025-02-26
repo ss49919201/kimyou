@@ -118,7 +118,7 @@ export const unsavedMonto = v.pipe(
   v.readonly()
 );
 
-export function createUnsavedMonto(
+export function newUnsavedMonto(
   input: v.InferInput<typeof unsavedMonto>
 ): UnsavedMonto | Error {
   try {
