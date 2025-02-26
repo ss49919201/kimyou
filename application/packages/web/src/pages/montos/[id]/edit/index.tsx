@@ -14,7 +14,6 @@ type Monto = {
 };
 
 const editMonto = (monto: Monto) => {
-  console.log(format(monto.dateOfDeath!, "yyyy-MM-ddTHH:mm"));
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-2">
