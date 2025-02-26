@@ -1,10 +1,14 @@
-import { createUnsavedMonto, UnsavedMonto } from "../domain/model/monto";
+import {
+  createUnsavedMonto,
+  Gender,
+  UnsavedMonto,
+} from "../domain/model/monto";
 import { InvalidParameterError } from "./error/invalidPrameter";
 
 export type Input = {
   wetRun: boolean;
   montos: {
-    gender: "MAN" | "WOMEN";
+    gender: Gender;
     firstName: string;
     lastName: string;
     phoneNumber: string;

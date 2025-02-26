@@ -1,10 +1,25 @@
 import * as v from "valibot";
 
-export const genders = ["MAN", "WOMEN"] as const;
+export const genders = ["MALE", "FEMALE"] as const;
 export const gender = v.picklist(genders);
 export type Gender = (typeof genders)[number];
 export function isGender(s: string): s is Gender {
   return genders.includes(s as Gender);
+}
+
+// in-source test suites
+if (import.meta.vitest) {
+  const { it, expect, describe } = import.meta.vitest;
+  describe("isGender", () => {
+    it("Should return true", () => {
+      expect(isGender("MALE")).toBe(true);
+      expect(isGender("FEMALE")).toBe(true);
+    });
+    it("Should return false", () => {
+      expect(isGender("MAN")).toBe(false);
+      expect(isGender("WOMAN")).toBe(false);
+    });
+  });
 }
 
 // 固定電話

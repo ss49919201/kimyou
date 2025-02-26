@@ -30,10 +30,10 @@ const newMonto = () => {
           <div className="mb-4">
             <p className="mb-2 block text-xl font-bold">性別</p>
             <label className="mb-2 block text-xl font-bold">
-              <input type="radio" name="gender" value="MAN" checked /> 男
+              <input type="radio" name="gender" value="MALE" checked /> 男
             </label>
             <label className="mb-2 block text-xl font-bold">
-              <input type="radio" name="gender" value="WOMAN" /> 女
+              <input type="radio" name="gender" value="FEMALE" /> 女
             </label>
           </div>
           <div className="mb-4">
