@@ -9,7 +9,7 @@ const newMonto = () => {
       <div className="items-center mb-6">
         <h1 className="text-2xl font-bold">門徒新規登録</h1>
       </div>
-      <form method="post" action="/montos">
+      <form method="post" action="/montos/new">
         <div className="items-center p-6 mb-6 rounded-lg shadow">
           <div className="mb-4">
             <lavel className="mb-2 block text-xl font-bold">性</lavel>

@@ -15,7 +15,7 @@ import Error500 from "./pages/500";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...findManyMontos)
-  .post("/", ...insertMonto)
+  .post("/new", ...insertMonto)
   .get("/new", ...newMonto)
   .get("/:id", ...findOneMonto);
 
