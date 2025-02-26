@@ -16,6 +16,7 @@ export async function setupD1(
 }
 
 export const dummyMontoId = "a06f0af8-bcdf-4f2d-9208-7408a90a294c";
+export const dummyInvalidMontoId = "dummyInvalidMontoId";
 
 async function insertDummy(d1: D1Database): Promise<void> {
   const db = drizzle(d1);
