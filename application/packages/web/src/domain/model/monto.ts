@@ -1,7 +1,26 @@
 import * as v from "valibot";
 
-export const genders = ["MAN", "WOMEN"] as const;
+export const genders = ["MALE", "FEMALE"] as const;
+export const gender = v.picklist(genders);
 export type Gender = (typeof genders)[number];
+export function isGender(s: string): s is Gender {
+  return genders.includes(s as Gender);
+}
+
+// in-source test suites
+if (import.meta.vitest) {
+  const { it, expect, describe } = import.meta.vitest;
+  describe("isGender", () => {
+    it("Should return true", () => {
+      expect(isGender("MALE")).toBe(true);
+      expect(isGender("FEMALE")).toBe(true);
+    });
+    it("Should return false", () => {
+      expect(isGender("MAN")).toBe(false);
+      expect(isGender("WOMAN")).toBe(false);
+    });
+  });
+}
 
 // 固定電話
 // 国内プレフィックス「0」市外局番+市内局番「合計5桁」加入者番号「4桁」
@@ -20,7 +39,7 @@ const mobilePhoneNumberRegex = v.regex(
 );
 
 const validatedMonto = v.object({
-  gender: v.pipe(v.string(), v.picklist(genders)),
+  gender: v.pipe(v.string(), gender),
   firstName: v.pipe(
     v.string("invalid firstName type"),
     v.trim(),
@@ -93,7 +112,11 @@ if (import.meta.vitest) {
   });
 }
 
-export const unsavedMonto = validatedMonto;
+export const unsavedMonto = v.pipe(
+  validatedMonto,
+  v.brand("unsavedMonto"),
+  v.readonly()
+);
 
 export function createUnsavedMonto(
   input: v.InferInput<typeof unsavedMonto>
@@ -111,12 +134,16 @@ export function createUnsavedMonto(
 
 export type UnsavedMonto = v.InferOutput<typeof unsavedMonto>;
 
-export const savedMonto = v.intersect([
-  unsavedMonto,
-  v.object({
-    id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
-  }),
-]);
+export const savedMonto = v.pipe(
+  v.intersect([
+    validatedMonto,
+    v.object({
+      id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
+    }),
+  ]),
+  v.brand("savedMonto"),
+  v.readonly()
+);
 
 export function createSavedMonto(
   input: v.InferInput<typeof savedMonto>
