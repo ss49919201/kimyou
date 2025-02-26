@@ -8,7 +8,15 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "5.1.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.88.0"
+    }
   }
+}
+
+variable "aws_region" {
+  type = string
 }
 
 variable "cloudflare_account_id" {
@@ -31,9 +39,13 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+provider "aws" {
+  region = var.aws_region
+}
+
 resource "cloudflare_zero_trust_access_service_token" "this" {
   account_id = var.cloudflare_account_id
-  name = "kimyou-api-auth"
+  name       = "kimyou-api-auth"
 }
 
 
@@ -65,4 +77,16 @@ resource "cloudflare_zero_trust_access_application" "this" {
       }]
     },
   ]
+}
+
+resource "aws_ssm_parameter" "service_auth_token_client_id" {
+  name  = "/kimyou/cloudflare_service_auth_token_client_id"
+  type  = "String"
+  value = cloudflare_zero_trust_access_service_token.this.client_id
+}
+
+resource "aws_ssm_parameter" "service_auth_token_client_secret" {
+  name  = "/kimyou/cloudflare_service_auth_token_client_secret"
+  type  = "SecureString"
+  value = cloudflare_zero_trust_access_service_token.this.client_secret
 }
