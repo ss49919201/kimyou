@@ -6,7 +6,7 @@ import { factory } from "./factory";
 import { findManyWithPage } from "../infrastructure/db/d1/monto";
 import { vValidatorHook } from "./vValidator";
 
-export const findManyMontos = factory.createHandlers(
+export const montos = factory.createHandlers(
   vValidator(
     "query",
     v.object({

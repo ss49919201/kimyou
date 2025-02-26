@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { Bindings } from "./handler/bindings";
-import { findManyMontos } from "./handler/findManyMontos";
+import { montos } from "./handler/montos";
 import { monto } from "./handler/monto";
 import { indexHandler } from "./handler";
 import { insertManyMontos } from "./handler/api/insertManyMontos";
@@ -16,7 +16,7 @@ import { editMonto } from "./handler/editMonto";
 import { editMontoAction } from "./handler/editMontoAction";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
-  .get("/", ...findManyMontos)
+  .get("/", ...montos)
   .post("/new", ...newMontoAction)
   .get("/new", ...newMonto)
   .post("/:id/edit", ...editMontoAction)
