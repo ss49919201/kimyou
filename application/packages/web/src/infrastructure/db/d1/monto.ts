@@ -113,6 +113,8 @@ export async function updateMonto(
   const createdDate = new Date().toISOString();
   const updatedDate = new Date().toISOString();
 
+  console.log(savedMonto);
+
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
   await db.batch([
@@ -134,8 +136,8 @@ export async function updateMonto(
     db
       .update(buddhistProfiles)
       .set({
-        homyo: savedMonto.homyo,
-        ingou: savedMonto.ingou,
+        homyo: savedMonto.homyo ?? null,
+        ingou: savedMonto.ingou ?? null,
         createdDate,
         updatedDate,
       })
