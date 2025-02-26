@@ -2,6 +2,10 @@ import * as v from "valibot";
 
 export const genders = ["MAN", "WOMEN"] as const;
 export const gender = v.picklist(genders);
+export type Gender = (typeof genders)[number];
+export function isGender(s: string): s is Gender {
+  return genders.includes(s as Gender);
+}
 
 // 固定電話
 // 国内プレフィックス「0」市外局番+市内局番「合計5桁」加入者番号「4桁」
