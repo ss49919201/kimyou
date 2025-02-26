@@ -9,6 +9,11 @@ const newMonto = () => {
       <div className="items-center mb-6">
         <h1 className="text-2xl font-bold">門徒新規登録</h1>
       </div>
+      <div className="items-center mb-6">
+        <p className="text-2xl font-bold text-red-900">
+          ※デモ環境のため、新規登録結果は反映されません。
+        </p>
+      </div>
       <form method="post" action="/montos/new">
         <div className="items-center p-6 mb-6 rounded-lg shadow">
           <div className="mb-4">

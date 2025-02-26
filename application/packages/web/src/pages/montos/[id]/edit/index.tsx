@@ -24,6 +24,9 @@ const editMonto = (monto: Monto) => {
       <div className="items-center mb-6">
         <h1 className="text-2xl font-bold">門徒編集</h1>
       </div>
+      <p className="text-2xl font-bold text-red-900">
+        ※デモ環境のため、編集結果は反映されません。
+      </p>
       <form method="post" action={`/montos/${monto.id}/edit`}>
         <div className="items-center p-6 mb-6 rounded-lg shadow">
           <div className="text-xl mb-4 font-bold">性</div>
