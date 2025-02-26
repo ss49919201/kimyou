@@ -12,11 +12,15 @@ import { newMonto } from "./handler/newMonto";
 import { insertMonto } from "./handler/insertMonto";
 import { csrf } from "hono/csrf";
 import Error500 from "./pages/500";
+import { editMonto } from "./handler/editMonto";
+import { editMontoAction } from "./handler/editMontoAction";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...findManyMontos)
   .post("/new", ...insertMonto)
   .get("/new", ...newMonto)
+  .post("/:id/edit", ...editMontoAction)
+  .get("/:id/edit", ...editMonto)
   .get("/:id", ...findOneMonto);
 
 const homyoApp = new Hono<{ Bindings: Bindings }>().get(
