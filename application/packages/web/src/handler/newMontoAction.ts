@@ -10,7 +10,7 @@ import { insertManyMontos as insertManyMontosUsecase } from "../usecase/insertMa
 import { factory } from "./factory";
 import { vValidatorHook } from "./vValidator";
 
-export const insertMonto = factory.createHandlers(
+export const newMontoAction = factory.createHandlers(
   vValidator(
     "form",
     v.object({

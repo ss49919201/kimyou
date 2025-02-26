@@ -9,7 +9,7 @@ import { InvalidParameterError } from "./usecase/error/invalidPrameter";
 import { HTTPException } from "hono/http-exception";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { newMonto } from "./handler/newMonto";
-import { insertMonto } from "./handler/insertMonto";
+import { newMontoAction } from "./handler/newMontoAction";
 import { csrf } from "hono/csrf";
 import Error500 from "./pages/500";
 import { editMonto } from "./handler/editMonto";
@@ -17,7 +17,7 @@ import { editMontoAction } from "./handler/editMontoAction";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...findManyMontos)
-  .post("/new", ...insertMonto)
+  .post("/new", ...newMontoAction)
   .get("/new", ...newMonto)
   .post("/:id/edit", ...editMontoAction)
   .get("/:id/edit", ...editMonto)
