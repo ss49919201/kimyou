@@ -17,7 +17,9 @@ export const editMonto = factory.createHandlers(async (c) => {
   const result = await findOneMonto(db, { id });
 
   if (!result) {
-    return c.text("Not found");
+    throw new HTTPException(404, {
+      message: "Monto not found",
+    });
   }
 
   return c.render(<EditMonto {...result} />);
