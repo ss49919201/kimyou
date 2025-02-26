@@ -1,12 +1,6 @@
 import { vValidator } from "@hono/valibot-validator";
-import { drizzle } from "drizzle-orm/d1";
 import * as v from "valibot";
-import { genders, UnsavedMonto } from "../../domain/model/monto";
-import {
-  insertMonto,
-  maxNumberOfInsertableMontos,
-} from "../../infrastructure/db/d1/monto";
-import { insertManyMontos as insertManyMontosUsecase } from "../../usecase/insertManyMontos";
+import { genders } from "../../domain/model/monto";
 import { factory } from "../factory";
 import { vValidatorHook } from "../vValidator";
 
@@ -31,15 +25,6 @@ export const insertManyMontos = factory.createHandlers(
     vValidatorHook()
   ),
   async (c) => {
-    const params = c.req.valid("json");
-    const db = drizzle(c.env.D1, { logger: true });
-
-    await insertManyMontosUsecase(params, {
-      insertMonto: (unsavedMonto: UnsavedMonto) =>
-        insertMonto(db, unsavedMonto),
-      maxNumberOfInsertableMontos,
-    });
-
     return c.json({ msg: "ok" });
   }
 );
