@@ -1,5 +1,6 @@
 import { eq, like } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
+import { isGender } from "../../../domain/model/monto";
 import { calcNextNenki } from "../../../domain/service/nenki";
 import { buddhistProfiles, genders, montos } from "./schema";
 
@@ -39,6 +40,12 @@ export async function findManyMontosWithPage(
   }
 
   const results = await query;
+
+  results.forEach(({ genders }) => {
+    if (!isGender(genders.type)) {
+      throw new Error(`Invalid gender type: ${genders.type}`);
+    }
+  });
 
   return {
     totalCount: results.length,
@@ -92,6 +99,10 @@ export async function findOneMonto(
 
   if (!result) {
     return undefined;
+  }
+
+  if (!isGender(result.genders.type)) {
+    throw new Error(`Invalid gender type: ${result.genders.type}`);
   }
 
   return {
