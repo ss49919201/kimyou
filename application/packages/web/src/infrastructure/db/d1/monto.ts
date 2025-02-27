@@ -2,11 +2,12 @@ import { eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { randomUUID } from "node:crypto";
 import {
+  isMontoStatus,
   newSavedMonto,
   SavedMonto,
   UnsavedMonto,
 } from "../../../domain/model/monto";
-import { buddhistProfiles, genders, montos } from "./schema";
+import { buddhistProfiles, genders, montos, removeMontos } from "./schema";
 
 export async function findOneForUpdate(
   db: DrizzleD1Database,
@@ -24,18 +25,52 @@ export async function findOneForUpdate(
     return undefined;
   }
 
+  const {
+    montos: selectedMonto,
+    buddhist_profiles: selectedBudhistProfile,
+    genders: selectedGender,
+  } = result;
+
+  if (!isMontoStatus(selectedMonto.status)) {
+    throw new Error(`Invalid monto status: ${selectedMonto.status}`);
+  }
+
+  const findOneInactiveReason = async () => {
+    const result = await db
+      .select({ reason: removeMontos.reason })
+      .from(removeMontos)
+      .where(eq(removeMontos.montoId, selectedMonto.id))
+      .orderBy(removeMontos.removedDate)
+      .limit(1)
+      .get();
+
+    if (result === undefined) {
+      throw new Error(
+        `Removed monto event not found: monto id = ${selectedMonto.id}`
+      );
+    }
+
+    return result.reason;
+  };
+
   const savedMontoOrError = newSavedMonto({
-    id: result.montos.id,
-    homyo: result.buddhist_profiles?.homyo ?? undefined,
-    firstName: result.montos.firstName,
-    lastName: result.montos.lastName,
-    ingou: result.buddhist_profiles?.ingou ?? undefined,
-    dateOfDeath: result.montos.dateOfDeath
-      ? new Date(result.montos.dateOfDeath)
+    id: selectedMonto.id,
+    homyo: selectedBudhistProfile?.homyo ?? undefined,
+    firstName: selectedMonto.firstName,
+    lastName: selectedMonto.lastName,
+    ingou: selectedBudhistProfile?.ingou ?? undefined,
+    dateOfDeath: selectedMonto.dateOfDeath
+      ? new Date(selectedMonto.dateOfDeath)
       : undefined,
-    address: result.montos.address,
-    phoneNumber: result.montos.phoneNumber,
-    gender: result.genders.type,
+    address: selectedMonto.address,
+    phoneNumber: selectedMonto.phoneNumber,
+    gender: selectedGender.type,
+    ...(selectedMonto.status === "ACTIVE"
+      ? { status: selectedMonto.status }
+      : {
+          status: selectedMonto.status,
+          reason: await findOneInactiveReason(),
+        }),
   });
 
   if (savedMontoOrError instanceof Error) {

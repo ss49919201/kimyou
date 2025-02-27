@@ -7,6 +7,12 @@ export function isGender(s: string): s is Gender {
   return genders.includes(s as Gender);
 }
 
+export const montoStatus = ["ACTIVE", "INACTIVE"] as const;
+export type MontoStatus = (typeof montoStatus)[number];
+export function isMontoStatus(s: string): s is MontoStatus {
+  return montoStatus.includes(s as MontoStatus);
+}
+
 // in-source test suites
 if (import.meta.vitest) {
   const { it, expect, describe } = import.meta.vitest;
@@ -18,6 +24,17 @@ if (import.meta.vitest) {
     it("Should return false", () => {
       expect(isGender("MAN")).toBe(false);
       expect(isGender("WOMAN")).toBe(false);
+    });
+  });
+
+  describe("isMontoStatus", () => {
+    it("Should return true", () => {
+      expect(isMontoStatus("ACTIVE")).toBe(true);
+      expect(isMontoStatus("INACTIVE")).toBe(true);
+    });
+    it("Should return false", () => {
+      expect(isMontoStatus("MAN")).toBe(false);
+      expect(isMontoStatus("WOMAN")).toBe(false);
     });
   });
 }
@@ -134,16 +151,44 @@ export function newUnsavedMonto(
 
 export type UnsavedMonto = v.InferOutput<typeof unsavedMontoSchema>;
 
-export const savedMontoSchema = v.pipe(
+const montoIdSchema = v.pipe(
+  v.string(),
+  v.uuid("The UUID is badly formatted.")
+);
+
+export const activeMontoSchema = v.pipe(
   v.intersect([
     validatedMontoSchema,
     v.object({
-      id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
+      id: montoIdSchema,
+      status: v.literal("ACTIVE"),
     }),
   ]),
-  v.brand("savedMonto"),
+  v.brand("activeMonto"),
   v.readonly()
 );
+
+export const inactiveMontoSchema = v.pipe(
+  v.intersect([
+    validatedMontoSchema,
+    v.object({
+      id: montoIdSchema,
+      status: v.literal("INACTIVE"),
+      reason: v.pipe(
+        v.string(),
+        v.trim(),
+        v.minLength(1, "invalid reason length")
+      ),
+    }),
+  ]),
+  v.brand("inactiveMonto"),
+  v.readonly()
+);
+
+export const savedMontoSchema = v.union([
+  activeMontoSchema,
+  inactiveMontoSchema,
+]);
 
 export function newSavedMonto(
   input: v.InferInput<typeof savedMontoSchema>
