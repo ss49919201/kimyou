@@ -63,7 +63,6 @@ const app = new Hono<{ Bindings: Bindings }>()
       return c.render(<Error404 />);
     }
 
-    // Error generated after passing html input validation are not expected.
     return c.render(<Error500 />);
   })
   .use(
