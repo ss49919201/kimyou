@@ -146,10 +146,7 @@ export async function updateMonto(
     throw new Error("gender not found");
   }
 
-  const createdDate = new Date().toISOString();
   const updatedDate = new Date().toISOString();
-
-  console.log(savedMonto);
 
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
@@ -165,7 +162,6 @@ export async function updateMonto(
         dateOfDeath: savedMonto.dateOfDeath
           ? savedMonto.dateOfDeath.toISOString()
           : null,
-        createdDate,
         updatedDate,
       })
       .where(eq(montos.id, savedMonto.id)),
@@ -174,7 +170,6 @@ export async function updateMonto(
       .set({
         homyo: savedMonto.homyo ?? null,
         ingou: savedMonto.ingou ?? null,
-        createdDate,
         updatedDate,
       })
       .where(eq(buddhistProfiles.montoId, savedMonto.id)),
