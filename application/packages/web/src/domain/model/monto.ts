@@ -190,6 +190,8 @@ export const savedMontoSchema = v.union([
   inactiveMontoSchema,
 ]);
 
+export type SavedMonto = v.InferOutput<typeof savedMontoSchema>;
+
 export function newSavedMonto(
   input: v.InferInput<typeof savedMontoSchema>
 ): SavedMonto | Error {
@@ -245,5 +247,3 @@ export function modifiedSavedMonto(
 
   return updatedMonto;
 }
-
-export type SavedMonto = v.InferOutput<typeof savedMontoSchema>;
