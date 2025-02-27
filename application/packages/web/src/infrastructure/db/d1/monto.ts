@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { randomUUID } from "node:crypto";
 import {
-  createSavedMonto,
+  newSavedMonto,
   SavedMonto,
   UnsavedMonto,
 } from "../../../domain/model/monto";
@@ -24,7 +24,7 @@ export async function findOneForUpdate(
     return undefined;
   }
 
-  const savedMontoOrError = createSavedMonto({
+  const savedMontoOrError = newSavedMonto({
     id: result.montos.id,
     homyo: result.buddhist_profiles?.homyo ?? undefined,
     firstName: result.montos.firstName,
