@@ -168,22 +168,28 @@ export const activeMontoSchema = v.pipe(
   v.readonly()
 );
 
+export type ActiveMonto = v.InferOutput<typeof activeMontoSchema>;
+
+const inactiveMontoReasonSchema = v.pipe(
+  v.string(),
+  v.trim(),
+  v.minLength(1, "invalid reason length")
+);
+
 export const inactiveMontoSchema = v.pipe(
   v.intersect([
     validatedMontoSchema,
     v.object({
       id: montoIdSchema,
       status: v.literal("INACTIVE"),
-      reason: v.pipe(
-        v.string(),
-        v.trim(),
-        v.minLength(1, "invalid reason length")
-      ),
+      reason: inactiveMontoReasonSchema,
     }),
   ]),
   v.brand("inactiveMonto"),
   v.readonly()
 );
+
+export type InactiveMonto = v.InferOutput<typeof inactiveMontoSchema>;
 
 export const savedMontoSchema = v.union([
   activeMontoSchema,
@@ -246,4 +252,25 @@ export function modifiedSavedMonto(
   }
 
   return updatedMonto;
+}
+
+export function inactiveSavedMonto(
+  currentMonto: v.InferOutput<typeof activeMontoSchema>,
+  reason: v.InferOutput<typeof inactiveMontoReasonSchema>
+): InactiveMonto | Error {
+  let inactiveMonto: v.InferOutput<typeof inactiveMontoSchema>;
+  try {
+    inactiveMonto = v.parse(inactiveMontoSchema, {
+      ...currentMonto,
+      reason,
+    });
+  } catch (e: unknown) {
+    return new Error(
+      `Failed to parse input based on inactive monto schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+
+  return inactiveMonto;
 }
