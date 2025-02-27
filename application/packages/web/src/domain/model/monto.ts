@@ -145,7 +145,7 @@ export const savedMonto = v.pipe(
   v.readonly()
 );
 
-export function createSavedMonto(
+export function newSavedMonto(
   input: v.InferInput<typeof savedMonto>
 ): SavedMonto | Error {
   try {
@@ -159,19 +159,19 @@ export function createSavedMonto(
   }
 }
 
-const updateSavedMontoInput = v.omit(validatedMonto, [
+const modifiedSavedMontoInput = v.omit(validatedMonto, [
   "gender",
   "firstName",
   "lastName",
 ]);
 
-export function updateSavedMonto(
+export function modifiedSavedMonto(
   currentMonto: v.InferOutput<typeof savedMonto>,
-  input: v.InferInput<typeof updateSavedMontoInput>
+  input: v.InferInput<typeof modifiedSavedMontoInput>
 ): SavedMonto | Error {
-  let parsedInput: v.InferOutput<typeof updateSavedMontoInput>;
+  let parsedInput: v.InferOutput<typeof modifiedSavedMontoInput>;
   try {
-    parsedInput = v.parse(updateSavedMontoInput, input);
+    parsedInput = v.parse(modifiedSavedMontoInput, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on update saved monto input schema: ${

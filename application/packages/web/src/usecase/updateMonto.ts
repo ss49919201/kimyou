@@ -1,4 +1,4 @@
-import { SavedMonto, updateSavedMonto } from "../domain/model/monto";
+import { SavedMonto, modifiedSavedMonto } from "../domain/model/monto";
 import { InvalidParameterError } from "./error/invalidPrameter";
 import { NotFoundError } from "./error/notFound";
 
@@ -25,7 +25,7 @@ export async function updateMonto(
     throw new NotFoundError("monto not found");
   }
 
-  const updatedMontoOrError = updateSavedMonto(monto, {
+  const updatedMontoOrError = modifiedSavedMonto(monto, {
     ...input,
   });
   if (updatedMontoOrError instanceof Error) {
