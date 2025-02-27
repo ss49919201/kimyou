@@ -274,3 +274,22 @@ export function inactiveSavedMonto(
 
   return inactiveMonto;
 }
+
+export function activeSavedMonto(
+  currentMonto: v.InferOutput<typeof inactiveMontoSchema>
+): ActiveMonto | Error {
+  let activeMonto: v.InferOutput<typeof activeMontoSchema>;
+  try {
+    activeMonto = v.parse(activeMontoSchema, {
+      ...currentMonto,
+    });
+  } catch (e: unknown) {
+    return new Error(
+      `Failed to parse input based on inactive monto schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+
+  return activeMonto;
+}
