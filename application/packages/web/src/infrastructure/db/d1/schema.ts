@@ -27,7 +27,7 @@ export const montos = sqliteTable("montos", {
   lastName: text("last_name").notNull(),
   phoneNumber: text("phone_number").notNull(),
   address: text("address").notNull(),
-  status: text("").notNull().default(montoStatus.active), // ACTIVE | INACTIVE
+  status: text("status").notNull().default(montoStatus.active), // ACTIVE | INACTIVE
   dateOfDeath: text("date_of_death"), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
@@ -60,7 +60,6 @@ export const removeMontos = sqliteTable("remove_montos", {
     .unique()
     .references(() => montos.id),
   reason: text().notNull(), // temple_transfer | misregistration | others
-  note: text(),
   removedDate: text("removed_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
 
@@ -70,6 +69,5 @@ export const restoreMontos = sqliteTable("restore_montos", {
     .notNull()
     .unique()
     .references(() => montos.id),
-  note: text(),
   restoredDate: text("restored_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
