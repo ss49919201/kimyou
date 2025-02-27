@@ -1,7 +1,7 @@
 import * as v from "valibot";
 
 export const genders = ["MALE", "FEMALE"] as const;
-export const gender = v.picklist(genders);
+const genderSchema = v.picklist(genders);
 export type Gender = (typeof genders)[number];
 export function isGender(s: string): s is Gender {
   return genders.includes(s as Gender);
@@ -38,8 +38,8 @@ const mobilePhoneNumberRegex = v.regex(
   "invalid phone nubmer format"
 );
 
-const validatedMonto = v.object({
-  gender: v.pipe(v.string(), gender),
+const validatedMontoSchema = v.object({
+  gender: v.pipe(v.string(), genderSchema),
   firstName: v.pipe(
     v.string("invalid firstName type"),
     v.trim(),
@@ -97,7 +97,7 @@ if (import.meta.vitest) {
   describe("validateMonto", () => {
     it("Should not to throw error", () => {
       expect(() =>
-        v.parse(validatedMonto, {
+        v.parse(validatedMontoSchema, {
           gender: genders[0],
           firstName: "テスト名",
           lastName: "テスト性",
@@ -112,17 +112,17 @@ if (import.meta.vitest) {
   });
 }
 
-export const unsavedMonto = v.pipe(
-  validatedMonto,
+export const unsavedMontoSchema = v.pipe(
+  validatedMontoSchema,
   v.brand("unsavedMonto"),
   v.readonly()
 );
 
 export function newUnsavedMonto(
-  input: v.InferInput<typeof unsavedMonto>
+  input: v.InferInput<typeof unsavedMontoSchema>
 ): UnsavedMonto | Error {
   try {
-    return v.parse(unsavedMonto, input);
+    return v.parse(unsavedMontoSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on unsaved monto schema: ${
@@ -132,11 +132,11 @@ export function newUnsavedMonto(
   }
 }
 
-export type UnsavedMonto = v.InferOutput<typeof unsavedMonto>;
+export type UnsavedMonto = v.InferOutput<typeof unsavedMontoSchema>;
 
-export const savedMonto = v.pipe(
+export const savedMontoSchema = v.pipe(
   v.intersect([
-    validatedMonto,
+    validatedMontoSchema,
     v.object({
       id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
     }),
@@ -146,10 +146,10 @@ export const savedMonto = v.pipe(
 );
 
 export function newSavedMonto(
-  input: v.InferInput<typeof savedMonto>
+  input: v.InferInput<typeof savedMontoSchema>
 ): SavedMonto | Error {
   try {
-    return v.parse(savedMonto, input);
+    return v.parse(savedMontoSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on saved monto schema: ${
@@ -159,19 +159,19 @@ export function newSavedMonto(
   }
 }
 
-const modifiedSavedMontoInput = v.omit(validatedMonto, [
+const modifiedSavedMontoInputSchema = v.omit(validatedMontoSchema, [
   "gender",
   "firstName",
   "lastName",
 ]);
 
 export function modifiedSavedMonto(
-  currentMonto: v.InferOutput<typeof savedMonto>,
-  input: v.InferInput<typeof modifiedSavedMontoInput>
+  currentMonto: v.InferOutput<typeof savedMontoSchema>,
+  input: v.InferInput<typeof modifiedSavedMontoInputSchema>
 ): SavedMonto | Error {
-  let parsedInput: v.InferOutput<typeof modifiedSavedMontoInput>;
+  let parsedInput: v.InferOutput<typeof modifiedSavedMontoInputSchema>;
   try {
-    parsedInput = v.parse(modifiedSavedMontoInput, input);
+    parsedInput = v.parse(modifiedSavedMontoInputSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on update saved monto input schema: ${
@@ -180,9 +180,9 @@ export function modifiedSavedMonto(
     );
   }
 
-  let updatedMonto: v.InferOutput<typeof savedMonto>;
+  let updatedMonto: v.InferOutput<typeof savedMontoSchema>;
   try {
-    updatedMonto = v.parse(savedMonto, {
+    updatedMonto = v.parse(savedMontoSchema, {
       ...currentMonto,
       phoneNumber: parsedInput.phoneNumber,
       address: parsedInput.address,
@@ -201,4 +201,4 @@ export function modifiedSavedMonto(
   return updatedMonto;
 }
 
-export type SavedMonto = v.InferOutput<typeof savedMonto>;
+export type SavedMonto = v.InferOutput<typeof savedMontoSchema>;
