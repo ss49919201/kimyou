@@ -1,5 +1,25 @@
 import * as v from "valibot";
 
+export class InvalidMontoError extends Error {
+  type = "InvalidMonto";
+  readonly details?: string;
+
+  constructor(msg: string, details?: string) {
+    super(msg);
+    this.details = details;
+  }
+}
+
+export class InvalidMontoParameterError extends Error {
+  type = "InvalidMontoParameter";
+  readonly details?: string;
+
+  constructor(msg: string, details?: string) {
+    super(msg);
+    this.details = details;
+  }
+}
+
 export const genders = ["MALE", "FEMALE"] as const;
 const genderSchema = v.picklist(genders);
 export type Gender = (typeof genders)[number];
@@ -141,7 +161,7 @@ export function newUnsavedMonto(
   try {
     return v.parse(unsavedMontoSchema, input);
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoParameterError(
       `Failed to parse input based on unsaved monto schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
@@ -204,7 +224,7 @@ export function newSavedMonto(
   try {
     return v.parse(savedMontoSchema, input);
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoError(
       `Failed to parse input based on saved monto schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
@@ -226,7 +246,7 @@ export function modifiedSavedMonto(
   try {
     parsedInput = v.parse(modifiedSavedMontoInputSchema, input);
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoParameterError(
       `Failed to parse input based on update saved monto input schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
@@ -244,7 +264,7 @@ export function modifiedSavedMonto(
       ingou: parsedInput.ingou,
     });
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoError(
       `Failed to parse input based on saved monto schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
@@ -258,14 +278,25 @@ export function inactiveSavedMonto(
   currentMonto: v.InferOutput<typeof activeMontoSchema>,
   reason: v.InferOutput<typeof inactiveMontoReasonSchema>
 ): InactiveMonto | Error {
+  let parsedReason: v.InferOutput<typeof inactiveMontoReasonSchema>;
+  try {
+    parsedReason = v.parse(inactiveMontoReasonSchema, reason);
+  } catch (e: unknown) {
+    return new InvalidMontoParameterError(
+      `Failed to parse input based on inactive monto reason schema: ${
+        e instanceof Error ? e.message : JSON.stringify(e)
+      }`
+    );
+  }
+
   let inactiveMonto: v.InferOutput<typeof inactiveMontoSchema>;
   try {
     inactiveMonto = v.parse(inactiveMontoSchema, {
       ...currentMonto,
-      reason,
+      reason: parsedReason,
     });
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoError(
       `Failed to parse input based on inactive monto schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
@@ -284,7 +315,7 @@ export function activeSavedMonto(
       ...currentMonto,
     });
   } catch (e: unknown) {
-    return new Error(
+    return new InvalidMontoError(
       `Failed to parse input based on inactive monto schema: ${
         e instanceof Error ? e.message : JSON.stringify(e)
       }`
