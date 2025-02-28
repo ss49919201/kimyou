@@ -2,6 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { randomUUID } from "node:crypto";
 import {
+  isInactiveMontoReason,
   isMontoStatus,
   newSavedMonto,
   SavedMonto,
@@ -54,6 +55,10 @@ export async function findOneForUpdate(
       throw new Error(
         `Removed monto event not found: monto id = ${selectedMonto.id}`
       );
+    }
+
+    if (!isInactiveMontoReason(result.reason)) {
+      throw new Error(`Invalid inactive monto reason: ${result.reason}`);
     }
 
     return result.reason;

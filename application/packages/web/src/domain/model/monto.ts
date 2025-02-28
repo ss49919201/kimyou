@@ -33,6 +33,16 @@ export function isMontoStatus(s: string): s is MontoStatus {
   return montoStatus.includes(s as MontoStatus);
 }
 
+export const inactiveMontoReason = [
+  "TEMPLE_TRANSFER",
+  "MISREGISTRATION",
+  "OTHERS",
+] as const;
+export type InactiveMontoReason = (typeof inactiveMontoReason)[number];
+export function isInactiveMontoReason(s: string): s is InactiveMontoReason {
+  return inactiveMontoReason.includes(s as InactiveMontoReason);
+}
+
 // in-source test suites
 if (import.meta.vitest) {
   const { it, expect, describe } = import.meta.vitest;
@@ -51,6 +61,18 @@ if (import.meta.vitest) {
     it("Should return true", () => {
       expect(isMontoStatus("ACTIVE")).toBe(true);
       expect(isMontoStatus("INACTIVE")).toBe(true);
+    });
+    it("Should return false", () => {
+      expect(isMontoStatus("MAN")).toBe(false);
+      expect(isMontoStatus("WOMAN")).toBe(false);
+    });
+  });
+
+  describe("isInactiveMontoReason", () => {
+    it("Should return true", () => {
+      expect(isInactiveMontoReason("OTHERS")).toBe(true);
+      expect(isInactiveMontoReason("TEMPLE_TRANSFER")).toBe(true);
+      expect(isInactiveMontoReason("MISREGISTRATION")).toBe(true);
     });
     it("Should return false", () => {
       expect(isMontoStatus("MAN")).toBe(false);
@@ -190,11 +212,7 @@ export const activeMontoSchema = v.pipe(
 
 export type ActiveMonto = v.InferOutput<typeof activeMontoSchema>;
 
-const inactiveMontoReasonSchema = v.pipe(
-  v.string(),
-  v.trim(),
-  v.minLength(1, "invalid reason length")
-);
+const inactiveMontoReasonSchema = v.picklist(inactiveMontoReason);
 
 export const inactiveMontoSchema = v.pipe(
   v.intersect([

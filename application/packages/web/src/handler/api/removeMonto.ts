@@ -2,7 +2,7 @@ import { vValidator } from "@hono/valibot-validator";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import * as v from "valibot";
-import { SavedMonto } from "../../domain/model/monto";
+import { inactiveMontoReason, SavedMonto } from "../../domain/model/monto";
 import {
   findOneForUpdate,
   updateMonto,
@@ -15,7 +15,7 @@ export const removeMonto = factory.createHandlers(
   vValidator(
     "json",
     v.object({
-      reason: v.string(),
+      reason: v.picklist(inactiveMontoReason),
     }),
     vValidatorHook()
   ),

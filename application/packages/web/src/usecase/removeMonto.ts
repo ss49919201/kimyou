@@ -1,10 +1,14 @@
-import { inactiveSavedMonto, SavedMonto } from "../domain/model/monto";
+import {
+  InactiveMontoReason,
+  inactiveSavedMonto,
+  SavedMonto,
+} from "../domain/model/monto";
 import { InvalidParameterError } from "./error/invalidPrameter";
 import { NotFoundError } from "./error/notFound";
 
 export type Input = {
   id: string;
-  reason: string;
+  reason: InactiveMontoReason;
 };
 
 export type Dependency = {

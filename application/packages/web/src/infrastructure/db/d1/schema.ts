@@ -58,7 +58,7 @@ export const removeMontos = sqliteTable("remove_montos", {
   montoId: text("monto_id")
     .notNull()
     .references(() => montos.id),
-  reason: text().notNull(), // temple_transfer | misregistration | others
+  reason: text().notNull(), // TEMPLE_TRANSFER | MISREGISTRATION | OTHERS
   removedDate: text("removed_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
 
