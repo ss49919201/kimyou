@@ -22,16 +22,16 @@ if (import.meta.vitest) {
   });
 }
 
-// 固定電話
-// 国内プレフィックス「0」市外局番+市内局番「合計5桁」加入者番号「4桁」
+// - Domestic prefix “0”,
+// - area code + local code “total 5 digits”
+// - subscriber number “4 digits
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
 const landlinePhoneNumberRegex = v.regex(
   /^0[0-9]{5}[0-9]{4}$/,
   "invalid phone nubmer format"
 );
 
-// 携帯電話
-// 「070」「080」「090」のいずれかから始まる「11桁」の番号
+// 11-digit number starting with either 070, 080, or 090
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
 const mobilePhoneNumberRegex = v.regex(
   /^0[789]0[0-9]{8}$/,
@@ -78,7 +78,7 @@ const validatedMontoSchema = v.object({
       )
     )
   ),
-  // 漢字の正規表現は[CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
+  // The regular expression for Kanji characters is [CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
   homyo: v.optional(
     v.pipe(
       v.string("invalid homyo type"),
@@ -86,7 +86,7 @@ const validatedMontoSchema = v.object({
       v.regex(/^釋[\u4E00-\u9FFF]{2}$/, "invalid homyo format")
     )
   ),
-  // 漢字の正規表現は[CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
+  //The regular expression for Kanji characters is [CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
   ingou: v.optional(
     v.pipe(
       v.string("invlalid ingou type"),
