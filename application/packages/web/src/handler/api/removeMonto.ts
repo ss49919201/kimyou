@@ -1,5 +1,6 @@
 import { vValidator } from "@hono/valibot-validator";
 import { drizzle } from "drizzle-orm/d1";
+import { HTTPException } from "hono/http-exception";
 import * as v from "valibot";
 import { SavedMonto } from "../../domain/model/monto";
 import {
@@ -14,19 +15,32 @@ export const removeMonto = factory.createHandlers(
   vValidator(
     "json",
     v.object({
-      id: v.string(),
       reason: v.string(),
     }),
     vValidatorHook()
   ),
   async (c) => {
+    const id = c.req.param("id");
+
+    if (!id) {
+      throw new HTTPException(500, {
+        message: "path parameter id is not found in monto handler",
+      });
+    }
+
     const params = c.req.valid("json");
     const db = drizzle(c.env.D1, { logger: true });
 
-    await removeMontoUsecase(params, {
-      findMonto: (id) => findOneForUpdate(db, id),
-      updateMonto: (savedMonto: SavedMonto) => updateMonto(db, savedMonto),
-    });
+    await removeMontoUsecase(
+      {
+        ...params,
+        id,
+      },
+      {
+        findMonto: (id) => findOneForUpdate(db, id),
+        updateMonto: (savedMonto: SavedMonto) => updateMonto(db, savedMonto),
+      }
+    );
 
     return c.json({ msg: "ok" });
   }

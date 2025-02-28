@@ -56,8 +56,8 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
     );
   })
   .post("/montos/_batch", ...insertManyMontos)
-  .post("/montos/removals", ...removeMonto)
-  .post("/montos/restoration", ...restoreMonto);
+  .post("/montos/:id/removals", ...removeMonto)
+  .post("/montos/:id/restorations", ...restoreMonto);
 
 const app = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
