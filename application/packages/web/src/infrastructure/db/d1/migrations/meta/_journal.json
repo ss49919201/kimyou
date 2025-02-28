@@ -71,6 +71,13 @@
       "when": 1740759653288,
       "tag": "0009_freezing_living_tribunal",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1740761552191,
+      "tag": "0010_old_phalanx",
+      "breakpoints": true
     }
   ]
 }

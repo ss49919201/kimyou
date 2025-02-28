@@ -6,9 +6,18 @@ import {
   text,
 } from "drizzle-orm/sqlite-core";
 
+// Cloudflare D1 transaction not supported.
+// https://github.com/drizzle-team/drizzle-orm/issues/2463
+// Locking using INSERT to unique key.
+// key example: `${montoId}:update`
+export const locks = sqliteTable("locks", {
+  key: text().notNull().primaryKey(),
+  lockedDate: text("locked_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+});
+
 export const genders = sqliteTable("genders", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
-  type: text("type").notNull(), // MALE | FEMALE
+  type: text().notNull(), // MALE | FEMALE
   createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
   updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
