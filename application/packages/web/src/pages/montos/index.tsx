@@ -1,4 +1,5 @@
 import { Gender } from "../../domain/model/monto";
+import { Button } from "../components/Button";
 
 type MontosWithPage = {
   totalCount: number;
@@ -39,12 +40,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
           placeholder="門徒の性を入力してください"
         />
         <div class="w-4"></div>
-        <button
-          type="submit"
-          className="w-32 text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          検索
-        </button>
+        <Button color="blue">検索</Button>
       </form>
       <a
         href="/montos/new"

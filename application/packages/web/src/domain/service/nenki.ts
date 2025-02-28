@@ -1,13 +1,13 @@
 import { addYears, isAfter } from "date-fns";
 
 /**
- * @name calcNextNenki
+ * @name nextNenki
  * @param dateOfDeath - The original date of death
  * @returns The calculated date, or undefined if current date is after next neki.
  * @description
  * Return nenki in the future that is closest to the current date and time.
  */
-export function calcNextNenki(dateOfDeath: Date): Date | undefined {
+export function nextNenki(dateOfDeath: Date): Date | undefined {
   const now = new Date();
   const yearsToAdd = [1, 2, 6, 12, 16, 24, 32, 49];
   const nenkis = yearsToAdd.map((yearToAdd) =>
@@ -20,7 +20,7 @@ export function calcNextNenki(dateOfDeath: Date): Date | undefined {
 if (import.meta.vitest) {
   const { it, expect, describe, vi, beforeEach, afterEach } = import.meta
     .vitest;
-  describe("calcNextNenki", () => {
+  describe("nextNenki", () => {
     beforeEach(() => {
       vi.useFakeTimers();
     });
@@ -34,7 +34,7 @@ if (import.meta.vitest) {
       const oneMonthAfterDateOfDeath = new Date("1970-02-10T15:00:00Z");
       vi.setSystemTime(oneMonthAfterDateOfDeath);
 
-      const result = calcNextNenki(dateOfDeath);
+      const result = nextNenki(dateOfDeath);
       expect(result).toEqual(new Date("1971-01-10T15:00:00Z"));
     });
 
@@ -43,7 +43,7 @@ if (import.meta.vitest) {
       const oneYearAfterDateOfDeath = new Date("1971-01-10T15:00:00Z");
       vi.setSystemTime(oneYearAfterDateOfDeath);
 
-      const result = calcNextNenki(dateOfDeath);
+      const result = nextNenki(dateOfDeath);
       expect(result).toEqual(new Date("1972-01-10T15:00:00Z"));
     });
 
@@ -52,7 +52,7 @@ if (import.meta.vitest) {
       const thirtyTwoYearsAfterDateOfDeath = new Date("2002-01-10T15:00:00Z");
       vi.setSystemTime(thirtyTwoYearsAfterDateOfDeath);
 
-      const result = calcNextNenki(dateOfDeath);
+      const result = nextNenki(dateOfDeath);
       expect(result).toEqual(new Date("2019-01-10T15:00:00Z"));
     });
 
@@ -61,7 +61,7 @@ if (import.meta.vitest) {
       const fiftyYearsAfterDateOfDeath = new Date("2020-01-10T15:00:00Z");
       vi.setSystemTime(fiftyYearsAfterDateOfDeath);
 
-      const result = calcNextNenki(dateOfDeath);
+      const result = nextNenki(dateOfDeath);
       expect(result).toBeUndefined();
     });
   });

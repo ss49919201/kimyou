@@ -1,3 +1,5 @@
+import { Button } from "../../components/Button";
+
 const newMonto = () => {
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -87,12 +89,7 @@ const newMonto = () => {
             />
           </div>
         </div>
-        <button
-          type="submit"
-          class="m-auto block w-32 text-white end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-        >
-          新規登録
-        </button>
+        <Button color="green">新規登録</Button>
       </form>
     </div>
   );

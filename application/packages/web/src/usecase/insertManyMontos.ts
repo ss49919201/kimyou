@@ -1,8 +1,4 @@
-import {
-  createUnsavedMonto,
-  Gender,
-  UnsavedMonto,
-} from "../domain/model/monto";
+import { Gender, newUnsavedMonto, UnsavedMonto } from "../domain/model/monto";
 import { InvalidParameterError } from "./error/invalidPrameter";
 
 export type Input = {
@@ -37,7 +33,7 @@ export async function insertManyMontos(
   }
 
   const unsavedMontos = input.montos.map((inputMonto) => {
-    const unsavedMontoOrError = createUnsavedMonto(inputMonto);
+    const unsavedMontoOrError = newUnsavedMonto(inputMonto);
     if (unsavedMontoOrError instanceof Error) {
       throw new InvalidParameterError(
         "Invalid insert many montos parameter",

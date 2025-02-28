@@ -1,7 +1,7 @@
 import * as v from "valibot";
 
 export const genders = ["MALE", "FEMALE"] as const;
-export const gender = v.picklist(genders);
+const genderSchema = v.picklist(genders);
 export type Gender = (typeof genders)[number];
 export function isGender(s: string): s is Gender {
   return genders.includes(s as Gender);
@@ -22,33 +22,33 @@ if (import.meta.vitest) {
   });
 }
 
-// 固定電話
-// 国内プレフィックス「0」市外局番+市内局番「合計5桁」加入者番号「4桁」
+// - Domestic prefix “0”,
+// - area code + local code “total 5 digits”
+// - subscriber number “4 digits
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
 const landlinePhoneNumberRegex = v.regex(
   /^0[0-9]{5}[0-9]{4}$/,
   "invalid phone nubmer format"
 );
 
-// 携帯電話
-// 「070」「080」「090」のいずれかから始まる「11桁」の番号
+// 11-digit number starting with either 070, 080, or 090
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
 const mobilePhoneNumberRegex = v.regex(
   /^0[789]0[0-9]{8}$/,
   "invalid phone nubmer format"
 );
 
-const validatedMonto = v.object({
-  gender: v.pipe(v.string(), gender),
+const validatedMontoSchema = v.object({
+  gender: v.pipe(v.string(), genderSchema),
   firstName: v.pipe(
     v.string("invalid firstName type"),
     v.trim(),
-    v.minLength(1, "invalid first name length")
+    v.minLength(1, "first name length must be greater than equal 1")
   ),
   lastName: v.pipe(
     v.string("invalid last name length"),
     v.trim(),
-    v.minLength(1, "invalid last name length")
+    v.minLength(1, "last name length must be greater than equal 1")
   ),
   phoneNumber: v.union([
     v.pipe(
@@ -65,15 +65,20 @@ const validatedMonto = v.object({
   address: v.pipe(
     v.string("invalid address type"),
     v.trim(),
-    v.minLength(1, "invalid address length")
+    v.minLength(1, "address length must be greater than equal 1")
   ),
   dateOfDeath: v.optional(
     v.pipe(
       v.date("invalid date of death type"),
-      v.maxValue(new Date(), "invalid date of death value")
+      // In Cloud flare workers, `new Date()` in global scope returns 0 value.
+      // If `v.maxValue()` is used, the maximum value is `1970-01-01T00:00:00.000Z`
+      v.custom(
+        (input) => input instanceof Date && input <= new Date(),
+        "date of death value must be less than equal current date"
+      )
     )
   ),
-  // 漢字の正規表現は[CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
+  // The regular expression for Kanji characters is [CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
   homyo: v.optional(
     v.pipe(
       v.string("invalid homyo type"),
@@ -81,7 +86,7 @@ const validatedMonto = v.object({
       v.regex(/^釋[\u4E00-\u9FFF]{2}$/, "invalid homyo format")
     )
   ),
-  // 漢字の正規表現は[CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
+  //The regular expression for Kanji characters is [CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
   ingou: v.optional(
     v.pipe(
       v.string("invlalid ingou type"),
@@ -97,7 +102,7 @@ if (import.meta.vitest) {
   describe("validateMonto", () => {
     it("Should not to throw error", () => {
       expect(() =>
-        v.parse(validatedMonto, {
+        v.parse(validatedMontoSchema, {
           gender: genders[0],
           firstName: "テスト名",
           lastName: "テスト性",
@@ -112,17 +117,17 @@ if (import.meta.vitest) {
   });
 }
 
-export const unsavedMonto = v.pipe(
-  validatedMonto,
+export const unsavedMontoSchema = v.pipe(
+  validatedMontoSchema,
   v.brand("unsavedMonto"),
   v.readonly()
 );
 
-export function createUnsavedMonto(
-  input: v.InferInput<typeof unsavedMonto>
+export function newUnsavedMonto(
+  input: v.InferInput<typeof unsavedMontoSchema>
 ): UnsavedMonto | Error {
   try {
-    return v.parse(unsavedMonto, input);
+    return v.parse(unsavedMontoSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on unsaved monto schema: ${
@@ -132,11 +137,11 @@ export function createUnsavedMonto(
   }
 }
 
-export type UnsavedMonto = v.InferOutput<typeof unsavedMonto>;
+export type UnsavedMonto = v.InferOutput<typeof unsavedMontoSchema>;
 
-export const savedMonto = v.pipe(
+export const savedMontoSchema = v.pipe(
   v.intersect([
-    validatedMonto,
+    validatedMontoSchema,
     v.object({
       id: v.pipe(v.string(), v.uuid("The UUID is badly formatted.")),
     }),
@@ -145,11 +150,11 @@ export const savedMonto = v.pipe(
   v.readonly()
 );
 
-export function createSavedMonto(
-  input: v.InferInput<typeof savedMonto>
+export function newSavedMonto(
+  input: v.InferInput<typeof savedMontoSchema>
 ): SavedMonto | Error {
   try {
-    return v.parse(savedMonto, input);
+    return v.parse(savedMontoSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on saved monto schema: ${
@@ -159,19 +164,19 @@ export function createSavedMonto(
   }
 }
 
-const updateSavedMontoInput = v.omit(validatedMonto, [
+const modifiedSavedMontoInputSchema = v.omit(validatedMontoSchema, [
   "gender",
   "firstName",
   "lastName",
 ]);
 
-export function updateSavedMonto(
-  currentMonto: v.InferOutput<typeof savedMonto>,
-  input: v.InferInput<typeof updateSavedMontoInput>
+export function modifiedSavedMonto(
+  currentMonto: v.InferOutput<typeof savedMontoSchema>,
+  input: v.InferInput<typeof modifiedSavedMontoInputSchema>
 ): SavedMonto | Error {
-  let parsedInput: v.InferOutput<typeof updateSavedMontoInput>;
+  let parsedInput: v.InferOutput<typeof modifiedSavedMontoInputSchema>;
   try {
-    parsedInput = v.parse(updateSavedMontoInput, input);
+    parsedInput = v.parse(modifiedSavedMontoInputSchema, input);
   } catch (e: unknown) {
     return new Error(
       `Failed to parse input based on update saved monto input schema: ${
@@ -180,9 +185,9 @@ export function updateSavedMonto(
     );
   }
 
-  let updatedMonto: v.InferOutput<typeof savedMonto>;
+  let updatedMonto: v.InferOutput<typeof savedMontoSchema>;
   try {
-    updatedMonto = v.parse(savedMonto, {
+    updatedMonto = v.parse(savedMontoSchema, {
       ...currentMonto,
       phoneNumber: parsedInput.phoneNumber,
       address: parsedInput.address,
@@ -201,4 +206,4 @@ export function updateSavedMonto(
   return updatedMonto;
 }
 
-export type SavedMonto = v.InferOutput<typeof savedMonto>;
+export type SavedMonto = v.InferOutput<typeof savedMontoSchema>;

@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { randomUUID } from "node:crypto";
 import {
-  createSavedMonto,
+  newSavedMonto,
   SavedMonto,
   UnsavedMonto,
 } from "../../../domain/model/monto";
@@ -24,7 +24,7 @@ export async function findOneForUpdate(
     return undefined;
   }
 
-  const savedMontoOrError = createSavedMonto({
+  const savedMontoOrError = newSavedMonto({
     id: result.montos.id,
     homyo: result.buddhist_profiles?.homyo ?? undefined,
     firstName: result.montos.firstName,
@@ -91,9 +91,9 @@ export async function insertMonto(
 }
 
 export function maxNumberOfInsertableMontos(): number {
-  // 1monto = 約100B
-  // Cloudflare Workers のメモリ制限が128MB
-  // 上記のインフラ制約を満たしている且つ、1回の入力として常識的な数を最大数とする
+  // - 1 monto ≒ 100B
+  // - 128MB memory limit for Cloudflare Workers, if plan is free.
+  // Set common sense values that meet the above infrastructure constraints.
   return 1000;
 }
 

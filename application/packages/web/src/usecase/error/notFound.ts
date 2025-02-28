@@ -3,6 +3,9 @@ export class NotFoundError extends Error {
   readonly details?: string;
 
   constructor(msg: string, details?: string) {
+    if (details) {
+      msg += ` details: ${details}`;
+    }
     super(msg);
     this.details = details;
   }
