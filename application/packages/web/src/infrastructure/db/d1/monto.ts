@@ -90,6 +90,8 @@ export async function insertMonto(
   db: DrizzleD1Database,
   unsavedMonto: UnsavedMonto
 ): Promise<void> {
+  const now = new Date().toISOString();
+
   const selectedGender = await db
     .select({ id: genders.id })
     .from(genders)
@@ -100,8 +102,8 @@ export async function insertMonto(
     throw new Error("gender not found");
   }
 
-  const createdDate = new Date().toISOString();
-  const updatedDate = new Date().toISOString();
+  const createdDate = now;
+  const updatedDate = now;
 
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
