@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { randomUUID } from "node:crypto";
 import {
@@ -7,7 +7,13 @@ import {
   SavedMonto,
   UnsavedMonto,
 } from "../../../domain/model/monto";
-import { buddhistProfiles, genders, montos, removeMontos } from "./schema";
+import {
+  buddhistProfiles,
+  genders,
+  montos,
+  removeMontos,
+  restoreMontos,
+} from "./schema";
 
 export async function findOneForUpdate(
   db: DrizzleD1Database,
@@ -40,7 +46,7 @@ export async function findOneForUpdate(
       .select({ reason: removeMontos.reason })
       .from(removeMontos)
       .where(eq(removeMontos.montoId, selectedMonto.id))
-      .orderBy(removeMontos.removedDate)
+      .orderBy(desc(removeMontos.removedDate))
       .limit(1)
       .get();
 
@@ -136,6 +142,8 @@ export async function updateMonto(
   db: DrizzleD1Database,
   savedMonto: SavedMonto
 ): Promise<void> {
+  const now = new Date().toISOString();
+
   const selectedGender = await db
     .select({ id: genders.id })
     .from(genders)
@@ -146,7 +154,42 @@ export async function updateMonto(
     throw new Error("gender not found");
   }
 
-  const updatedDate = new Date().toISOString();
+  const selectedMonto = await db
+    .select({ status: montos.status })
+    .from(montos)
+    .where(eq(montos.id, savedMonto.id))
+    .get();
+
+  if (!selectedMonto) {
+    throw new Error("monto not found");
+  }
+
+  let queryToInsertEvent;
+  if (selectedMonto.status === savedMonto.status) {
+    return undefined;
+  }
+  const savedMontoStatus = savedMonto.status;
+  switch (savedMontoStatus) {
+    case "ACTIVE":
+      queryToInsertEvent = db.insert(restoreMontos).values({
+        id: randomUUID(),
+        montoId: savedMonto.id,
+        restoredDate: now,
+      });
+      break;
+    case "INACTIVE":
+      queryToInsertEvent = db.insert(removeMontos).values({
+        id: randomUUID(),
+        montoId: savedMonto.id,
+        removedDate: now,
+        reason: savedMonto.reason,
+      });
+      break;
+    default:
+      throw new Error(savedMontoStatus satisfies never);
+  }
+
+  const updatedDate = now;
 
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
@@ -162,6 +205,7 @@ export async function updateMonto(
         dateOfDeath: savedMonto.dateOfDeath
           ? savedMonto.dateOfDeath.toISOString()
           : null,
+        status: savedMonto.status,
         updatedDate,
       })
       .where(eq(montos.id, savedMonto.id)),
@@ -173,5 +217,6 @@ export async function updateMonto(
         updatedDate,
       })
       .where(eq(buddhistProfiles.montoId, savedMonto.id)),
+    ...(queryToInsertEvent ? [queryToInsertEvent] : []),
   ]);
 }
