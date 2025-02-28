@@ -167,28 +167,27 @@ export async function updateMonto(
   }
 
   let queryToInsertEvent;
-  if (selectedMonto.status === savedMonto.status) {
-    return undefined;
-  }
-  const savedMontoStatus = savedMonto.status;
-  switch (savedMontoStatus) {
-    case "ACTIVE":
-      queryToInsertEvent = db.insert(restoreMontos).values({
-        id: randomUUID(),
-        montoId: savedMonto.id,
-        restoredDate: now,
-      });
-      break;
-    case "INACTIVE":
-      queryToInsertEvent = db.insert(removeMontos).values({
-        id: randomUUID(),
-        montoId: savedMonto.id,
-        removedDate: now,
-        reason: savedMonto.reason,
-      });
-      break;
-    default:
-      throw new Error(savedMontoStatus satisfies never);
+  if (selectedMonto.status !== savedMonto.status) {
+    const savedMontoStatus = savedMonto.status;
+    switch (savedMontoStatus) {
+      case "ACTIVE":
+        queryToInsertEvent = db.insert(restoreMontos).values({
+          id: randomUUID(),
+          montoId: savedMonto.id,
+          restoredDate: now,
+        });
+        break;
+      case "INACTIVE":
+        queryToInsertEvent = db.insert(removeMontos).values({
+          id: randomUUID(),
+          montoId: savedMonto.id,
+          removedDate: now,
+          reason: savedMonto.reason,
+        });
+        break;
+      default:
+        throw new Error(savedMontoStatus satisfies never);
+    }
   }
 
   const updatedDate = now;
