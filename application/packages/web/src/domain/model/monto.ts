@@ -70,7 +70,12 @@ const validatedMontoSchema = v.object({
   dateOfDeath: v.optional(
     v.pipe(
       v.date("invalid date of death type"),
-      v.maxValue(new Date(), "invalid date of death value")
+      // In Cloud flare workers, `new Date()` in global scope returns 0 value.
+      // If `v.maxValue()` is used, the maximum value is `1970-01-01T00:00:00.000Z`
+      v.custom(
+        (input) => input instanceof Date && input <= new Date(),
+        "date of death value must be less than equal current date"
+      )
     )
   ),
   // 漢字の正規表現は[CJK統合漢字](https://ja.wikipedia.org/wiki/CJK%E7%B5%B1%E5%90%88%E6%BC%A2%E5%AD%97)
