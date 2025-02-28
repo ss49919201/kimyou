@@ -43,12 +43,12 @@ const validatedMontoSchema = v.object({
   firstName: v.pipe(
     v.string("invalid firstName type"),
     v.trim(),
-    v.minLength(1, "invalid first name length")
+    v.minLength(1, "first name length must be greater than equal 1")
   ),
   lastName: v.pipe(
     v.string("invalid last name length"),
     v.trim(),
-    v.minLength(1, "invalid last name length")
+    v.minLength(1, "last name length must be greater than equal 1")
   ),
   phoneNumber: v.union([
     v.pipe(
@@ -65,7 +65,7 @@ const validatedMontoSchema = v.object({
   address: v.pipe(
     v.string("invalid address type"),
     v.trim(),
-    v.minLength(1, "invalid address length")
+    v.minLength(1, "address length must be greater than equal 1")
   ),
   dateOfDeath: v.optional(
     v.pipe(
