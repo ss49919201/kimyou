@@ -15,6 +15,8 @@ import Error500 from "./pages/500";
 import Error404 from "./pages/404";
 import { editMonto } from "./handler/editMonto";
 import { editMontoAction } from "./handler/editMontoAction";
+import { removeMonto } from "./handler/api/removeMonto";
+import { restoreMonto } from "./handler/api/restoreMonto";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...montos)
@@ -53,7 +55,9 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
       500
     );
   })
-  .post("/montos/_batch", ...insertManyMontos);
+  .post("/montos/_batch", ...insertManyMontos)
+  .post("/montos/removals", ...removeMonto)
+  .post("/montos/restoration", ...restoreMonto);
 
 const app = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
