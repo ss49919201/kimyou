@@ -289,11 +289,13 @@ export function inactiveSavedMonto(
     );
   }
 
+  const newStatus: MontoStatus = "INACTIVE";
   let inactiveMonto: v.InferOutput<typeof inactiveMontoSchema>;
   try {
     inactiveMonto = v.parse(inactiveMontoSchema, {
       ...currentMonto,
       reason: parsedReason,
+      status: newStatus,
     });
   } catch (e: unknown) {
     return new InvalidMontoError(
@@ -309,10 +311,12 @@ export function inactiveSavedMonto(
 export function activeSavedMonto(
   currentMonto: v.InferOutput<typeof inactiveMontoSchema>
 ): ActiveMonto | Error {
+  const newStatus: MontoStatus = "ACTIVE";
   let activeMonto: v.InferOutput<typeof activeMontoSchema>;
   try {
     activeMonto = v.parse(activeMontoSchema, {
       ...currentMonto,
+      status: newStatus,
     });
   } catch (e: unknown) {
     return new InvalidMontoError(
