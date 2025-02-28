@@ -57,7 +57,6 @@ export const removeMontos = sqliteTable("remove_montos", {
   id: text().notNull().primaryKey(),
   montoId: text("monto_id")
     .notNull()
-    .unique()
     .references(() => montos.id),
   reason: text().notNull(), // temple_transfer | misregistration | others
   removedDate: text("removed_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
@@ -67,7 +66,6 @@ export const restoreMontos = sqliteTable("restore_montos", {
   id: text().notNull().primaryKey(),
   montoId: text("monto_id")
     .notNull()
-    .unique()
     .references(() => montos.id),
   restoredDate: text("restored_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
