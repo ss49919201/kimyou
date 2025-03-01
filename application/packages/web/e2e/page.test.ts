@@ -56,7 +56,6 @@ describe("E2E Page test", () => {
     for (const [name, value] of Object.entries(formData)) {
       body.append(name, value);
     }
-    console.log(body);
     const req = new Request(`${domain}${route}`, {
       method: "POST",
       body,
