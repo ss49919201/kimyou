@@ -25,7 +25,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
     </div>
 
     <div className="flex justify-between mb-6">
-      <form method="get" action="/montos" class="max-w-md relative flex">
+      <form method="get" action="/montos" className="max-w-md relative flex">
         <label
           for="default-search"
           className="text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -39,7 +39,7 @@ const MontoList = ({ values: montos }: MontosWithPage) => (
           className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="門徒の性を入力してください"
         />
-        <div class="w-4"></div>
+        <div className="w-4"></div>
         <Button color="blue">検索</Button>
       </form>
       <a
