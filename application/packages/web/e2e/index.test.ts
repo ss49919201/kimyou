@@ -13,6 +13,7 @@ describe("E2E Snapshot test", () => {
     { route: "/homyos/generate" },
     { route: "/montos" },
     { route: `/montos/${dummyMontoId}` },
+    { route: `/montos/${dummyMontoId}/edit` },
     { route: `/montos/${dummyInvalidMontoId}` },
     { route: "/montos/new" },
   ])("route `$route`", async ({ route }) => {

@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Gender } from "../../../domain/model/monto";
+import { tz } from "@date-fns/tz";
 
 type Monto = {
   id: string;
@@ -52,12 +53,18 @@ const Monto = (monto: Monto) => (
       <div className="text-xl mb-4 font-bold">命日</div>
       <div className="text-xl mb-4">
         {monto.dateOfDeath
-          ? format(monto.dateOfDeath, "yyyy年M月d日H時m分")
+          ? format(monto.dateOfDeath, "yyyy年M月d日", {
+              in: tz("Asia/Tokyo"),
+            })
           : "-"}
       </div>
       <div className="text-xl mb-2 font-bold">次回年忌</div>
       <div className="text-xl mb-2">
-        {monto.nextNenki ? format(monto.nextNenki, "yyyy年M月d日") : "-"}
+        {monto.nextNenki
+          ? format(monto.nextNenki, "yyyy年M月d日", {
+              in: tz("Asia/Tokyo"),
+            })
+          : "-"}
       </div>
     </div>
   </div>
