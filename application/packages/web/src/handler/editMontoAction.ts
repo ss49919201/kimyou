@@ -3,10 +3,12 @@ import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import * as v from "valibot";
 import { SavedMonto } from "../domain/model/monto";
+import { lock, unlock } from "../infrastructure/db/d1/lock";
 import {
   findOneForUpdate,
   updateMonto as updateMontoD1,
 } from "../infrastructure/db/d1/monto";
+import { ConflictError } from "../usecase/error/conflict";
 import { updateMonto as updateMontoUsecase } from "../usecase/updateMonto";
 import { factory } from "./factory";
 import { vValidatorHook } from "./vValidator";
@@ -57,18 +59,30 @@ export const editMontoAction = factory.createHandlers(
     const params = c.req.valid("form");
     const db = drizzle(c.env.D1, { logger: true });
 
-    await updateMontoUsecase(
-      {
-        ...params,
-        phoneNumber: params["phone-number"],
-        dateOfDeath: params["date-of-death"],
-        id,
-      },
-      {
-        updateMonto: (savedMonto: SavedMonto) => updateMontoD1(db, savedMonto),
-        findMonto: (id) => findOneForUpdate(db, id),
+    try {
+      await updateMontoUsecase(
+        {
+          ...params,
+          phoneNumber: params["phone-number"],
+          dateOfDeath: params["date-of-death"],
+          id,
+        },
+        {
+          updateMonto: (savedMonto: SavedMonto) =>
+            updateMontoD1(db, savedMonto),
+          findMonto: (id) => findOneForUpdate(db, id),
+          lock: (key) => lock(db, key),
+          unlock: (key) => unlock(db, key),
+        }
+      );
+    } catch (e: unknown) {
+      if (e instanceof ConflictError) {
+        throw new HTTPException(409, {
+          message: e.message,
+        });
       }
-    );
+      throw e;
+    }
 
     return c.redirect("/montos");
   }

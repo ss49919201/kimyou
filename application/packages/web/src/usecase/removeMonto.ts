@@ -1,4 +1,8 @@
-import { SavedMonto, modifiedSavedMonto } from "../domain/model/monto";
+import {
+  InactiveMontoReason,
+  inactiveSavedMonto,
+  SavedMonto,
+} from "../domain/model/monto";
 import { ConflictError } from "./error/conflict";
 import { InvalidParameterError } from "./error/invalidPrameter";
 import { NotFoundError } from "./error/notFound";
@@ -6,11 +10,7 @@ import { lockKeyForUpdateMonto } from "./lockKey";
 
 export type Input = {
   id: string;
-  phoneNumber: string;
-  address: string;
-  dateOfDeath?: Date;
-  homyo?: string;
-  ingou?: string;
+  reason: InactiveMontoReason;
 };
 
 export type Dependency = {
@@ -20,7 +20,7 @@ export type Dependency = {
   unlock: (key: string) => Promise<void>;
 };
 
-export async function updateMonto(
+export async function removeMonto(
   input: Input,
   dep: Dependency
 ): Promise<void> {
@@ -29,7 +29,7 @@ export async function updateMonto(
     throw new ConflictError("Monto update alreacy locked.");
   }
   try {
-    await _updateMonto(input, dep);
+    await _removeMonto(input, dep);
   } finally {
     try {
       await dep.unlock(lockKey);
@@ -43,21 +43,23 @@ export async function updateMonto(
   }
 }
 
-async function _updateMonto(input: Input, dep: Dependency): Promise<void> {
+async function _removeMonto(input: Input, dep: Dependency): Promise<void> {
   const monto = await dep.findMonto(input.id);
   if (!monto) {
     throw new NotFoundError("monto not found");
   }
 
-  const updatedMontoOrError = modifiedSavedMonto(monto, {
-    ...input,
-  });
-  if (updatedMontoOrError instanceof Error) {
+  if (monto.status === "INACTIVE") {
+    return;
+  }
+
+  const inactiveMontoOrError = inactiveSavedMonto(monto, input.reason);
+  if (inactiveMontoOrError instanceof Error) {
     throw new InvalidParameterError(
-      "Invalid update monto parameter",
-      updatedMontoOrError.message
+      "Invalid remove monto parameter",
+      inactiveMontoOrError.message
     );
   }
 
-  await dep.updateMonto(updatedMontoOrError);
+  await dep.updateMonto(inactiveMontoOrError);
 }
