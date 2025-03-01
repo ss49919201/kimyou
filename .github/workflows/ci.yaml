@@ -31,6 +31,23 @@ jobs:
       - run: pnpm install
       - run: pnpm web test
 
+  test-scripts:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts/cloudflare
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ./go.mod
+      - run: go test -v ./...
+        env:
+          INTEGRATION_TEST: true
+          API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SERVICE_AUTH_TOKEN_ID: ${{ secrets.CLOUDFLARE_SERVICE_AUTH_TOKEN_ID_FOR_TEST }}
+
   typecheck-web:
     runs-on: ubuntu-latest
     defaults:
