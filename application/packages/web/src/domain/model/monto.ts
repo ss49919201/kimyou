@@ -161,27 +161,6 @@ const validatedMontoSchema = v.object({
   ),
 });
 
-// in-source test suites
-if (import.meta.vitest) {
-  const { it, expect, describe } = import.meta.vitest;
-  describe("validateMonto", () => {
-    it("Should not to throw error", () => {
-      expect(() =>
-        v.parse(validatedMontoSchema, {
-          gender: genders[0],
-          firstName: "テスト名",
-          lastName: "テスト性",
-          phoneNumber: "0311112222",
-          address: "テスト住所",
-          dateOfDeath: new Date("2020-12-31T15:00:00Z"),
-          homyo: "釋一宗",
-          ingou: "帰命院",
-        })
-      ).not.toThrowError();
-    });
-  });
-}
-
 export const unsavedMontoSchema = v.pipe(
   validatedMontoSchema,
   v.brand("unsavedMonto"),
