@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import worker from "../src";
 import { dummyInvalidMontoId, dummyMontoId, setupD1 } from "./helper/d1";
 
-describe("E2E Snapshot test", () => {
+describe("E2E Page test", () => {
   beforeAll(async () => {
     await setupD1(env.D1, env.D1_MIGRATIONS);
   });
