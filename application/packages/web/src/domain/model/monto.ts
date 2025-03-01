@@ -202,6 +202,184 @@ export function newUnsavedMonto(
   }
 }
 
+// in-source test suites
+if (import.meta.vitest) {
+  const { it, expect, describe } = import.meta.vitest;
+  describe("newUnsavedMonto", () => {
+    it("should create UnsavedMonto with valid input", () => {
+      const validInput = {
+        gender: "MALE",
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+        dateOfDeath: new Date("2023-01-01"),
+        homyo: "釋一宗",
+        ingou: "帰命院",
+      };
+
+      const result = newUnsavedMonto(validInput);
+
+      expect(result).not.toBeInstanceOf(Error);
+      if (!(result instanceof Error)) {
+        expect(result.gender).toBe("MALE");
+        expect(result.firstName).toBe("太郎");
+        expect(result.lastName).toBe("山田");
+        expect(result.phoneNumber).toBe("0311112222");
+        expect(result.address).toBe("東京都渋谷区");
+        expect(result.dateOfDeath).toEqual(new Date("2023-01-01"));
+        expect(result.homyo).toBe("釋一宗");
+        expect(result.ingou).toBe("帰命院");
+      }
+    });
+
+    it("should create UnsavedMonto without optional fields", () => {
+      const validInput = {
+        gender: "FEMALE",
+        firstName: "花子",
+        lastName: "鈴木",
+        phoneNumber: "0311112222",
+        address: "大阪府大阪市",
+      };
+
+      const result = newUnsavedMonto(validInput);
+
+      expect(result).not.toBeInstanceOf(Error);
+      if (!(result instanceof Error)) {
+        expect(result.gender).toBe("FEMALE");
+        expect(result.firstName).toBe("花子");
+        expect(result.lastName).toBe("鈴木");
+        expect(result.phoneNumber).toBe("0311112222");
+        expect(result.address).toBe("大阪府大阪市");
+        expect(result.dateOfDeath).toBeUndefined();
+        expect(result.homyo).toBeUndefined();
+        expect(result.ingou).toBeUndefined();
+      }
+    });
+
+    it("should return error with invalid gender", () => {
+      // Using type assertion to create an object with invalid gender for testing
+      const invalidInput = {
+        gender: "INVALID" as Gender, // Invalid at runtime but passes type checking
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+
+    it("should return error with empty first name", () => {
+      const invalidInput = {
+        gender: "MALE",
+        firstName: "", // Empty first name
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+
+    it("should return error with invalid phone number", () => {
+      const invalidInput = {
+        gender: "MALE",
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "123", // Invalid phone number
+        address: "東京都渋谷区",
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+
+    it("should return error with invalid homyo format", () => {
+      const invalidInput = {
+        gender: "MALE",
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+        homyo: "一宗", // Invalid homyo format (not starting with "釋")
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+
+    it("should return error with invalid ingou format", () => {
+      const invalidInput = {
+        gender: "MALE",
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+        ingou: "帰命", // Invalid ingou format (not ending with "院")
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+
+    it("should return error with future date of death", () => {
+      const futureDate = new Date();
+      futureDate.setFullYear(futureDate.getFullYear() + 1); // Date one year in the future
+
+      const invalidInput = {
+        gender: "MALE",
+        firstName: "太郎",
+        lastName: "山田",
+        phoneNumber: "0311112222",
+        address: "東京都渋谷区",
+        dateOfDeath: futureDate, // Future date
+      };
+
+      const result = newUnsavedMonto(invalidInput);
+
+      expect(result).toBeInstanceOf(InvalidMontoParameterError);
+      if (result instanceof Error) {
+        expect(result.message).toContain(
+          "Failed to parse input based on unsaved monto schema"
+        );
+      }
+    });
+  });
+}
+
 export type UnsavedMonto = v.InferOutput<typeof unsavedMontoSchema>;
 
 const montoIdSchema = v.pipe(
