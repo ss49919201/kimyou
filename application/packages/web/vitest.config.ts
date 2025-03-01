@@ -2,7 +2,6 @@ import {
   defineWorkersConfig,
   readD1Migrations,
 } from "@cloudflare/vitest-pool-workers/config";
-import { env } from "cloudflare:test";
 
 export default defineWorkersConfig(async () => {
   const migrations = await readD1Migrations(
@@ -18,7 +17,7 @@ export default defineWorkersConfig(async () => {
           miniflare: {
             bindings: {
               D1_MIGRATIONS: migrations,
-            } satisfies Pick<typeof env, "D1_MIGRATIONS">,
+            },
           },
         },
       },
