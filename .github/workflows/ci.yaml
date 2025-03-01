@@ -35,12 +35,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./scripts/cloudflare
+        working-directory: ./infrastructure/scripts/cloudflare
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version-file: ./scripts/cloudflare/go.mod
+          go-version-file: ./infrastructure/scripts/cloudflare/go.mod
       - run: go test -v ./...
         env:
           INTEGRATION_TEST: true
