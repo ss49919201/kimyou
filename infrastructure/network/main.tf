@@ -27,6 +27,10 @@ variable "cloudflare_api_token" {
   type = string
 }
 
+variable "cloudflare_zero_trust_access_service_token_id" {
+  type = string
+}
+
 variable "allow_emails" {
   type = list(string)
 }
@@ -43,12 +47,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "cloudflare_zero_trust_access_service_token" "this" {
-  account_id = var.cloudflare_account_id
-  name       = "kimyou-api-auth"
-}
-
-
 resource "cloudflare_zero_trust_access_application" "this" {
   account_id = var.cloudflare_account_id
   domain     = var.domain
@@ -61,7 +59,7 @@ resource "cloudflare_zero_trust_access_application" "this" {
       include = [
         {
           service_token = {
-            token_id = cloudflare_zero_trust_access_service_token.this.id
+            token_id = var.cloudflare_zero_trust_access_service_token_id
           }
         },
       ]
@@ -79,14 +77,3 @@ resource "cloudflare_zero_trust_access_application" "this" {
   ]
 }
 
-resource "aws_ssm_parameter" "service_auth_token_client_id" {
-  name  = "/kimyou/cloudflare_service_auth_token_client_id"
-  type  = "String"
-  value = cloudflare_zero_trust_access_service_token.this.client_id
-}
-
-resource "aws_ssm_parameter" "service_auth_token_client_secret" {
-  name  = "/kimyou/cloudflare_service_auth_token_client_secret"
-  type  = "SecureString"
-  value = cloudflare_zero_trust_access_service_token.this.client_secret
-}
