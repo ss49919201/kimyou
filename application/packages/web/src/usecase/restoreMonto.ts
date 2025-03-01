@@ -29,7 +29,11 @@ export async function restoreMonto(
     try {
       await dep.unlock(lockKey);
     } catch (e) {
-      console.log(e);
+      console.log(
+        `Failed to unlock monto update, ${
+          e instanceof Error ? e.message : JSON.stringify(e)
+        }`
+      );
     }
   }
 }
