@@ -17,7 +17,7 @@ describe("E2E Page test", () => {
     { route: `/montos/${dummyInvalidMontoId}` },
     { route: "/montos/new" },
   ])("route `$route`", async ({ route }) => {
-    const req = new Request(`http://localhost:8787"${route}`);
+    const req = new Request(`http://localhost:8787${route}`);
     const res = await worker.fetch(req, env, createExecutionContext());
     const resRext = await res.text();
     expect(resRext).toMatchSnapshot();
