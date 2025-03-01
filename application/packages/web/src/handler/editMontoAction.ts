@@ -72,7 +72,7 @@ export const editMontoAction = factory.createHandlers(
             updateMontoD1(db, savedMonto),
           findMonto: (id) => findOneForUpdate(db, id),
           lock: (key) => lock(db, key),
-          unock: (key) => unlock(db, key),
+          unlock: (key) => unlock(db, key),
         }
       );
     } catch (e: unknown) {

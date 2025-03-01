@@ -17,7 +17,7 @@ export type Dependency = {
   findMonto: (id: string) => Promise<SavedMonto | undefined>;
   updateMonto: (savedMonto: SavedMonto) => Promise<void>;
   lock: (key: string) => Promise<boolean>;
-  unock: (key: string) => Promise<void>;
+  unlock: (key: string) => Promise<void>;
 };
 
 export async function updateMonto(
@@ -32,7 +32,7 @@ export async function updateMonto(
     await _updateMonto(input, dep);
   } finally {
     try {
-      await dep.unock(lockKey);
+      await dep.unlock(lockKey);
     } catch (e) {
       console.log(e);
     }
