@@ -14,6 +14,7 @@
     "drizzle:migrate": "wrangler d1 migrations apply D1 --remote"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@hono/valibot-validator": "0.5.2",
     "clsx": "^2.1.1",
     "hono": "^4.6.20"
