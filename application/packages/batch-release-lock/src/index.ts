@@ -7,9 +7,7 @@ type Env = {
 };
 
 export default {
-  async scheduled(event: ScheduledEvent, env: Env) {
-    console.log({ scheduledTime: event.scheduledTime, cron: event.cron });
-
+  async scheduled(_: ScheduledEvent, env: Env) {
     try {
       await releaseLock(drizzle(env.D1, { logger: true }));
     } catch (e: unknown) {
