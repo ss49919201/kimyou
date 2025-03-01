@@ -81,9 +81,9 @@ if (import.meta.vitest) {
   });
 }
 
-// - Domestic prefix “0”,
-// - area code + local code “total 5 digits”
-// - subscriber number “4 digits
+// - Domestic prefix “0”
+// - Area code + local code “total 5 digits”
+// - Subscriber number “4 digits
 // https://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/q_and_a.html
 const landlinePhoneNumberRegex = v.regex(
   /^0[0-9]{5}[0-9]{4}$/,

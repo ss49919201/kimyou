@@ -2,6 +2,7 @@ import { vValidator } from "@hono/valibot-validator";
 import * as v from "valibot";
 import { genders } from "../domain/model/monto";
 import { factory } from "./factory";
+import { jstDateStrToDate } from "./helper/transform";
 import { vValidatorHook } from "./vValidator";
 
 export const newMontoAction = factory.createHandlers(
@@ -18,11 +19,7 @@ export const newMontoAction = factory.createHandlers(
           v.literal(""),
           v.transform(() => undefined)
         ),
-        v.pipe(
-          v.string(),
-          v.isoDateTime(),
-          v.transform((v) => new Date(v))
-        ),
+        v.pipe(v.string(), v.isoDate(), v.transform(jstDateStrToDate)),
       ]),
       homyo: v.union([
         v.pipe(

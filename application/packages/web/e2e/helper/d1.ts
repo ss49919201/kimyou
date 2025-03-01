@@ -26,12 +26,12 @@ async function insertDummy(d1: D1Database): Promise<void> {
 
   await db.insert(genders).values([
     {
-      type: "男",
+      type: "MALE",
       createdDate,
       updatedDate,
     },
     {
-      type: "女",
+      type: "FEMALE",
       createdDate,
       updatedDate,
     },
@@ -40,7 +40,7 @@ async function insertDummy(d1: D1Database): Promise<void> {
   const genderMale = await db
     .select()
     .from(genders)
-    .where(eq(genders.type, "男"))
+    .where(eq(genders.type, "MALE"))
     .get();
 
   if (!genderMale) {
@@ -57,13 +57,13 @@ async function insertDummy(d1: D1Database): Promise<void> {
     createdDate,
     updatedDate,
     address: "テスト住所",
-    phoneNumber: "テスト電話番号",
+    phoneNumber: "0311112222",
   });
 
   await db.insert(buddhistProfiles).values({
     id: crypto.randomUUID(),
     montoId,
-    homyo: "釋　一宗",
+    homyo: "釋一宗",
     ingou: "帰命院",
     createdDate,
     updatedDate,
