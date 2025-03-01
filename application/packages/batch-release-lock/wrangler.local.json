@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kimyou",
+  "main": "src/index.tsx",
+  "compatibility_date": "2025-02-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENV": "local"
+  },
+  "d1_databases": [
+    {
+      "binding": "D1",
+      "database_name" : "kimyou",
+      "database_id" : "n/a",
+      "migrations_dir" : "./src/infrastructure/db/d1/migrations"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  }
+}

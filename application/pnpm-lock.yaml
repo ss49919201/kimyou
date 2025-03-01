@@ -21,6 +21,15 @@ importers:
         specifier: 1.0.0-beta.14
         version: 1.0.0-beta.14(typescript@5.7.3)
     devDependencies:
+      '@cloudflare/vitest-pool-workers':
+        specifier: 0.6.15
+        version: 0.6.15(@cloudflare/workers-types@4.20250214.0)(@vitest/runner@2.1.8)(@vitest/snapshot@2.1.8)(vitest@2.1.8(@types/node@22.13.4))
+      '@cloudflare/workers-types':
+        specifier: 4.20250214.0
+        version: 4.20250214.0
+      '@eslint/js':
+        specifier: ^9.20.0
+        version: 9.20.0
       '@types/node':
         specifier: 22.13.4
         version: 22.13.4
@@ -45,6 +54,11 @@ importers:
       vitest:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.13.4)
+      wrangler:
+        specifier: ^3.101.0
+        version: 3.109.2(@cloudflare/workers-types@4.20250214.0)
+
+  packages/batch-release-lock: {}
 
   packages/web:
     dependencies:
@@ -61,21 +75,9 @@ importers:
         specifier: ^4.6.20
         version: 4.7.2
     devDependencies:
-      '@cloudflare/vitest-pool-workers':
-        specifier: 0.6.15
-        version: 0.6.15(@cloudflare/workers-types@4.20250214.0)(@vitest/runner@2.1.8)(@vitest/snapshot@2.1.8)(vitest@2.1.8(@types/node@22.13.4))
-      '@cloudflare/workers-types':
-        specifier: ^4.20250109.0
-        version: 4.20250214.0
-      '@eslint/js':
-        specifier: ^9.20.0
-        version: 9.20.0
       miniflare:
         specifier: 3.20250214.0
         version: 3.20250214.0
-      wrangler:
-        specifier: ^3.101.0
-        version: 3.109.2(@cloudflare/workers-types@4.20250214.0)
 
 packages:
 
