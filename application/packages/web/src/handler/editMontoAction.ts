@@ -11,6 +11,7 @@ import {
 import { ConflictError } from "../usecase/error/conflict";
 import { updateMonto as updateMontoUsecase } from "../usecase/updateMonto";
 import { factory } from "./factory";
+import { jstDateStrToDate } from "./helper/transform";
 import { vValidatorHook } from "./vValidator";
 
 export const editMontoAction = factory.createHandlers(
@@ -24,11 +25,7 @@ export const editMontoAction = factory.createHandlers(
           v.literal(""),
           v.transform(() => undefined)
         ),
-        v.pipe(
-          v.string(),
-          v.isoDateTime(),
-          v.transform((v) => new Date(v))
-        ),
+        v.pipe(v.string(), v.isoDate(), v.transform(jstDateStrToDate)),
       ]),
       homyo: v.union([
         v.pipe(
