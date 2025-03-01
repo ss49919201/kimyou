@@ -15,6 +15,10 @@ import Error500 from "./pages/500";
 import Error404 from "./pages/404";
 import { editMonto } from "./handler/editMonto";
 import { editMontoAction } from "./handler/editMontoAction";
+import { removeMonto } from "./handler/api/removeMonto";
+import { restoreMonto } from "./handler/api/restoreMonto";
+import Error409 from "./pages/409";
+import { ContentfulStatusCode } from "hono/utils/http-status";
 
 const montoApp = new Hono<{ Bindings: Bindings }>()
   .get("/", ...montos)
@@ -33,16 +37,27 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
     console.error(err);
 
-    if (
-      err instanceof InvalidParameterError ||
-      (err instanceof HTTPException && err.status === 400)
-    ) {
+    const isHTTPException = (status: ContentfulStatusCode) => {
+      return err instanceof HTTPException && err.status === status;
+    };
+
+    if (err instanceof InvalidParameterError || isHTTPException(400)) {
       return c.json(
         {
           msg: "Bad request",
           detail: err.message,
         },
         400
+      );
+    }
+
+    if (err instanceof InvalidParameterError || isHTTPException(409)) {
+      return c.json(
+        {
+          msg: "Conflict",
+          detail: err.message,
+        },
+        409
       );
     }
 
@@ -53,17 +68,24 @@ const apiApp = new Hono<{ Bindings: Bindings }>()
       500
     );
   })
-  .post("/montos/_batch", ...insertManyMontos);
+  .post("/montos/_batch", ...insertManyMontos)
+  .post("/montos/:id/removals", ...removeMonto)
+  .post("/montos/:id/restorations", ...restoreMonto);
 
 const app = new Hono<{ Bindings: Bindings }>()
   .onError((err, c) => {
     console.error(err);
 
-    if (err instanceof HTTPException && err.status === 404) {
-      return c.render(<Error404 />);
+    if (err instanceof HTTPException) {
+      if (err.status === 404) {
+        return c.render(<Error404 />);
+      }
+
+      if (err.status === 409) {
+        return c.render(<Error409 />);
+      }
     }
 
-    // Error generated after passing html input validation are not expected.
     return c.render(<Error500 />);
   })
   .use(
