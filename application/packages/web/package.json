@@ -21,5 +21,8 @@
   },
   "devDependencies": {
     "miniflare": "3.20250214.0"
+  },
+  "exports": {
+    "./schema": "./src/infrastructure/db/d1/schema.ts"
   }
 }

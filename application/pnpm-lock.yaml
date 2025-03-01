@@ -58,7 +58,11 @@ importers:
         specifier: ^3.101.0
         version: 3.109.2(@cloudflare/workers-types@4.20250214.0)
 
-  packages/batch-release-lock: {}
+  packages/batch-release-lock:
+    dependencies:
+      web:
+        specifier: workspace:*
+        version: link:../web
 
   packages/web:
     dependencies:
