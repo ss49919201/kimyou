@@ -1,3 +1,8 @@
+# Important information
+
+kimyou does not implement authentication.
+Recommend using Cloudflare Access for authentication.
+
 # Getting started
 
 ## Prerequisites
@@ -120,8 +125,3 @@ pnpm ${workspace} add ${new_pkg} -E
 # or
 cd packages/${workspace} && pnpm add ${new_pkg} -E
 ```
-
-## Authentication
-
-kimyou does not implement authentication.
-Recommend using Cloudflare Access for authentication.
