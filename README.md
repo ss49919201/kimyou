@@ -15,6 +15,9 @@ Acceess [here](https://kimyou-demo.ss49919201.workers.dev/).
 
 The demo site is available for viewing functions only, creation and editing are not available.
 
+> [!IMPORTANT]
+> Some pages do not support dark mode. sorry 🙏
+
 # System Architecture 🖼️
 
 <img width="830" alt="スクリーンショット 2025-03-02 8 00 48" src="https://github.com/user-attachments/assets/58163e43-9362-4ceb-999b-45010cb0e2a8" />
@@ -32,6 +35,7 @@ Application works perfectly with Cloudflare only.
 | restore montos                               | No     | Yes |
 | generate homyo by AI                         | Yes    | No  |
 
-# Development 🛠️
+# Getting started 🛠️
 
-TODO
+1. [infrastructure](https://github.com/ss49919201/kimyou/tree/main/infrastructure#getting-started)
+2. [application](https://github.com/ss49919201/kimyou/tree/main/infrastructure#getting-started)
