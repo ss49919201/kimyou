@@ -38,7 +38,7 @@ export async function generateHomyos(
       usage: parsed.usage,
     });
 
-    const homyo = `釋　${parsed.response}`; // eslint-disable-line no-irregular-whitespace
+    const homyo = `釋${parsed.response}`;
 
     return [homyo];
   } catch (e: unknown) {
