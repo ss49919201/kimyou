@@ -16,7 +16,13 @@ export const insertManyMontos = factory.createHandlers(
           lastName: v.string(),
           phoneNumber: v.string(),
           address: v.string(),
-          dateOfDeath: v.optional(v.date()),
+          dateOfDeath: v.optional(
+            v.pipe(
+              v.string(),
+              v.isoTimestamp(),
+              v.transform((input) => new Date(input))
+            )
+          ),
           homyo: v.optional(v.string()),
           ingou: v.optional(v.string()),
         })

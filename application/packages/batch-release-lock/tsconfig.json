@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "@cloudflare/workers-types/2023-07-01",
+      "vitest/importMeta",
+      "@cloudflare/vitest-pool-workers"
+    ],
+    // JSX elements are converted to _jsx calls
+    "jsx": "react-jsx",
+    // use hono/jsx to factory JSX
+    "jsxImportSource": "hono/jsx",
+  },
+}
