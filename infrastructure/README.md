@@ -10,7 +10,7 @@
 
 ## Apply datastore state
 
-Create <any>.tfbackend.
+Create \<any>\.tfbackend.
 
 ```
 bucket  = <your-bucket>
@@ -33,7 +33,7 @@ terraform apply
 
 ## Apply network state
 
-Create <any>.tfbackend.
+Create \<any>\.tfbackend.
 
 ```
 bucket  = <your-bucket>
