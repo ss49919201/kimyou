@@ -38,4 +38,4 @@ Application works perfectly with Cloudflare only.
 # Getting started 🛠️
 
 1. [infrastructure](https://github.com/ss49919201/kimyou/tree/main/infrastructure#getting-started)
-2. [application](https://github.com/ss49919201/kimyou/tree/main/infrastructure#getting-started)
+2. [application](https://github.com/ss49919201/kimyou/tree/main/application#getting-started)
