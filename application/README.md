@@ -1,7 +1,8 @@
 # Important information
 
 kimyou does not implement authentication.
-Recommend using Cloudflare Access for authentication.
+
+Use Cloudflare Access for authentication.
 
 # Getting started
 
