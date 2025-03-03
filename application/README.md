@@ -36,7 +36,7 @@ ref: `./wrangler.local.json`
 Execute migration.
 
 ```bash
-pnpm drizzle:migrate
+pnpm migrate
 ```
 
 Insert master data.
@@ -54,7 +54,7 @@ pnpm deploy
 Execute migration.
 
 ```bash
-pnpm drizzle:migrate:local
+pnpm migrate:local
 ```
 
 Insert master data.
