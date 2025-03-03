@@ -17,5 +17,5 @@ jobs:
         with:
           package_json_file: ./application/package.json
       - run: pnpm install
-      - run: echo ${{ env.BASE64_WRANGLER_JSON_WEB }} | base64 --decode > ./wrangler.json
+      - run: echo ${{ secrets.BASE64_WRANGLER_JSON_WEB }} | base64 --decode > ./wrangler.json
       - run: pnpm migrate:prod
