@@ -11,7 +11,9 @@
     "deploy": "wrangler deploy --minify",
     "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts",
     "migrate:local": "wrangler d1 migrations apply D1 --local --config=./wrangler.local.json",
-    "migrate": "wrangler d1 migrations apply D1 --remote"
+    "migrate": "wrangler d1 migrations apply D1 --remote",
+    "migrate:demo": "wrangler d1 migrations apply D1 --remote --env=demo",
+    "migrate:prod": "wrangler d1 migrations apply D1 --remote --env=prod"
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
