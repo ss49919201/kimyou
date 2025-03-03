@@ -10,8 +10,8 @@
     "dev": "wrangler dev --config=./wrangler.local.json",
     "deploy": "wrangler deploy --minify",
     "drizzle:generate": "drizzle-kit generate --config=./src/infrastructure/db/d1/drizzle.config.ts",
-    "drizzle:migrate:local": "wrangler d1 migrations apply D1 --local --config=./wrangler.local.json",
-    "drizzle:migrate": "wrangler d1 migrations apply D1 --remote"
+    "migrate:local": "wrangler d1 migrations apply D1 --local --config=./wrangler.local.json",
+    "migrate": "wrangler d1 migrations apply D1 --remote"
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
