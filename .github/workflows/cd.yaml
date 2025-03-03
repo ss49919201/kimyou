@@ -1,0 +1,40 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-web:
+    name: Deploy Web Package
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./application
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./application/package.json
+      - run: pnpm install
+      - run: echo ${{ secrets.BASE64_WRANGLER_JSON }} | base64 --decode > ./wrangler.json
+        working-directory: ./application/packages/web
+      - run: echo ${{ secrets.BASE64_WRANGLER_JSON_BATCH_RELEASE_LOCK }} | base64 --decode > ./wrangler.json
+        working-directory: ./application/packages/batch-release-lock
+      - name: Deploy web
+        uses: cloudflare/wrangler-action@v3
+        with:
+          environment: prod
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: ./application/packages/web
+          quiet: true
+      - name: Deploy batch release lock
+        uses: cloudflare/wrangler-action@v3
+        with:
+          environment: prod
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: ./application/packages/batch-release-lock
+          quiet: true
