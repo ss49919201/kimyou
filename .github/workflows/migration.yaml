@@ -1,0 +1,21 @@
+name: Migration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  d1-migration:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./application/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./application/package.json
+      - run: pnpm install
+      - run: echo ${{ env.BASE64_WRANGLER_JSON_WEB }} | base64 --decode > ./wrangler.json
+      - run: pnpm migrate:prod
