@@ -10,8 +10,8 @@ Use Cloudflare Access for authentication.
 
 - Cloudflare account with API access
 - Development Tools
-    - `node`
-    - `pnpm`
+  - `node`
+  - `pnpm`
 
 ## Deploy Web Application
 
@@ -21,7 +21,7 @@ Change dir.
 cd ./packages/web
 ```
 
-Create `./wrangler.json`. 
+Create `./wrangler.json`.
 
 ref: `./wrangler.local.json`
 
@@ -36,10 +36,10 @@ ref: `./wrangler.local.json`
 Execute migration.
 
 ```bash
-pnpm drizzle:migrate
+pnpm migrate
 ```
 
-Insert master data. 
+Insert master data.
 
 use: `./packages/web/src/infrastructure/db/d1/master`
 
@@ -54,10 +54,10 @@ pnpm deploy
 Execute migration.
 
 ```bash
-pnpm drizzle:migrate:local
+pnpm migrate:local
 ```
 
-Insert master data. 
+Insert master data.
 
 use: `./packages/web/src/infrastructure/db/d1/master`
 
@@ -75,7 +75,7 @@ Change dir.
 cd ./packages/batch-release-lock
 ```
 
-Create `./wrangler.json`. 
+Create `./wrangler.json`.
 
 ref: `./wrangler.local.json`
 
