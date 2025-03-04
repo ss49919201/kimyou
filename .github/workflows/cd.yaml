@@ -22,6 +22,11 @@ jobs:
         working-directory: ./application/packages/web
       - run: echo ${{ secrets.BASE64_WRANGLER_JSON_BATCH_RELEASE_LOCK }} | base64 --decode > ./wrangler.json
         working-directory: ./application/packages/batch-release-lock
+      - run: pnpm migrate:prod
+        working-directory: ./application/packages/web
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - name: Deploy web
         uses: cloudflare/wrangler-action@v3
         with:
