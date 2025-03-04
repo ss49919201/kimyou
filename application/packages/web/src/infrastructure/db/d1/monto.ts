@@ -1,6 +1,5 @@
 import { desc, eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
-import { randomUUID } from "node:crypto";
 import {
   isInactiveMontoReason,
   isMontoStatus,
@@ -112,7 +111,7 @@ export async function insertMonto(
 
   // NOTE: Cloudflare D1 transaction not supported
   // https://github.com/drizzle-team/drizzle-orm/issues/2463
-  const montoId = randomUUID();
+  const montoId = crypto.randomUUID();
   await db.batch([
     db.insert(montos).values({
       id: montoId,
@@ -177,14 +176,14 @@ export async function updateMonto(
     switch (savedMontoStatus) {
       case "ACTIVE":
         queryToInsertEvent = db.insert(restoreMontos).values({
-          id: randomUUID(),
+          id: crypto.randomUUID(),
           montoId: savedMonto.id,
           restoredDate: now,
         });
         break;
       case "INACTIVE":
         queryToInsertEvent = db.insert(removeMontos).values({
-          id: randomUUID(),
+          id: crypto.randomUUID(),
           montoId: savedMonto.id,
           removedDate: now,
           reason: savedMonto.reason,
