@@ -93,6 +93,7 @@ const app = new Hono<{ Bindings: Bindings }>()
       <html>
         <head>
           <script src="https://cdn.tailwindcss.com"></script>
+          <meta name="robots" content="noindex" />
         </head>
         <body>{children}</body>
       </html>
