@@ -78,3 +78,10 @@ export const restoreMontos = sqliteTable("restore_montos", {
     .references(() => montos.id),
   restoredDate: text("restored_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
+
+// TODO: define schema
+export const addressGroup = sqliteTable("address_groups", {
+  id: text().notNull().primaryKey(),
+  createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+  updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+});
