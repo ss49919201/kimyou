@@ -79,6 +79,30 @@ export const restoreMontos = sqliteTable("restore_montos", {
   restoredDate: text("restored_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
 });
 
+export const addresses = sqliteTable("addresses", {
+  id: text().notNull().primaryKey(),
+  montoId: text("monto_id")
+    .notNull()
+    .unique()
+    .references(() => montos.id),
+  name: text().notNull(),
+  createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+  updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+});
+
+export const addressBelongsToGroups = sqliteTable("address_belongs_to_groups", {
+  id: text().notNull().primaryKey(),
+  addressId: text()
+    .notNull()
+    .unique()
+    .references(() => addresses.id),
+  addressGroupId: text()
+    .notNull()
+    .references(() => addressGroups.id),
+  createdDate: text("created_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+  updatedDate: text("updated_date").notNull(), // RFC3339 ex)2006-01-02T15:04:05Z07:00
+});
+
 export const addressGroups = sqliteTable("address_groups", {
   id: text().notNull().primaryKey(),
   name: text().notNull(),
