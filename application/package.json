@@ -26,6 +26,7 @@
     "date-fns": "4.1.0",
     "drizzle": "1.4.0",
     "drizzle-orm": "^0.39.2",
+    "tslog": "4.9.3",
     "valibot": "1.0.0-beta.14"
   }
 }
